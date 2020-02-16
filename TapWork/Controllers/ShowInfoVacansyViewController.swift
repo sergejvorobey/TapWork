@@ -27,7 +27,7 @@ class ShowInfoVacansyViewController: UIViewController {
             showPaymentLable.text = vacansy.payment + " ₽ "
             
             if let topItem = navigationController?.navigationBar.topItem {
-                topItem.backBarButtonItem = UIBarButtonItem(title: "Вакансия от: \(vacansy.publicationDate)",
+                topItem.backBarButtonItem = UIBarButtonItem(title: "Вакансии",
                                                             style: .plain,
                                                             target: nil, action: nil)
             }
