@@ -8,7 +8,9 @@
 
 import UIKit
 
-class MainScreenTableViewController: UITableViewController {
+class MainScreenController: UITableViewController {
+    
+    @IBOutlet weak var imageAccount: UIBarButtonItem!
     
     private var vacancies:[Vacancy] = []
     private let vacansyProvider: VacansyProvider = VacansyProvider()
@@ -18,9 +20,14 @@ class MainScreenTableViewController: UITableViewController {
         super.viewDidLoad()
         
         vacancies = vacansyProvider.vacancies
+        
         tableView.tableFooterView = UIView()
+        self.view.backgroundColor = UIColor.lightGray
 
     }
+
+
+   
 
     // MARK: - Table view data source
 
@@ -30,7 +37,7 @@ class MainScreenTableViewController: UITableViewController {
 //    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        
         return vacancies.count
     }
 
@@ -38,6 +45,12 @@ class MainScreenTableViewController: UITableViewController {
         let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacansyTableViewCell
         
         let vacansy = vacancies[indexPath.row]
+        
+        vacanciesCell.layer.cornerRadius = 20
+        vacanciesCell.layer.masksToBounds = true
+        vacanciesCell.layer.borderWidth = 6
+        vacanciesCell.layer.borderColor = UIColor.lightGray.cgColor
+        
         vacanciesCell.headingLabel.text = vacansy.heading
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "
@@ -45,10 +58,10 @@ class MainScreenTableViewController: UITableViewController {
         
         return vacanciesCell
     }
-    
-    @IBAction func cancelButton(_ sender: UIStoryboardSegue) {
-        dismiss(animated: true, completion: nil)
-    }
+
+//    @IBAction func cancelButton(_ sender: UIStoryboardSegue) {
+//        dismiss(animated: true, completion: nil)
+//    }
     
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -61,44 +74,18 @@ class MainScreenTableViewController: UITableViewController {
         
         self.navigationController?.pushViewController(ShowInfoVacansyViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
+
+    }
+    
+    
+    @IBAction func userAccount(_ sender: UIBarButtonItem) {
         
+        performSegue(withIdentifier: "ShowAccount", sender: nil)
     }
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
+
+
+//extension MainScreenTableViewController: UITabBarController {
+//    
+//}
