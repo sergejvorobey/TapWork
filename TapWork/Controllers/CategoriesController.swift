@@ -10,12 +10,11 @@ import UIKit
 
 class CategoriesController: UIViewController {
 
-    @IBOutlet weak var applyFilterLabel: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     private var categories:[Category] = []
-    private var specializations: [Specialization] = []
     private let categoryProvider: CategoriesProvider = CategoriesProvider()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,18 +23,12 @@ class CategoriesController: UIViewController {
         self.tableView.dataSource = self
         
         tableView.tableFooterView = UIView()
+        navigationItem.title = "Категории"
+        self.navigationController?.navigationBar.tintColor = .red
+        
         
         categories = categoryProvider.categories
-        specializations = categoryProvider.specializations
-        
-        
-        if let button = applyFilterLabel {
-            
-            button.layer.cornerRadius = 10
-            button.layer.backgroundColor = UIColor.red.cgColor
-            button.setTitle("Применить фильтр", for: .normal)
-            button.setTitleColor(.white, for: .normal)
-        }
+       
     }
 }
 
@@ -71,7 +64,5 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
-    
-   
 }
 

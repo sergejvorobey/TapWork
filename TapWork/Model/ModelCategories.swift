@@ -44,10 +44,13 @@ struct CategoriesProvider {
     var categories: [Category] {
         return [categoryRestaurants, categoryMusicians, categoryOthers]
     }
+}
+
+struct SpecializationsProvider {
     
     var specializations: [Specialization] {
-        return [specializationCook, specializationWaiter, specializationBarmen]
-    }
+           return [specializationCook, specializationWaiter, specializationBarmen]
+       }
 }
 
 let categoryRestaurants  = Category(nameCategories: .restaurants)
@@ -63,29 +66,29 @@ let specializationMusicianEquipment = Specialization(nameSpecialization: .musici
 
 //=================================================================//
 
-class CategoryTest {
-    
-    var nameCategory: NameCategories
-    
-    init(nameCategory: NameCategories) {
-        self.nameCategory = nameCategory
-    }
-}
-
-class SpecializationTest: CategoryTest {
-    
-    var nameSpecialization: NameSpecialization
-    
-    init(nameCategory: NameCategories, nameSpecialization: NameSpecialization) {
-        self.nameSpecialization = nameSpecialization
-        super.init(nameCategory: nameCategory)
-    }
-}
-
-let barmens = SpecializationTest(nameCategory: .restaurants, nameSpecialization: .barmen)
-let waiters = SpecializationTest(nameCategory: .restaurants, nameSpecialization: .waiter)
-let cooks   = SpecializationTest(nameCategory: .restaurants, nameSpecialization: .cook)
-let singers = SpecializationTest(nameCategory: .musicians, nameSpecialization: .singer)
-let dj      = SpecializationTest(nameCategory: .musicians, nameSpecialization: .dj)
-let musiciansEquipments = SpecializationTest(nameCategory: .musicians, nameSpecialization: .musicianEquipment)
+//class CategoryTest {
+//
+//    var nameCategory: NameCategories
+//
+//    init(nameCategory: NameCategories) {
+//        self.nameCategory = nameCategory
+//    }
+//}
+//
+//class SpecializationTest: CategoryTest {
+//
+//    var nameSpecialization: NameSpecialization
+//
+//    init(nameCategory: NameCategories, nameSpecialization: NameSpecialization) {
+//        self.nameSpecialization = nameSpecialization
+//        super.init(nameCategory: nameCategory)
+//    }
+//}
+//
+//let barmens = SpecializationTest(nameCategory: .restaurants, nameSpecialization: .barmen)
+//let waiters = SpecializationTest(nameCategory: .restaurants, nameSpecialization: .waiter)
+//let cooks   = SpecializationTest(nameCategory: .restaurants, nameSpecialization: .cook)
+//let singers = SpecializationTest(nameCategory: .musicians, nameSpecialization: .singer)
+//let dj      = SpecializationTest(nameCategory: .musicians, nameSpecialization: .dj)
+//let musiciansEquipments = SpecializationTest(nameCategory: .musicians, nameSpecialization: .musicianEquipment)
 

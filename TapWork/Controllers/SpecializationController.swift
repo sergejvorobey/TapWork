@@ -13,26 +13,14 @@ class SpecializationController: UITableViewController {
     //@IBOutlet weak var tableView: UITableView!
     
     private var specializations: [Specialization] = []
-    private let categoryProvider: CategoriesProvider = CategoriesProvider()
-    private var categoryIndex: Int!
-    
+    private let specializationsProvider: SpecializationsProvider = SpecializationsProvider()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        specializations = categoryProvider.specializations
-        
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        specializations = specializationsProvider.specializations
         
     }
-    
-    func customInit(categoryIndex: Int, title: String) {
-        self.categoryIndex = categoryIndex
-        self.title = title
-    }
-
-
-
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return specializations.count
@@ -43,12 +31,13 @@ class SpecializationController: UITableViewController {
         let specializationCell = tableView.dequeueReusableCell(withIdentifier: "SpecializationCell", for: indexPath) as! SpecializationCell
         
         specializationCell.specializationLabel.text = specializations[indexPath.row].nameSpecialization.rawValue
-
+        
         return specializationCell
         
     }
     
-override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //MARK: update cells specialization
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
 //     let specializationController = storyboard?.instantiateViewController(withIdentifier: "SpecializationController")
         
@@ -56,6 +45,9 @@ override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: Inde
 //
 //        self.navigationController?.pushViewController(specializationVC, animated: true)
     
+
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
         

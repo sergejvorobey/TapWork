@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 struct Vacancy {
     
     var heading: String

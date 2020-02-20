@@ -22,18 +22,12 @@ class MainScreenController: UITableViewController {
         vacancies = vacansyProvider.vacancies
         
         tableView.tableFooterView = UIView()
-//        self.view.backgroundColor = UIColor.lightGray
-        
+
     }
 
     
     // MARK: - Table view data source
-    
-    //    override func numberOfSections(in tableView: UITableView) -> Int {
-    //        // #warning Incomplete implementation, return the number of sections
-    //        return vacancies.count
-    //    }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return vacancies.count
@@ -43,12 +37,7 @@ class MainScreenController: UITableViewController {
         let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacansyTableViewCell
         
         let vacansy = vacancies[indexPath.row]
-        
-//                vacanciesCell.layer.cornerRadius = 20
-//                vacanciesCell.layer.masksToBounds = true
-//                vacanciesCell.layer.borderWidth = 6
-//                vacanciesCell.layer.borderColor = UIColor.lightGray.cgColor
-        
+
         vacanciesCell.headingLabel.text = vacansy.heading
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "
@@ -79,6 +68,3 @@ class MainScreenController: UITableViewController {
 }
 
 
-//extension MainScreenTableViewController: UITabBarController {
-//    
-//}
