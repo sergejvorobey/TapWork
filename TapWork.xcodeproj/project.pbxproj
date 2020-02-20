@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871397C923FCBC5900FB7732 /* SpecializationController.swift */; };
+		871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871397CD23FCBF3800FB7732 /* SpecializationCell.swift */; };
 		871D175223C8F6350095C765 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871D175123C8F6350095C765 /* AppDelegate.swift */; };
 		871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871D175323C8F6350095C765 /* SceneDelegate.swift */; };
 		871D175923C8F6350095C765 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175723C8F6350095C765 /* Main.storyboard */; };
@@ -18,7 +20,9 @@
 		879F599223F99A6900D4D124 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599123F99A6900D4D124 /* NavigationController.swift */; };
 		879F599423F99F0D00D4D124 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599323F99F0D00D4D124 /* AccountViewController.swift */; };
 		879F599723F9A0A400D4D124 /* RegisterAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599623F9A0A400D4D124 /* RegisterAccountController.swift */; };
-		87BB3BA223F9D691004F3C61 /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BB3BA123F9D691004F3C61 /* FilterController.swift */; };
+		87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BB3BA123F9D691004F3C61 /* CategoriesController.swift */; };
+		87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C9097123FB0B4E00C262FC /* ModelCategories.swift */; };
+		87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C9097323FB1FA700C262FC /* CategoryCell.swift */; };
 		87F68A6A23EF2B8500D4C454 /* MainScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6923EF2B8500D4C454 /* MainScreenController.swift */; };
 		87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */; };
 		87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */; };
@@ -26,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		871397C923FCBC5900FB7732 /* SpecializationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationController.swift; sourceTree = "<group>"; };
+		871397CD23FCBF3800FB7732 /* SpecializationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationCell.swift; sourceTree = "<group>"; };
 		871D174E23C8F6350095C765 /* TapWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871D175123C8F6350095C765 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		871D175323C8F6350095C765 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,7 +45,9 @@
 		879F599123F99A6900D4D124 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		879F599323F99F0D00D4D124 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		879F599623F9A0A400D4D124 /* RegisterAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAccountController.swift; sourceTree = "<group>"; };
-		87BB3BA123F9D691004F3C61 /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
+		87BB3BA123F9D691004F3C61 /* CategoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesController.swift; sourceTree = "<group>"; };
+		87C9097123FB0B4E00C262FC /* ModelCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCategories.swift; sourceTree = "<group>"; };
+		87C9097323FB1FA700C262FC /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		87F68A6923EF2B8500D4C454 /* MainScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenController.swift; sourceTree = "<group>"; };
 		87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelVacancies.swift; sourceTree = "<group>"; };
 		87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacansyTableViewCell.swift; sourceTree = "<group>"; };
@@ -57,6 +65,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		871397C723FC5E1700FB7732 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				879F599323F99F0D00D4D124 /* AccountViewController.swift */,
+				879F599623F9A0A400D4D124 /* RegisterAccountController.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
 		871D174523C8F6350095C765 = {
 			isa = PBXGroup;
 			children = (
@@ -93,13 +110,13 @@
 		879F596623F4D00900D4D124 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				871397C723FC5E1700FB7732 /* Account */,
 				87F68A6923EF2B8500D4C454 /* MainScreenController.swift */,
 				87F68A6F23EF7E2200D4C454 /* ShowInfoVacansyViewController.swift */,
-				87BB3BA123F9D691004F3C61 /* FilterController.swift */,
+				87BB3BA123F9D691004F3C61 /* CategoriesController.swift */,
+				871397C923FCBC5900FB7732 /* SpecializationController.swift */,
 				8768965B23F9F87400E17CC1 /* AddVacansyController.swift */,
 				879F596923F4D0C200D4D124 /* ResponseViewController.swift */,
-				879F599323F99F0D00D4D124 /* AccountViewController.swift */,
-				879F599623F9A0A400D4D124 /* RegisterAccountController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -108,6 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */,
+				871397CD23FCBF3800FB7732 /* SpecializationCell.swift */,
+				87C9097323FB1FA700C262FC /* CategoryCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -116,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */,
+				87C9097123FB0B4E00C262FC /* ModelCategories.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -203,16 +223,20 @@
 				87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */,
 				8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */,
 				879F599023F9797A00D4D124 /* TabBarController.swift in Sources */,
+				871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */,
 				87F68A7023EF7E2200D4C454 /* ShowInfoVacansyViewController.swift in Sources */,
-				87BB3BA223F9D691004F3C61 /* FilterController.swift in Sources */,
+				87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */,
 				87F68A6A23EF2B8500D4C454 /* MainScreenController.swift in Sources */,
 				879F599223F99A6900D4D124 /* NavigationController.swift in Sources */,
 				87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */,
 				879F599723F9A0A400D4D124 /* RegisterAccountController.swift in Sources */,
 				879F599423F99F0D00D4D124 /* AccountViewController.swift in Sources */,
 				871D175223C8F6350095C765 /* AppDelegate.swift in Sources */,
+				871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */,
 				871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */,
 				879F596A23F4D0C200D4D124 /* ResponseViewController.swift in Sources */,
+				87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */,
+				87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

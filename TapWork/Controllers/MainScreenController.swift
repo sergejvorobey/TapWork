@@ -57,11 +57,6 @@ class MainScreenController: UITableViewController {
         return vacanciesCell
     }
 
-//    @IBAction func cancelButton(_ sender: UIStoryboardSegue) {
-//        dismiss(animated: true, completion: nil)
-//    }
-    
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let ShowInfoVacansyViewController = storyboard?.instantiateViewController(withIdentifier: "ShowInfoVacansyViewController") as! ShowInfoVacansyViewController

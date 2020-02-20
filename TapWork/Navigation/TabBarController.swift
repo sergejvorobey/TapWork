@@ -17,7 +17,7 @@ class TabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = .black
         tabBar.barTintColor = .white
         tabBar.items![0].title = "Вакансии"
-        tabBar.items![1].title = "Фильтр"
+        tabBar.items![1].title = "Категории"
         tabBar.items![2].title = "Добавить вакансию"
     }
     
