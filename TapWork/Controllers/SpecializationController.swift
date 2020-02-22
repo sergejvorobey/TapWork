@@ -10,14 +10,13 @@ import UIKit
 
 class SpecializationController: UITableViewController {
 
-    //@IBOutlet weak var tableView: UITableView!
-    
     private var specializations: [Specialization] = []
     private let specializationsProvider: SpecializationsProvider = SpecializationsProvider()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        tableView.tableFooterView = UIView()
         specializations = specializationsProvider.specializations
         
     }
@@ -39,13 +38,7 @@ class SpecializationController: UITableViewController {
     //MARK: update cells specialization
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-//     let specializationController = storyboard?.instantiateViewController(withIdentifier: "SpecializationController")
-        
-//        guard let specializationVC = specializationController else { return }
-//
-//        self.navigationController?.pushViewController(specializationVC, animated: true)
     
-
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -61,5 +54,4 @@ class SpecializationController: UITableViewController {
         
         
     }
-
 }

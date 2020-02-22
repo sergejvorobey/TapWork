@@ -42,7 +42,7 @@ class MainScreenController: UITableViewController {
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "
         vacanciesCell.publicationDateLabel.text = vacansy.publicationDate
-        
+       
         return vacanciesCell
     }
 

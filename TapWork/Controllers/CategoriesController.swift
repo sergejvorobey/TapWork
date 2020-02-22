@@ -23,12 +23,19 @@ class CategoriesController: UIViewController {
         self.tableView.dataSource = self
         
         tableView.tableFooterView = UIView()
-        navigationItem.title = "Категории"
-        self.navigationController?.navigationBar.tintColor = .red
-        
-        
+    
         categories = categoryProvider.categories
-       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+         super.viewWillAppear(animated)
+        
+        navigationItem.title = "Категории"
+        guard let navigation = navigationController else {return}
+        navigation.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.red,
+            NSAttributedString.Key.font: UIFont(name: "Apple SD Gothic Neo", size: 20.0)!
+        ]
     }
 }
 
@@ -57,6 +64,12 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        let specializationController = storyboard?.instantiateViewController(withIdentifier: "SpecializationController")
+               
+        guard let specializationVC = specializationController else { return }
+
+        self.navigationController?.pushViewController(specializationVC, animated: true)
+           
         self.tableView.deselectRow(at: indexPath, animated: true)
     
     }

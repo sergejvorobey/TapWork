@@ -22,14 +22,23 @@ class AddVacansyController: UIViewController {
     private let maxCountDescriptionTextView = 200
     private let minCountDescriptionTextView = 20
     
+    override func viewWillAppear(_ animated: Bool) {
+         super.viewWillAppear(animated)
+
+        navigationItem.title = "Добавить вакансию"
+        guard let navigation = navigationController else {return}
+        navigation.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.red,
+            NSAttributedString.Key.font: UIFont(name: "Apple SD Gothic Neo", size: 20.0)!
+        ]
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
         nameVacansy.addTarget(self,
                                    action: #selector(addVacansyColorChanged),
                                    for: .editingChanged)
-        
-       
         
         if let categoryButton = categoryButtonLabel {
             categoryButton.setTitle("Категория", for: .normal)
@@ -53,6 +62,8 @@ class AddVacansyController: UIViewController {
             addButton.setTitleColor(.white, for: .normal)
         }
     }
+    
+    
     
     /*
     // MARK: - Navigation
