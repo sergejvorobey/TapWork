@@ -10,23 +10,45 @@ import UIKit
 
 class AccountViewController: UIViewController {
 
+    
+    @IBOutlet weak var loginUser: UITextField!
+    @IBOutlet weak var passwordUser: UITextField!
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signOutButton: UIButton!
+    @IBOutlet weak var errorLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let signInButton = signInButton {
+            signInButton.backgroundColor = .red
+            signInButton.layer.cornerRadius = 15
+            signInButton.tintColor = .white
+        }
+        
+        if let signOutButton = signOutButton {
+            signOutButton.backgroundColor = .red
+            signOutButton.layer.cornerRadius = 15
+            signOutButton.tintColor = .white
+        }
+        
+        if let errorLabel = errorLabel {
+            errorLabel.isHidden = true
+            errorLabel.tintColor = .red
+        }
         
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     @IBAction func cancelButton(_ sender: Any?) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func signInAccount(_ sender: UIButton) {
+    }
+    
+    @IBAction func signOutAccount(_ sender: UIButton) {
     }
     
 }

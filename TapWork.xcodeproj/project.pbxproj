@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871397C923FCBC5900FB7732 /* SpecializationController.swift */; };
 		871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871397CD23FCBF3800FB7732 /* SpecializationCell.swift */; };
+		871397F424030FCB00FB7732 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 871397F324030FCA00FB7732 /* GoogleService-Info.plist */; };
 		871D175223C8F6350095C765 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871D175123C8F6350095C765 /* AppDelegate.swift */; };
 		871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871D175323C8F6350095C765 /* SceneDelegate.swift */; };
 		871D175923C8F6350095C765 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175723C8F6350095C765 /* Main.storyboard */; };
@@ -27,11 +28,14 @@
 		87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */; };
 		87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */; };
 		87F68A7023EF7E2200D4C454 /* ShowInfoVacansyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6F23EF7E2200D4C454 /* ShowInfoVacansyViewController.swift */; };
+		FAB96E1FEE3EDF12559C97E1 /* Pods_TapWork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		350CE8BA8C3B942105F6513A /* Pods-TapWork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapWork.release.xcconfig"; path = "Target Support Files/Pods-TapWork/Pods-TapWork.release.xcconfig"; sourceTree = "<group>"; };
 		871397C923FCBC5900FB7732 /* SpecializationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationController.swift; sourceTree = "<group>"; };
 		871397CD23FCBF3800FB7732 /* SpecializationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationCell.swift; sourceTree = "<group>"; };
+		871397F324030FCA00FB7732 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		871D174E23C8F6350095C765 /* TapWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871D175123C8F6350095C765 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		871D175323C8F6350095C765 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +56,8 @@
 		87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelVacancies.swift; sourceTree = "<group>"; };
 		87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacansyTableViewCell.swift; sourceTree = "<group>"; };
 		87F68A6F23EF7E2200D4C454 /* ShowInfoVacansyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoVacansyViewController.swift; sourceTree = "<group>"; };
+		96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapWork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC08CC48E8067813AB071D7E /* Pods-TapWork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapWork.debug.xcconfig"; path = "Target Support Files/Pods-TapWork/Pods-TapWork.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,12 +65,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB96E1FEE3EDF12559C97E1 /* Pods_TapWork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4AA6057A0D9FC5CD6EA0F0CA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EC08CC48E8067813AB071D7E /* Pods-TapWork.debug.xcconfig */,
+				350CE8BA8C3B942105F6513A /* Pods-TapWork.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		871397C723FC5E1700FB7732 /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +96,8 @@
 			children = (
 				871D175023C8F6350095C765 /* TapWork */,
 				871D174F23C8F6350095C765 /* Products */,
+				4AA6057A0D9FC5CD6EA0F0CA /* Pods */,
+				EB92BD2BD420574FCD1128ED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +121,7 @@
 				871D175A23C8F6360095C765 /* Assets.xcassets */,
 				871D175723C8F6350095C765 /* Main.storyboard */,
 				871D175C23C8F6360095C765 /* LaunchScreen.storyboard */,
+				871397F324030FCA00FB7732 /* GoogleService-Info.plist */,
 				871D175F23C8F6360095C765 /* Info.plist */,
 			);
 			path = TapWork;
@@ -149,6 +169,14 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
+		EB92BD2BD420574FCD1128ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -156,9 +184,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 871D176223C8F6360095C765 /* Build configuration list for PBXNativeTarget "TapWork" */;
 			buildPhases = (
+				8E2B9868E10D5FA7DA5EED99 /* [CP] Check Pods Manifest.lock */,
 				871D174A23C8F6350095C765 /* Sources */,
 				871D174B23C8F6350095C765 /* Frameworks */,
 				871D174C23C8F6350095C765 /* Resources */,
+				8DDDB5F8C13863D9D56EDF0C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -208,12 +238,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				871D175E23C8F6360095C765 /* LaunchScreen.storyboard in Resources */,
+				871397F424030FCB00FB7732 /* GoogleService-Info.plist in Resources */,
 				871D175B23C8F6360095C765 /* Assets.xcassets in Resources */,
 				871D175923C8F6350095C765 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8DDDB5F8C13863D9D56EDF0C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TapWork/Pods-TapWork-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TapWork/Pods-TapWork-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TapWork/Pods-TapWork-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8E2B9868E10D5FA7DA5EED99 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TapWork-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		871D174A23C8F6350095C765 /* Sources */ = {
@@ -378,6 +451,7 @@
 		};
 		871D176323C8F6360095C765 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC08CC48E8067813AB071D7E /* Pods-TapWork.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -397,6 +471,7 @@
 		};
 		871D176423C8F6360095C765 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 350CE8BA8C3B942105F6513A /* Pods-TapWork.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
