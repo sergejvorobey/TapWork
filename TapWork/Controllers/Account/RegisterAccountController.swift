@@ -9,21 +9,28 @@
 import UIKit
 
 class RegisterAccountController: UIViewController {
+    
+    @IBOutlet weak var errorRegistrationLabel: UILabel!
+    @IBOutlet weak var registerButtonLabel: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let registerButton = registerButtonLabel {
+            registerButton.setTitle("Зарегистрировать", for: .normal)
+            registerButton.backgroundColor = .red
+            registerButton.layer.cornerRadius = 15
+            registerButton.tintColor = .white
+        }
+        
+        if let errorRegistration = errorRegistrationLabel {
+            errorRegistration.isHidden = true
+            errorRegistration.tintColor = .red
+        }
 
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func registerButton(_ sender: UIButton) {
+        
     }
-    */
-
 }

@@ -22,7 +22,7 @@ class MainScreenController: UITableViewController {
         vacancies = vacansyProvider.vacancies
         
         tableView.tableFooterView = UIView()
-
+        
     }
 
     
@@ -62,7 +62,7 @@ class MainScreenController: UITableViewController {
     
     @IBAction func userAccount(_ sender: UIBarButtonItem) {
         
-        performSegue(withIdentifier: "ShowAccount", sender: nil)
+        performSegue(withIdentifier: "LoginAccount", sender: nil)
     }
     
 }

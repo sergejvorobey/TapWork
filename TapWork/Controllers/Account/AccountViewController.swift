@@ -14,7 +14,7 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var loginUser: UITextField!
     @IBOutlet weak var passwordUser: UITextField!
     @IBOutlet weak var signInButton: UIButton!
-    @IBOutlet weak var signOutButton: UIButton!
+    @IBOutlet weak var registerAccountButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
     
@@ -27,7 +27,7 @@ class AccountViewController: UIViewController {
             signInButton.tintColor = .white
         }
         
-        if let signOutButton = signOutButton {
+        if let signOutButton = registerAccountButton {
             signOutButton.backgroundColor = .red
             signOutButton.layer.cornerRadius = 15
             signOutButton.tintColor = .white
@@ -48,7 +48,9 @@ class AccountViewController: UIViewController {
     @IBAction func signInAccount(_ sender: UIButton) {
     }
     
-    @IBAction func signOutAccount(_ sender: UIButton) {
+    @IBAction func registerAnAccount(_ sender: UIButton) {
+        
+        
     }
     
 }
