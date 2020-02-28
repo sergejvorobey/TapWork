@@ -32,8 +32,6 @@ struct Vacancy {
         self.ref = nil
     }
     
-    
-    
     init(snapshot: DataSnapshot) {
         
         let snapshotValue = snapshot.value as! [String: AnyObject]
@@ -55,34 +53,6 @@ struct Vacancy {
                     "content": content,
                     "payment": payment,
                     "phoneNumber": phoneNumber,
-                    "timestamp": [".sv": "timestamp"]
-            ]
+                    "timestamp": [".sv": "timestamp"]]
     }
 }
-
-//struct VacansyProvider {
-//
-//    var vacancies: [Vacancy] {
-//        return [vacansyOne, vacansyTwo, vacansyThree, vacansyTwo]
-//    }
-//}
-//
-//let vacansyOne = Vacancy(userId: "12345" ,
-//                         heading: "Нужен официант",
-//                         content: "Новый ресторан Экспромт приглашает на постоянную работу официантов.",
-//                         payment: "2500"/*,
-//                         timestamp: "8.02.2020 14:37"*/)
-//
-//let vacansyTwo = Vacancy(userId: "12345",
-//                         heading: "Срочно официант",
-//                         content: "В ресторан-кафе Пушкинъ, который находиться в огромном и манящим фонтаном ГУМе, открыт набор ОФИЦИАНТОВ!!!!!!!!!! Мы приглашаем вас стать частью легендарной команды! Обязанности:Обслуживание гостей согласно стандартам сервиса;Создание в ресторане атмосферы гостеприимства;Помощь в выборе блюд и напитков;Консультирование гостей по меню.",
-//                         payment: "65000"/*,
-//                         timestamp: "8.02.2020 14:37"*/)
-//
-//let vacansyThree = Vacancy(userId: "12345",
-//                           heading: "Срочно официант",
-//                           content: "В ресторан-кафе Пушкинъ, который находиться в огромном и манящим фонтаном ГУМе, открыт набор ОФИЦИАНТОВ!!!!!!!!!! Мы приглашаем вас стать частью легендарной команды! Обязанности:Обслуживание гостей согласно стандартам сервиса;Создание в ресторане атмосферы гостеприимства;Помощь в выборе блюд и напитков;Консультирование гостей по меню.",
-//                           payment: "65000"/*,
-//                           timestamp: "8.02.2020 14:37"*/)
-
-
