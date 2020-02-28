@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = UIColor.red
         
         FirebaseApp.configure()
+        checkUserLogin()
         
         return true
     }
@@ -40,3 +41,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate {
+
+       // MARK: - HELPER METHODS
+
+       func checkUserLogin() {
+           // to check whether the user has already logged in or not
+
+
+           
+           Auth.auth().addStateDidChangeListener { (auth, user) in
+
+               if user == nil {
+                   let registeration = UserDefaults.standard.bool(forKey: "registering")
+                   if(!registeration) {
+                        
+                    self.goToLoginScreen()
+                   }
+               } else {
+                   
+                   self.goToUserAccount()
+               }
+           }
+       }
+
+       func goToUserAccount () {
+            print("USER ACC")
+           
+
+       }
+
+       func goToLoginScreen () {
+           print("Login Screen")
+
+       }
+   }

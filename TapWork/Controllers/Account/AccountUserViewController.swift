@@ -7,24 +7,44 @@
 //
 
 import UIKit
+import Firebase
 
 class AccountUserViewController: UIViewController {
+    
+    @IBOutlet weak var imageUser: UIImageView!
+    @IBOutlet weak var nameUserLabel: UILabel!
+    @IBOutlet weak var emailUserLabel: UILabel!
+    @IBOutlet weak var specializationUserLabel: UILabel!
+    @IBOutlet weak var workExperienceUserLabel: UILabel!
+    
+    private var infoUser: Users!
+    private var ref: DatabaseReference!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        
+        guard let currentUsers = Auth.auth().currentUser else { return }
+        infoUser = Users(user: currentUsers)
+        ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
+        
+        emailUserLabel.text = infoUser.emailUser
+//        nameUserLabel.text = infoUser.userName
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func signOutButton(_ sender: UIBarButtonItem) {
+        
+        do {
+            try Auth.auth().signOut()
+           
+        } catch {
+            print(error.localizedDescription)
+        }
+         dismiss(animated: true)
     }
-    */
-
+    
+    @IBAction func transitionButton(_ sender: UIBarButtonItem) {
+        tabBarController?.tabBar.isHidden = false
+        dismiss(animated: true, completion: nil)
+    }
 }

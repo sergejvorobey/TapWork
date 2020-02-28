@@ -38,7 +38,6 @@ class SpecializationController: UITableViewController {
     //MARK: update cells specialization
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-    
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         
         tableView.deselectRow(at: indexPath, animated: true)

@@ -43,7 +43,8 @@ class ShowInfoVacansyViewController: UIViewController {
     
     
     @IBAction func responseButton(_ sender: UIButton) {
-        
+
+        // MARK: response vacansy 
         
     }
 }

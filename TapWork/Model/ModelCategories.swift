@@ -91,4 +91,8 @@ let specializationMusicianEquipment = Specialization(nameSpecialization: .musici
 //let singers = SpecializationTest(nameCategory: .musicians, nameSpecialization: .singer)
 //let dj      = SpecializationTest(nameCategory: .musicians, nameSpecialization: .dj)
 //let musiciansEquipments = SpecializationTest(nameCategory: .musicians, nameSpecialization: .musicianEquipment)
-
+/*
+insert Firebase (register account, login account)
+insert database content
+reading content in Database
+*/

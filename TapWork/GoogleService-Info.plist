@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>969849315348-d5r5o02vooovfiqlat270e4pmhd4chat.apps.googleusercontent.com</string>
+	<string>86130775960-f0ggnq7ef8jc6oc5cok6lgdtqrpp2nnn.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.969849315348-d5r5o02vooovfiqlat270e4pmhd4chat</string>
+	<string>com.googleusercontent.apps.86130775960-f0ggnq7ef8jc6oc5cok6lgdtqrpp2nnn</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBA-uOTrBTbLtYptogHtPTs-fyLz9m5OJw</string>
+	<string>AIzaSyBgGIhwFK2J7RiOmAlW5b84KYxq0cAjT5Y</string>
 	<key>GCM_SENDER_ID</key>
-	<string>969849315348</string>
+	<string>86130775960</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>-.TapWork</string>
 	<key>PROJECT_ID</key>
-	<string>tapwork-85c3c</string>
+	<string>tapwork-5c676</string>
 	<key>STORAGE_BUCKET</key>
-	<string>tapwork-85c3c.appspot.com</string>
+	<string>tapwork-5c676.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:969849315348:ios:3fec30df10932ca265c701</string>
+	<string>1:86130775960:ios:64b0ade0f87c73c859bded</string>
 	<key>DATABASE_URL</key>
-	<string>https://tapwork-85c3c.firebaseio.com</string>
+	<string>https://tapwork-5c676.firebaseio.com</string>
 </dict>
 </plist>

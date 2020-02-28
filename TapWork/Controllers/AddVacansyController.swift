@@ -7,36 +7,58 @@
 //
 
 import UIKit
+import Firebase
 
 class AddVacansyController: UIViewController {
 
     
-    @IBOutlet weak var nameVacansy: UITextField!
+    @IBOutlet weak var headingVacansy: UITextField!
     @IBOutlet weak var categoryButtonLabel: UIButton!
     @IBOutlet weak var descriptionVacansyHeadingLabel: UILabel!
-    @IBOutlet weak var descriptionVacansyTextView: UITextView!
-    @IBOutlet weak var budgetVacansy: UITextField!
+    @IBOutlet weak var contentVacansy: UITextView!
+    @IBOutlet weak var paymentVacansy: UITextField!
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var addVacansyLabel: UIButton!
     
     private let maxCountDescriptionTextView = 200
     private let minCountDescriptionTextView = 20
     
+    private var ref: DatabaseReference?
+    private var user: Users?
+    private var vacancies = Array<Vacancy>()
+    
     override func viewWillAppear(_ animated: Bool) {
          super.viewWillAppear(animated)
-
+        
+        ref?.observe(.value) { [weak self] (snapshot) in
+            var _vacancies = Array<Vacancy>()
+            for item in snapshot.children {
+                let vacancy = Vacancy(snapshot: item as! DataSnapshot)
+                _vacancies.append(vacancy)
+            }
+            self?.vacancies = _vacancies
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         navigationItem.title = "Добавить вакансию"
         guard let navigation = navigationController else {return}
         navigation.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.red,
             NSAttributedString.Key.font: UIFont(name: "Apple SD Gothic Neo", size: 20.0)!
         ]
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        
+        guard let currentUser = Auth.auth().currentUser else {
+            return
+        }
+        
+        user = Users(user: currentUser)
+        
+        ref = Database.database().reference(withPath: "vacancies")
        
-        nameVacansy.addTarget(self,
+        headingVacansy.addTarget(self,
                                    action: #selector(addVacansyColorChanged),
                                    for: .editingChanged)
         
@@ -48,7 +70,7 @@ class AddVacansyController: UIViewController {
             headingVacansy.text = "Описание вакансии"
         }
         
-        if let descriptionVacansy = descriptionVacansyTextView {
+        if let descriptionVacansy = contentVacansy {
             descriptionVacansy.text = ""
             descriptionVacansy.layer.borderWidth = 1
             descriptionVacansy.layer.cornerRadius = 10
@@ -63,18 +85,14 @@ class AddVacansyController: UIViewController {
         }
     }
     
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        headingVacansy.text = ""
+        contentVacansy.text = ""
+        paymentVacansy.text = ""
+        phoneNumber.text = ""
+        addVacansyLabel.isEnabled = false
+        addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
     }
-    */
-    
     
     @IBAction func categoryVacansyButton (_ sender: UIButton) {
         
@@ -83,8 +101,8 @@ class AddVacansyController: UIViewController {
     
     @IBAction func addVacansyButton(_ sender: UIButton) {
         
-        let descriptionCount = descriptionVacansyTextView.text.count
-        
+        let descriptionCount = contentVacansy.text.count
+
         switch descriptionCount {
             // MARK: Up to work conditions
         case _ where descriptionCount > maxCountDescriptionTextView :
@@ -97,6 +115,27 @@ class AddVacansyController: UIViewController {
         default:
             break
         }
+        
+        guard let headingVacansy = headingVacansy.text,
+              let contentVacansy = contentVacansy.text,
+              let paymentVacansy = paymentVacansy.text,
+              let phoneNumber = phoneNumber.text,
+                  headingVacansy != "",
+                  contentVacansy != "",
+                  paymentVacansy != "",
+                  phoneNumber != ""
+        
+                else { return }
+        
+        let vacansy = Vacancy(userId: self.user!.userId,
+                              heading: headingVacansy ,
+                              content: contentVacansy,
+                              phoneNumber: phoneNumber,
+                              payment: paymentVacansy)
+
+        let vacansyRef = ref?.child(vacansy.heading.lowercased())
+        vacansyRef?.setValue(vacansy.providerToDictionary())
+        tabBarController?.selectedIndex = 0
     }
 }
 
@@ -110,7 +149,7 @@ extension AddVacansyController: UITextFieldDelegate, UITextViewDelegate {
     // изменяем цвет кнопки при заполнии данных в nameVacansy
        @objc private func addVacansyColorChanged () {
          
-           if nameVacansy.text?.isEmpty == false {
+           if headingVacansy.text?.isEmpty == false {
                 addVacansyLabel.isEnabled = true
                 addVacansyLabel.layer.backgroundColor = UIColor.red.cgColor
            } else {
