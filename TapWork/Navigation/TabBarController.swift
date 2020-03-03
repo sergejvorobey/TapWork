@@ -16,8 +16,10 @@ class TabBarController: UITabBarController {
         tabBar.tintColor = .red
         tabBar.unselectedItemTintColor = .black
         tabBar.barTintColor = .white
+//        tabBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
         tabBar.items![0].title = "Вакансии"
-        tabBar.items![1].title = "Категории"
-        tabBar.items![2].title = "Добавить вакансию"
+        tabBar.items![1].title = "Опубликовать вакансию"
+        tabBar.items![2].title = "Фильтр"
     }
 }

@@ -50,6 +50,5 @@ class SpecializationController: UITableViewController {
     
     @IBAction func applyFilterButton(_ sender: UIBarButtonItem) {
         
-        
     }
 }

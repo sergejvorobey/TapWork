@@ -13,12 +13,12 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         UINavigationBar.appearance().tintColor = UIColor.red
         
         FirebaseApp.configure()
+        
         checkUserLogin()
         
         return true
@@ -37,8 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
 }
 
 extension AppDelegate {
@@ -47,32 +45,30 @@ extension AppDelegate {
 
        func checkUserLogin() {
            // to check whether the user has already logged in or not
-
-
-           
-           Auth.auth().addStateDidChangeListener { (auth, user) in
+        
+           Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
 
                if user == nil {
-                   let registeration = UserDefaults.standard.bool(forKey: "registering")
-                   if(!registeration) {
-                        
-                    self.goToLoginScreen()
-                   }
+                  // let registeration = UserDefaults.standard.bool(forKey: "registering")
+                 //  if(!registeration) {
+                    
+                    self?.goToLoginScreen()
+                 //  }
                } else {
                    
-                   self.goToUserAccount()
+                   self?.goToUserAccount()
+    
                }
            }
        }
 
        func goToUserAccount () {
-            print("USER ACC")
-           
-
+            print("User is login")
+        
        }
 
        func goToLoginScreen () {
-           print("Login Screen")
-
+           print("User is not login")
+            
        }
    }

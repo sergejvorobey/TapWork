@@ -15,7 +15,6 @@ class CategoriesController: UIViewController {
     private var categories:[Category] = []
     private let categoryProvider: CategoriesProvider = CategoriesProvider()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,7 +38,6 @@ class CategoriesController: UIViewController {
     }
 }
 
-
 extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,7 +47,6 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
         let categoryCell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
         
         let category = categories[indexPath.row]
@@ -57,7 +54,6 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
         categoryCell.categoryLabel.text = category.nameCategories.rawValue
         
         categoryCell.accessoryType = .disclosureIndicator
-        
         
         return categoryCell
     }

@@ -26,11 +26,12 @@ class ShowInfoVacansyViewController: UIViewController {
             showContentLabel.text = vacansy.content
             showPaymentLable.text = vacansy.payment + " ₽ "
             
-            if let topItem = navigationController?.navigationBar.topItem {
-                topItem.backBarButtonItem = UIBarButtonItem(title: "Вакансии",
-                                                            style: .plain,
-                                                            target: nil, action: nil)
-            }
+        }
+        
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "Вакансии",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
         }
         
         if let button = responseButtonLabel {
@@ -41,10 +42,8 @@ class ShowInfoVacansyViewController: UIViewController {
         }
     }
     
-    
     @IBAction func responseButton(_ sender: UIButton) {
 
         // MARK: response vacansy 
-        
     }
 }

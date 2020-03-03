@@ -23,6 +23,11 @@ class AccountUserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
+        }
         
         guard let currentUsers = Auth.auth().currentUser else { return }
         infoUser = Users(user: currentUsers)
@@ -31,7 +36,7 @@ class AccountUserViewController: UIViewController {
         emailUserLabel.text = infoUser.emailUser
 //        nameUserLabel.text = infoUser.userName
     }
-    
+   
     @IBAction func signOutButton(_ sender: UIBarButtonItem) {
         
         do {
@@ -40,11 +45,11 @@ class AccountUserViewController: UIViewController {
         } catch {
             print(error.localizedDescription)
         }
-         dismiss(animated: true)
-    }
-    
-    @IBAction func transitionButton(_ sender: UIBarButtonItem) {
-        tabBarController?.tabBar.isHidden = false
-        dismiss(animated: true, completion: nil)
+        
+        let launchScreenVC = storyboard?.instantiateViewController(withIdentifier: "LaunchScreen")
+        
+        guard let launchSVC = launchScreenVC else { return }
+
+        self.navigationController?.pushViewController(launchSVC, animated: true)
     }
 }

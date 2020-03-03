@@ -141,7 +141,7 @@ class AddVacansyController: UIViewController {
 
 extension AddVacansyController: UITextFieldDelegate, UITextViewDelegate {
     
-    // скрываем клавиатуру при нажатии на Done
+    // скрываем клавиатуру при нажатии на Done text Field 
        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
            textField.resignFirstResponder()
            return true
@@ -158,7 +158,7 @@ extension AddVacansyController: UITextFieldDelegate, UITextViewDelegate {
         }
     }
     
-    // скрываем клавиатуру при нажатии на Done
+    // скрываем клавиатуру при нажатии на Done text View
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
        
         if(text == "\n") {

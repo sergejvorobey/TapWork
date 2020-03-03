@@ -38,7 +38,7 @@ class RegisterAccountController: UIViewController {
     func displayWarning(withText text: String) {
         errorRegistrationLabel.text = text
         
-        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+        UIView.animate(withDuration: 1.9, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
             self?.errorRegistrationLabel.alpha = 1
         }) { [weak self] complate in
             self?.errorRegistrationLabel.alpha = 0
@@ -60,11 +60,11 @@ class RegisterAccountController: UIViewController {
                    displayWarning(withText: "Пожалуйста, заполните все поля!")
                    return
             }
-        UserDefaults.standard.set(true, forKey: "registering")
+//        UserDefaults.standard.set(true, forKey: "registering")
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] (user, error) in
             if error == nil {
                 if user != nil {
-                    
+                    self?.performSegue(withIdentifier: "MainScreenController", sender: nil)
                 } else {
                     self?.displayWarning(withText: "Пользователь не создан")
                 }
@@ -72,5 +72,9 @@ class RegisterAccountController: UIViewController {
                 print(error!.localizedDescription)
             }
         }
+    }
+    
+    @IBAction func cancelButton (_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
     }
 }

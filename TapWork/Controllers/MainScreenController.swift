@@ -21,13 +21,36 @@ class MainScreenController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.isHidden = false
+    
+        navigationItem.title = "TAP WORK"
+        
+        spinner()
+        
         refDatebase()
         
         tableView.tableFooterView = UIView()
-        UserDefaults.standard.set(false, forKey: "registering")
-        
     }
     
+    // activity indicator
+    
+    private func spinner() {
+        
+        let spinner = UIActivityIndicatorView()
+            spinner.startAnimating()
+            spinner.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            spinner.hidesWhenStopped = true
+        
+        tableView.backgroundView = spinner
+    }
+    
+    private func spinnerStop() {
+        
+         let spinner = UIActivityIndicatorView()
+             spinner.stopAnimating()
+             spinner.hidesWhenStopped = true
+    }
+ 
     private func refDatebase() {
         ref = Database.database().reference(withPath: "vacancies")
     }
@@ -58,7 +81,7 @@ class MainScreenController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacansyTableViewCell
-        
+
         let vacansy = vacancies[indexPath.row]
 
         vacanciesCell.headingLabel.text = vacansy.heading
@@ -80,15 +103,13 @@ class MainScreenController: UITableViewController {
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
             ShowInfoVacansyViewController.vacansyInfo = vacancies[selectedIndexPath.row]
         }
-        
         self.navigationController?.pushViewController(ShowInfoVacansyViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
-
     }
     
     @IBAction func userAccount(_ sender: UIBarButtonItem) {
         
-        performSegue(withIdentifier: "LoginAccount", sender: nil)
+        performSegue(withIdentifier: "ShowUserAccount", sender: nil)
         
     }
 }
