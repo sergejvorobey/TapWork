@@ -114,14 +114,15 @@ class LoginAccountViewController: UIViewController {
                 self?.displayWarning(withText: "Неверный логин или пароль!")
                 return
             }
-            
             self?.activityIndicator.startAnimating()
             
             self?.signInButton.titleLabel?.isHidden = true
             
             self?.activityIndicator.isHidden = false
             
-            self?.displayWarning(withText: "Login complete")
+            self?.displayWarning(withText: "Авторизация прошла успешно!")
+            
+            self?.activityIndicator.stopAnimating()
         }
     }
     

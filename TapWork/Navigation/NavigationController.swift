@@ -14,6 +14,5 @@ class NavigationController: UINavigationController {
         super.viewDidLoad()
 
         navigationBar.topItem?.title = "TAP WORK"
-       
     }
 }
