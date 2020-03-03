@@ -19,6 +19,7 @@ class AddVacansyController: UIViewController {
     @IBOutlet weak var paymentVacansy: UITextField!
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var addVacansyLabel: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     private let maxCountDescriptionTextView = 200
     private let minCountDescriptionTextView = 20
@@ -27,21 +28,10 @@ class AddVacansyController: UIViewController {
     private var user: Users?
     private var vacancies = Array<Vacancy>()
     
-    override func viewWillAppear(_ animated: Bool) {
-         super.viewWillAppear(animated)
-        
-        ref?.observe(.value) { [weak self] (snapshot) in
-            var _vacancies = Array<Vacancy>()
-            for item in snapshot.children {
-                let vacancy = Vacancy(snapshot: item as! DataSnapshot)
-                _vacancies.append(vacancy)
-            }
-            self?.vacancies = _vacancies
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.addDoneButtonOnNumberKeyboard()
         
         navigationItem.title = "Добавить вакансию"
         guard let navigation = navigationController else {return}
@@ -83,7 +73,48 @@ class AddVacansyController: UIViewController {
             addButton.setTitle("Добавить вакансию", for: .normal)
             addButton.setTitleColor(.white, for: .normal)
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateChangeFrame(notification:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+               
+        NotificationCenter.default.addObserver(self,
+                                                selector: #selector(updateChangeFrame(notification:)),
+                                                name: UIResponder.keyboardWillHideNotification,
+                                                object: nil)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+           
+           ref?.observe(.value) { [weak self] (snapshot) in
+               var _vacancies = Array<Vacancy>()
+               for item in snapshot.children {
+                   let vacancy = Vacancy(snapshot: item as! DataSnapshot)
+                   _vacancies.append(vacancy)
+               }
+               self?.vacancies = _vacancies
+           }
+       }
+    
+    @objc func updateChangeFrame (notification: Notification) {
+           
+           guard let userInfo = notification.userInfo as? [String: AnyObject],
+               
+           let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+               else { return }
+    
+           if notification.name == UIResponder.keyboardWillShowNotification {
+
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height + 50, right: 0)
+ 
+           } else {
+               
+            scrollView.contentInset = UIEdgeInsets.zero
+               
+           }
+       }
     
     override func viewDidAppear(_ animated: Bool) {
         headingVacansy.text = ""
@@ -92,6 +123,34 @@ class AddVacansyController: UIViewController {
         phoneNumber.text = ""
         addVacansyLabel.isEnabled = false
         addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
+    }
+    
+    // MARK: Done button on numberKB
+    func addDoneButtonOnNumberKeyboard() {
+        
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace,
+                                        target: nil,
+                                        action: nil)
+        
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done",
+                                                    style: UIBarButtonItem.Style.done,
+                                                    target: self,
+                                                    action: #selector(doneButtonAction))
+        let items = NSMutableArray()
+        items.add(flexSpace)
+        items.add(done)
+      
+        doneToolbar.items = (items as! [UIBarButtonItem])
+        doneToolbar.sizeToFit()
+        
+        self.phoneNumber.inputAccessoryView = doneToolbar
+        
+    }
+    
+    @objc func doneButtonAction() {
+            self.phoneNumber.resignFirstResponder()
     }
     
     @IBAction func categoryVacansyButton (_ sender: UIButton) {
@@ -104,6 +163,7 @@ class AddVacansyController: UIViewController {
         let descriptionCount = contentVacansy.text.count
 
         switch descriptionCount {
+            
             // MARK: Up to work conditions
         case _ where descriptionCount > maxCountDescriptionTextView :
             print("слишком большое описание")
