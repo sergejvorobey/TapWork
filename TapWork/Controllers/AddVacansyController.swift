@@ -111,7 +111,7 @@ class AddVacansyController: UIViewController {
  
            } else {
                
-            scrollView.contentInset = UIEdgeInsets.zero
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50 - keyboardFrame.height, right: 0)
                
            }
        }
@@ -146,11 +146,12 @@ class AddVacansyController: UIViewController {
         doneToolbar.sizeToFit()
         
         self.phoneNumber.inputAccessoryView = doneToolbar
-        
+        self.paymentVacansy.inputAccessoryView = doneToolbar
     }
     
     @objc func doneButtonAction() {
             self.phoneNumber.resignFirstResponder()
+            self.paymentVacansy.resignFirstResponder()
     }
     
     @IBAction func categoryVacansyButton (_ sender: UIButton) {

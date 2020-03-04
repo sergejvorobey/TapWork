@@ -13,6 +13,6 @@ class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationBar.topItem?.title = "TAP WORK"
+//        navigationBar.backgroundColor = .white
     }
 }

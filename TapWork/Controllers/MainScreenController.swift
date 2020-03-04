@@ -21,7 +21,7 @@ class MainScreenController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.isHidden = false
+//        navigationController?.navigationBar.isHidden = false
     
         navigationItem.title = "TAP WORK"
         
@@ -98,12 +98,13 @@ class MainScreenController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let ShowInfoVacansyViewController = storyboard?.instantiateViewController(withIdentifier: "ShowInfoVacansyViewController") as! ShowInfoVacansyViewController
+        let showVacansyVC = storyboard?.instantiateViewController(withIdentifier: "ShowVacansyVC") as! ShowInfoVacansyViewController
         
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
-            ShowInfoVacansyViewController.vacansyInfo = vacancies[selectedIndexPath.row]
+            showVacansyVC.vacansyInfo = vacancies[selectedIndexPath.row]
         }
-        self.navigationController?.pushViewController(ShowInfoVacansyViewController, animated: true)
+
+        self.navigationController?.pushViewController(showVacansyVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
