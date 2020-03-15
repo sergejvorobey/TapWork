@@ -59,15 +59,18 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let specializationController = storyboard?.instantiateViewController(withIdentifier: "SpecializationController")
-               
-        guard let specializationVC = specializationController else { return }
 
-        self.navigationController?.pushViewController(specializationVC, animated: true)
-           
         self.tableView.deselectRow(at: indexPath, animated: true)
     
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SpecializationController" {
+//            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+//            let category = categories[indexPath.row]
+//            let newHumanVC = segue.destination as! SpecializationController
+//            newHumanVC.
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

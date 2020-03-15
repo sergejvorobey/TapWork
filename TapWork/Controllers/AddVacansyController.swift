@@ -85,6 +85,18 @@ class AddVacansyController: UIViewController {
                                                 object: nil)
     }
     
+    // изменяем цвет кнопки при заполнии данных в nameVacansy
+       @objc private func addVacansyColorChanged () {
+         
+           if headingVacansy.text?.isEmpty == false {
+                addVacansyLabel.isEnabled = true
+                addVacansyLabel.layer.backgroundColor = UIColor.red.cgColor
+           } else {
+                addVacansyLabel.isEnabled = false
+                addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
            
@@ -161,17 +173,17 @@ class AddVacansyController: UIViewController {
     
     @IBAction func addVacansyButton(_ sender: UIButton) {
         
-        let descriptionCount = contentVacansy.text.count
+        let content = contentVacansy.text.count
 
-        switch descriptionCount {
+        switch content {
             
             // MARK: Up to work conditions
-        case _ where descriptionCount > maxCountDescriptionTextView :
+        case _ where content > maxCountDescriptionTextView :
             print("слишком большое описание")
-        case _ where descriptionCount < minCountDescriptionTextView :
+        case _ where content < minCountDescriptionTextView :
             print("слишком короткое описание")
-        case _ where descriptionCount < maxCountDescriptionTextView &&
-            descriptionCount > minCountDescriptionTextView :
+        case _ where content < maxCountDescriptionTextView &&
+            content > minCountDescriptionTextView :
             print("norm")
         default:
             break
@@ -207,18 +219,7 @@ extension AddVacansyController: UITextFieldDelegate, UITextViewDelegate {
            textField.resignFirstResponder()
            return true
        }
-    // изменяем цвет кнопки при заполнии данных в nameVacansy
-       @objc private func addVacansyColorChanged () {
-         
-           if headingVacansy.text?.isEmpty == false {
-                addVacansyLabel.isEnabled = true
-                addVacansyLabel.layer.backgroundColor = UIColor.red.cgColor
-           } else {
-                addVacansyLabel.isEnabled = false
-                addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
-        }
-    }
-    
+
     // скрываем клавиатуру при нажатии на Done text View
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
        

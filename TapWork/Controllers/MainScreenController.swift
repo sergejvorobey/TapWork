@@ -97,15 +97,17 @@ class MainScreenController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let showVacansyVC = storyboard?.instantiateViewController(withIdentifier: "ShowVacansyVC") as! ShowInfoVacansyViewController
-        
-        if let selectedIndexPath = tableView.indexPathForSelectedRow {
-            showVacansyVC.vacansyInfo = vacancies[selectedIndexPath.row]
-        }
-
-        self.navigationController?.pushViewController(showVacansyVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    //MARK: navigation 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowVacansyVC" {
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            let vacansy = vacancies[indexPath.row]
+            let newHumanVC = segue.destination as! ShowInfoVacansyViewController
+            newHumanVC.vacansyInfo = vacansy
+        }
     }
     
     @IBAction func userAccount(_ sender: UIBarButtonItem) {

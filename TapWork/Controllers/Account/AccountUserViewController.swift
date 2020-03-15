@@ -34,7 +34,6 @@ class AccountUserViewController: UIViewController {
         ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
         
         emailUserLabel.text = infoUser.emailUser
-//        nameUserLabel.text = infoUser.userName
     }
    
     @IBAction func signOutButton(_ sender: UIBarButtonItem) {

@@ -74,6 +74,7 @@
                                     <outlet property="headingLabel" destination="Aar-1e-tTI" id="tyf-8w-y2T"/>
                                     <outlet property="paymentLabel" destination="JIg-t7-YkZ" id="C2U-bl-l0t"/>
                                     <outlet property="publicationDateLabel" destination="XOv-Tq-RNQ" id="BOi-A6-D55"/>
+                                    <segue destination="qEt-Ql-NET" kind="showDetail" identifier="ShowVacansyVC" id="Dsf-J2-twS"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -94,7 +95,6 @@
                     <connections>
                         <outlet property="imageAccount" destination="mme-2i-lmd" id="pcH-S1-oIA"/>
                         <segue destination="WOz-DV-5Lz" kind="show" identifier="ShowUserAccount" id="Htc-HJ-amD"/>
-                        <segue destination="qEt-Ql-NET" kind="show" identifier="ShowVacansyVC" id="nOb-Gn-tew"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fcl-OU-B0A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -403,14 +403,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="OBR-oD-z0q" customClass="CategoryCell" customModule="TapWork" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="41.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="40.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OBR-oD-z0q" id="4SW-BW-cjN">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="40.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CategoryLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pf7-B0-i2R">
-                                                    <rect key="frame" x="10" y="10.000000000000002" width="394" height="21.666666666666671"/>
+                                                    <rect key="frame" x="10" y="10.000000000000002" width="394" height="20.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -426,6 +426,7 @@
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="categoryLabel" destination="pf7-B0-i2R" id="GrD-BN-kHh"/>
+                                            <segue destination="EFM-3f-91b" kind="show" identifier="SpecializationController" id="B7F-m3-Ns8"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -650,11 +651,11 @@
             <objects>
                 <viewController storyboardIdentifier="ShowVacansyVC" hidesBottomBarWhenPushed="YES" id="qEt-Ql-NET" customClass="ShowInfoVacansyViewController" customModule="TapWork" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="191-24-Az7">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Bhd-Ty-0xV">
-                                <rect key="frame" x="20" y="108" width="374" height="114.33333333333331"/>
+                                <rect key="frame" x="20" y="19.999999999999993" width="374" height="114.33333333333331"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTa-FP-Wzv">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="18"/>
@@ -669,13 +670,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ShowContent" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCI-rI-yjj">
-                                        <rect key="frame" x="0.0" y="61.66666666666665" width="374" height="20.666666666666664"/>
+                                        <rect key="frame" x="0.0" y="61.666666666666664" width="374" height="20.666666666666664"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Medium" family="Apple SD Gothic Neo" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ShowPayment" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCV-BJ-eNq">
-                                        <rect key="frame" x="0.0" y="90.333333333333343" width="374" height="24"/>
+                                        <rect key="frame" x="0.0" y="90.333333333333329" width="374" height="24"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -683,14 +684,14 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pt6-BP-K9b">
-                                <rect key="frame" x="20" y="255" width="374" height="50"/>
+                                <rect key="frame" x="20" y="167" width="374" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="XjG-PU-Iil"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="responseButton:" destination="qEt-Ql-NET" eventType="touchUpInside" id="QWr-PJ-FdA"/>
-                                    <segue destination="sTR-vm-J5b" kind="show" identifier="ResponseViewController" id="Exn-NZ-1Ob"/>
+                                    <segue destination="sTR-vm-J5b" kind="showDetail" identifier="ResponseViewController" id="Exn-NZ-1Ob"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -720,9 +721,9 @@
         <!--Response View Controller-->
         <scene sceneID="cqG-or-Jr3">
             <objects>
-                <viewController definesPresentationContext="YES" modalPresentationStyle="fullScreen" id="sTR-vm-J5b" customClass="ResponseViewController" customModule="TapWork" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController definesPresentationContext="YES" id="sTR-vm-J5b" customClass="ResponseViewController" customModule="TapWork" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jJR-tm-56l">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="k5G-6t-M0n"/>
@@ -820,7 +821,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Work" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfz-f8-dEe">
-                                <rect key="frame" x="30" y="118" width="354" height="60"/>
+                                <rect key="frame" x="30" y="74" width="354" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="1do-7B-Nhr"/>
                                 </constraints>
@@ -845,6 +846,8 @@
                         <viewLayoutGuide key="safeArea" id="F6P-3l-b4o"/>
                     </view>
                     <navigationItem key="navigationItem" id="lQP-fG-0OW"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityIndicator" destination="0t0-VF-1Oo" id="Kwc-N9-LTf"/>
                         <outlet property="headingApp" destination="qfz-f8-dEe" id="oai-az-cLR"/>
@@ -859,10 +862,11 @@
         <!--Navigation Controller-->
         <scene sceneID="M72-TK-MmR">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6bu-83-7vk" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="6bu-83-7vk" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Y2A-Ih-HH0">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -883,6 +887,6 @@
         <image name="userPhoto" width="16.666666030883789" height="16.666666030883789"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2hr-L2-VK8"/>
+        <segue reference="do0-uC-fMi"/>
     </inferredMetricsTieBreakers>
 </document>

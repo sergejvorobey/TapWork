@@ -12,7 +12,6 @@ import Firebase
 struct Vacancy {
     
     var userId: String
-   // var userName: String
     var heading: String
     var content: String
     var phoneNumber: String
@@ -23,7 +22,6 @@ struct Vacancy {
     init(userId: String, heading: String, content: String, phoneNumber: String, payment: String) {
         
         self.userId = userId
-     //   self.userName = userName
         self.heading = heading
         self.content = content
         self.phoneNumber = phoneNumber
@@ -36,7 +34,6 @@ struct Vacancy {
         
         let snapshotValue = snapshot.value as! [String: AnyObject]
         userId = snapshotValue["userId"] as! String
-       // userName = snapshotValue["userName"] as! String
         heading = snapshotValue["heading"] as! String
         content = snapshotValue["content"] as! String
         phoneNumber = snapshotValue["phoneNumber"] as! String
@@ -48,7 +45,6 @@ struct Vacancy {
     
         func providerToDictionary() -> Any {
             return ["userId": userId,
-                   // "userName": userName,
                     "heading": heading,
                     "content": content,
                     "payment": payment,
