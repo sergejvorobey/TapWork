@@ -58,18 +58,72 @@ class LoginAccountViewController: UIViewController {
                                                selector: #selector(updateChangeFrame(notification:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
-        
     }
     
+    @IBAction func signInAccount(_ sender: UIButton) {
+        
+        guard let email = emailUser.text, let password = passwordUser.text, email != "",
+            password != ""
+            else {
+            alertError(withMessage: "Пожалуйста, заполните все поля!")
+            return
+        }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
+            if error != nil {
+                self?.alertError(withMessage: "Неверный логин или пароль!")
+                return
+            }
+            
+            self?.activityIndicator.startAnimating()
+            
+            self?.signInButton.titleLabel?.isHidden = true
+            
+            self?.activityIndicator.isHidden = false
+            
+//            self?.activityIndicator.stopAnimating()
+        }
+    }
+    
+    @IBAction func registerAnAccount(_ sender: UIButton) {
+        performSegue(withIdentifier: "RegisterAccount", sender: nil)
+    }
+}
+
+extension LoginAccountViewController: UITextFieldDelegate {
+    
+    // hide the keyboard when you click on Done text Field
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+extension LoginAccountViewController {
+    
+     //error handling method
+    func alertError(withMessage message: String) {
+        
+        let alertController = UIAlertController(title: "Ошибка",
+                                                message: message,
+                                                preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        
+        alertController.addAction(cancel)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    // update keyboard after tap text field
     @objc func updateChangeFrame (notification: Notification) {
         
         guard let userInfo = notification.userInfo as? [String: AnyObject],
             
-        let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             else { return }
- 
+        
         if notification.name == UIResponder.keyboardWillShowNotification {
-
+            
             self.bottomConstraint.constant = keyboardFrame.height + 5
             
             UIView.animate(withDuration: 0.5) {
@@ -87,56 +141,4 @@ class LoginAccountViewController: UIViewController {
             }
         }
     }
-
-    //error handling method
-    func displayWarning(withText text: String) {
-        
-        errorLabel.text = text
-        
-        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
-            self?.errorLabel.alpha = 1
-        }) { [weak self] complate in
-            self?.errorLabel.alpha = 0
-        }
-    }
-
-    @IBAction func signInAccount(_ sender: UIButton) {
-        
-        guard let email = emailUser.text, let password = passwordUser.text, email != "",
-            password != ""
-            else {
-            displayWarning(withText: "Пожалуйста, заполните все поля!")
-            return
-        }
-        
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
-            if error != nil {
-                self?.displayWarning(withText: "Неверный логин или пароль!")
-                return
-            }
-            
-            self?.activityIndicator.startAnimating()
-            
-            self?.signInButton.titleLabel?.isHidden = true
-            
-            self?.activityIndicator.isHidden = false
-            
-            self?.displayWarning(withText: "Авторизация прошла успешно!")
-            
-//            self?.activityIndicator.stopAnimating()
-        }
-    }
-    
-    @IBAction func registerAnAccount(_ sender: UIButton) {
-        performSegue(withIdentifier: "RegisterAccount", sender: nil)
-    }
-}
-
-extension LoginAccountViewController: UITextFieldDelegate {
-
-// скрываем клавиатуру при нажатии на Done text Field
-   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-       textField.resignFirstResponder()
-       return true
-   }
 }

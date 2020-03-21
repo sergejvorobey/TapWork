@@ -19,7 +19,7 @@ class ShowInfoVacansyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         if let vacansy = vacansyInfo {
             
             showHeadingLabel.text = vacansy.heading
@@ -35,15 +35,15 @@ class ShowInfoVacansyViewController: UIViewController {
         }
         
         if let button = responseButtonLabel {
-               button.layer.cornerRadius = 10
-               button.layer.backgroundColor = UIColor.red.cgColor
-               button.setTitle("Откликнуться", for: .normal)
-               button.setTitleColor(.white, for: .normal)
+            button.layer.cornerRadius = 10
+            button.layer.backgroundColor = UIColor.red.cgColor
+            button.setTitle("Откликнуться", for: .normal)
+            button.setTitleColor(.white, for: .normal)
         }
     }
     
     @IBAction func responseButton(_ sender: UIButton) {
-
+        
         // MARK: response vacansy 
     }
 }

@@ -9,10 +9,10 @@
 import UIKit
 
 class SpecializationController: UITableViewController {
-
+    
     private var specializations: [Specialization] = []
     private let specializationsProvider: SpecializationsProvider = SpecializationsProvider()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,7 +20,7 @@ class SpecializationController: UITableViewController {
         specializations = specializationsProvider.specializations
         
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return specializations.count
     }
@@ -37,7 +37,7 @@ class SpecializationController: UITableViewController {
     
     //MARK: update cells specialization
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+        
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         
         tableView.deselectRow(at: indexPath, animated: true)

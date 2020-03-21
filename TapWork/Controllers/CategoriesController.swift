@@ -9,7 +9,7 @@
 import UIKit
 
 class CategoriesController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     private var categories:[Category] = []
@@ -22,12 +22,12 @@ class CategoriesController: UIViewController {
         self.tableView.dataSource = self
         
         tableView.tableFooterView = UIView()
-    
+        
         categories = categoryProvider.categories
     }
     
     override func viewWillAppear(_ animated: Bool) {
-         super.viewWillAppear(animated)
+        super.viewWillAppear(animated)
         
         navigationItem.title = "Категории"
         guard let navigation = navigationController else {return}
@@ -59,20 +59,20 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
         self.tableView.deselectRow(at: indexPath, animated: true)
-    
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SpecializationController" {
-//            guard let indexPath = tableView.indexPathForSelectedRow else { return }
-//            let category = categories[indexPath.row]
-//            let newHumanVC = segue.destination as! SpecializationController
-//            newHumanVC.
+            //            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            //            let category = categories[indexPath.row]
+            //            let newHumanVC = segue.destination as! SpecializationController
+            //            newHumanVC.
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }

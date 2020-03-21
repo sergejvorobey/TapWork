@@ -41,14 +41,14 @@ struct Vacancy {
         timestamp = snapshotValue["timestamp"] as! Double
         ref = snapshot.ref
         
-        }
+    }
     
-        func providerToDictionary() -> Any {
-            return ["userId": userId,
-                    "heading": heading,
-                    "content": content,
-                    "payment": payment,
-                    "phoneNumber": phoneNumber,
-                    "timestamp": [".sv": "timestamp"]]
+    func providerToDictionary() -> Any {
+        return ["userId": userId,
+                "heading": heading,
+                "content": content,
+                "payment": payment,
+                "phoneNumber": phoneNumber,
+                "timestamp": [".sv": "timestamp"]]
     }
 }

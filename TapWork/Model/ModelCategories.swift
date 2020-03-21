@@ -18,19 +18,19 @@ enum NameCategories: String {
 
 enum NameSpecialization: String {
     
-     case cook = "Повар"
-     case waiter = "Официант"
-     case barmen = "Бармен"
-     case singer = "Певец"
-     case dj = "Dj"
-     case musicianEquipment = "Музыкальное Оборудование"
+    case cook = "Повар"
+    case waiter = "Официант"
+    case barmen = "Бармен"
+    case singer = "Певец"
+    case dj = "Dj"
+    case musicianEquipment = "Музыкальное Оборудование"
     
 }
 
 struct Category {
     
     var nameCategories: NameCategories
-   
+    
 }
 
 struct Specialization {
@@ -40,7 +40,7 @@ struct Specialization {
 }
 
 struct CategoriesProvider {
-
+    
     var categories: [Category] {
         return [categoryRestaurants, categoryMusicians, categoryOthers]
     }
@@ -49,8 +49,8 @@ struct CategoriesProvider {
 struct SpecializationsProvider {
     
     var specializations: [Specialization] {
-           return [specializationCook, specializationWaiter, specializationBarmen]
-       }
+        return [specializationCook, specializationWaiter, specializationBarmen]
+    }
 }
 
 let categoryRestaurants  = Category(nameCategories: .restaurants)
@@ -92,7 +92,7 @@ let specializationMusicianEquipment = Specialization(nameSpecialization: .musici
 //let dj      = SpecializationTest(nameCategory: .musicians, nameSpecialization: .dj)
 //let musiciansEquipments = SpecializationTest(nameCategory: .musicians, nameSpecialization: .musicianEquipment)
 /*
-insert Firebase (register account, login account)
-insert database content
-reading content in Database
-*/
+ insert Firebase (register account, login account)
+ insert database content
+ reading content in Database
+ */

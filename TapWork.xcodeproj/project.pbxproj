@@ -32,6 +32,8 @@
 		87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */; };
 		87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */; };
 		87F68A7023EF7E2200D4C454 /* ShowInfoVacansyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6F23EF7E2200D4C454 /* ShowInfoVacansyViewController.swift */; };
+		87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */; };
+		87FFD9B22426CDD200A8ECE7 /* CheckValid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FFD9B12426CDD200A8ECE7 /* CheckValid.swift */; };
 		FAB96E1FEE3EDF12559C97E1 /* Pods_TapWork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,8 @@
 		87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelVacancies.swift; sourceTree = "<group>"; };
 		87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacansyTableViewCell.swift; sourceTree = "<group>"; };
 		87F68A6F23EF7E2200D4C454 /* ShowInfoVacansyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoVacansyViewController.swift; sourceTree = "<group>"; };
+		87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
+		87FFD9B12426CDD200A8ECE7 /* CheckValid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckValid.swift; sourceTree = "<group>"; };
 		96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapWork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC08CC48E8067813AB071D7E /* Pods-TapWork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapWork.debug.xcconfig"; path = "Target Support Files/Pods-TapWork/Pods-TapWork.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +108,7 @@
 				879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */,
 				879F599623F9A0A400D4D124 /* RegisterAccountController.swift */,
 				87329CFD240360F40089E9EF /* AccountUserViewController.swift */,
+				87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -129,6 +134,7 @@
 		871D175023C8F6350095C765 /* TapWork */ = {
 			isa = PBXGroup;
 			children = (
+				87FFD9B02426CD6000A8ECE7 /* HelperFunctionAuth */,
 				87D65A0B240852F20093D75F /* HelperExtensions */,
 				871D175123C8F6350095C765 /* AppDelegate.swift */,
 				871D175323C8F6350095C765 /* SceneDelegate.swift */,
@@ -202,6 +208,14 @@
 				87D65A0C240853170093D75F /* HelperExtensions.swift */,
 			);
 			name = HelperExtensions;
+			sourceTree = "<group>";
+		};
+		87FFD9B02426CD6000A8ECE7 /* HelperFunctionAuth */ = {
+			isa = PBXGroup;
+			children = (
+				87FFD9B12426CDD200A8ECE7 /* CheckValid.swift */,
+			);
+			name = HelperFunctionAuth;
 			sourceTree = "<group>";
 		};
 		EB92BD2BD420574FCD1128ED /* Frameworks */ = {
@@ -329,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */,
+				87FFD9B22426CDD200A8ECE7 /* CheckValid.swift in Sources */,
 				87329CFE240360F40089E9EF /* AccountUserViewController.swift in Sources */,
 				8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */,
 				879F599023F9797A00D4D124 /* TabBarController.swift in Sources */,
@@ -344,6 +359,7 @@
 				870B9D6B240DDDD0006EB3EC /* LaunchScreenViewController.swift in Sources */,
 				87329D01240463EB0089E9EF /* ModelUsers.swift in Sources */,
 				871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */,
+				87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */,
 				871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */,
 				879F596A23F4D0C200D4D124 /* ResponseViewController.swift in Sources */,
 				87D65A0D240853170093D75F /* HelperExtensions.swift in Sources */,

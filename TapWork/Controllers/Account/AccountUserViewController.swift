@@ -15,7 +15,6 @@ class AccountUserViewController: UIViewController {
     @IBOutlet weak var nameUserLabel: UILabel!
     @IBOutlet weak var emailUserLabel: UILabel!
     @IBOutlet weak var specializationUserLabel: UILabel!
-    @IBOutlet weak var workExperienceUserLabel: UILabel!
     
     private var infoUser: Users!
     private var ref: DatabaseReference!
@@ -27,28 +26,71 @@ class AccountUserViewController: UIViewController {
             topItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                         style: .plain,
                                                         target: nil, action: nil)
+            
+            guard let currentUsers = Auth.auth().currentUser else { return }
+            infoUser = Users(user: currentUsers)
+            ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
+            
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
-        guard let currentUsers = Auth.auth().currentUser else { return }
-        infoUser = Users(user: currentUsers)
-        ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
+//        let uid = infoUser!.userId
         
-        emailUserLabel.text = infoUser.emailUser
+        let db = Firestore.firestore()
+
+        db.collection("users").document(infoUser.userId).addSnapshotListener {[weak self] querySnapshot, error in
+            
+            guard let querySnapshot = querySnapshot, querySnapshot.exists else {return}
+            
+            guard let userData = querySnapshot.data() else {return}
+            
+            if let error = error {
+                print("Error retreiving collection: \(error)")
+            } else {
+                guard let firstName = userData["firstName"],
+                    let email = userData["email"],
+                    let lastName = userData["lastName"] else {return}
+                let specialization = userData["spezialization"] ?? "не указана"
+                let fullName = """
+                \(firstName)
+                \(lastName)
+                """
+                self?.nameUserLabel.text = fullName
+                self?.emailUserLabel.text = email as? String
+                self?.specializationUserLabel.text = "Профессия: \(specialization)"
+            }
+        }
     }
    
     @IBAction func signOutButton(_ sender: UIBarButtonItem) {
         
-        do {
-            try Auth.auth().signOut()
-           
-        } catch {
-            print(error.localizedDescription)
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .default) { _ in }
+        let signOutAcc = UIAlertAction(title: "Выйти из аккаунта", style: .destructive) {[weak self] _ in
+            
+            do {
+                try Auth.auth().signOut()
+                
+            } catch {
+                print(error.localizedDescription)
+            }
+            let launchScreenVC = self?.storyboard?.instantiateViewController(withIdentifier: "LaunchScreen")
+            
+            guard let launchSVC = launchScreenVC else { return }
+            
+            self?.navigationController?.pushViewController(launchSVC, animated: true)
+        }
+        let editUserAcc = UIAlertAction(title: "Редактировать аккаунт", style: .default) {[weak self] _ in
+            self?.performSegue(withIdentifier: "EditAccountViewController", sender: nil)
         }
         
-        let launchScreenVC = storyboard?.instantiateViewController(withIdentifier: "LaunchScreen")
-        
-        guard let launchSVC = launchScreenVC else { return }
-
-        self.navigationController?.pushViewController(launchSVC, animated: true)
+        actionSheet.addAction(editUserAcc)
+        actionSheet.addAction(signOutAcc)
+        actionSheet.addAction(cancel)
+        present(actionSheet, animated: true)
     }
 }

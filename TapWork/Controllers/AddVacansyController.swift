@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class AddVacansyController: UIViewController {
-
+    
     
     @IBOutlet weak var headingVacansy: UITextField!
     @IBOutlet weak var categoryButtonLabel: UIButton!
@@ -47,10 +47,10 @@ class AddVacansyController: UIViewController {
         user = Users(user: currentUser)
         
         ref = Database.database().reference(withPath: "vacancies")
-       
+        
         headingVacansy.addTarget(self,
-                                   action: #selector(addVacansyColorChanged),
-                                   for: .editingChanged)
+                                 action: #selector(addVacansyColorChanged),
+                                 for: .editingChanged)
         
         if let categoryButton = categoryButtonLabel {
             categoryButton.setTitle("Категория", for: .normal)
@@ -78,55 +78,54 @@ class AddVacansyController: UIViewController {
                                                selector: #selector(updateChangeFrame(notification:)),
                                                name: UIResponder.keyboardWillShowNotification,
                                                object: nil)
-               
+        
         NotificationCenter.default.addObserver(self,
-                                                selector: #selector(updateChangeFrame(notification:)),
-                                                name: UIResponder.keyboardWillHideNotification,
-                                                object: nil)
+                                               selector: #selector(updateChangeFrame(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
     }
     
     // изменяем цвет кнопки при заполнии данных в nameVacansy
-       @objc private func addVacansyColorChanged () {
-         
-           if headingVacansy.text?.isEmpty == false {
-                addVacansyLabel.isEnabled = true
-                addVacansyLabel.layer.backgroundColor = UIColor.red.cgColor
-           } else {
-                addVacansyLabel.isEnabled = false
-                addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
+    @objc private func addVacansyColorChanged () {
+        
+        if headingVacansy.text?.isEmpty == false {
+            addVacansyLabel.isEnabled = true
+            addVacansyLabel.layer.backgroundColor = UIColor.red.cgColor
+        } else {
+            addVacansyLabel.isEnabled = false
+            addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-           
-           ref?.observe(.value) { [weak self] (snapshot) in
-               var _vacancies = Array<Vacancy>()
-               for item in snapshot.children {
-                   let vacancy = Vacancy(snapshot: item as! DataSnapshot)
-                   _vacancies.append(vacancy)
-               }
-               self?.vacancies = _vacancies
-           }
-       }
+        super.viewWillAppear(animated)
+        
+        ref?.observe(.value) { [weak self] (snapshot) in
+            var _vacancies = Array<Vacancy>()
+            for item in snapshot.children {
+                let vacancy = Vacancy(snapshot: item as! DataSnapshot)
+                _vacancies.append(vacancy)
+            }
+            self?.vacancies = _vacancies
+        }
+    }
     
     @objc func updateChangeFrame (notification: Notification) {
-           
-           guard let userInfo = notification.userInfo as? [String: AnyObject],
-               
-           let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-               else { return }
-    
-           if notification.name == UIResponder.keyboardWillShowNotification {
-
+        
+        guard let userInfo = notification.userInfo as? [String: AnyObject],
+            
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            else { return }
+        
+        if notification.name == UIResponder.keyboardWillShowNotification {
+            
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height + 50, right: 0)
- 
-           } else {
-               
+            
+        } else {
+            
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50 - keyboardFrame.height, right: 0)
-               
-           }
-       }
+        }
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         headingVacansy.text = ""
@@ -153,7 +152,7 @@ class AddVacansyController: UIViewController {
         let items = NSMutableArray()
         items.add(flexSpace)
         items.add(done)
-      
+        
         doneToolbar.items = (items as! [UIBarButtonItem])
         doneToolbar.sizeToFit()
         
@@ -162,8 +161,8 @@ class AddVacansyController: UIViewController {
     }
     
     @objc func doneButtonAction() {
-            self.phoneNumber.resignFirstResponder()
-            self.paymentVacansy.resignFirstResponder()
+        self.phoneNumber.resignFirstResponder()
+        self.paymentVacansy.resignFirstResponder()
     }
     
     @IBAction func categoryVacansyButton (_ sender: UIButton) {
@@ -174,10 +173,10 @@ class AddVacansyController: UIViewController {
     @IBAction func addVacansyButton(_ sender: UIButton) {
         
         let content = contentVacansy.text.count
-
+        
         switch content {
             
-            // MARK: Up to work conditions
+        // MARK: Up to work conditions
         case _ where content > maxCountDescriptionTextView :
             print("слишком большое описание")
         case _ where content < minCountDescriptionTextView :
@@ -190,22 +189,22 @@ class AddVacansyController: UIViewController {
         }
         
         guard let headingVacansy = headingVacansy.text,
-              let contentVacansy = contentVacansy.text,
-              let paymentVacansy = paymentVacansy.text,
-              let phoneNumber = phoneNumber.text,
-                  headingVacansy != "",
-                  contentVacansy != "",
-                  paymentVacansy != "",
-                  phoneNumber != ""
-        
-                else { return }
+            let contentVacansy = contentVacansy.text,
+            let paymentVacansy = paymentVacansy.text,
+            let phoneNumber = phoneNumber.text,
+            headingVacansy != "",
+            contentVacansy != "",
+            paymentVacansy != "",
+            phoneNumber != ""
+            
+            else { return }
         
         let vacansy = Vacancy(userId: self.user!.userId,
                               heading: headingVacansy ,
                               content: contentVacansy,
                               phoneNumber: phoneNumber,
                               payment: paymentVacansy)
-
+        
         let vacansyRef = ref?.child(vacansy.heading.lowercased())
         vacansyRef?.setValue(vacansy.providerToDictionary())
         tabBarController?.selectedIndex = 0
@@ -215,17 +214,17 @@ class AddVacansyController: UIViewController {
 extension AddVacansyController: UITextFieldDelegate, UITextViewDelegate {
     
     // скрываем клавиатуру при нажатии на Done text Field 
-       func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-           textField.resignFirstResponder()
-           return true
-       }
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     // скрываем клавиатуру при нажатии на Done text View
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-       
+        
         if(text == "\n") {
-                textView.resignFirstResponder()
-                return false
+            textView.resignFirstResponder()
+            return false
         }
         return true
     }

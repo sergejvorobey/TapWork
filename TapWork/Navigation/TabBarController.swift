@@ -19,7 +19,7 @@ class TabBarController: UITabBarController {
         tabBar.items![0].title = "Вакансии"
         tabBar.items![1].title = "Опубликовать вакансию"
         tabBar.items![2].title = "Фильтр"
-        tabBar.items![2].isEnabled = false
+        tabBar.items![2].isEnabled = false //доработать 
 
         navigationController?.navigationBar.isHidden = true
     }
