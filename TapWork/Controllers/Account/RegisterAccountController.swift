@@ -23,6 +23,12 @@ class RegisterAccountController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        emailTextField.delegate = self
+        firstNameUserTextField.delegate = self
+        lastNameUserTextField.delegate = self
+        passwordUserTextField.delegate = self
+        confirmPassUserTextField.delegate = self
+        
         if let registerButton = registerButtonLabel {
             registerButton.setTitle("Зарегистрировать", for: .normal)
             registerButton.backgroundColor = .red
@@ -91,9 +97,18 @@ extension RegisterAccountController {
                                                 preferredStyle: .alert)
 
 
-        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        let cancel = UIAlertAction(title: "Назад", style: .default, handler: nil)
 
         alertController.addAction(cancel)
         present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension RegisterAccountController: UITextFieldDelegate {
+    
+    // hide the keyboard when you click on Done text Field
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

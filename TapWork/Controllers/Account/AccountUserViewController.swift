@@ -30,14 +30,11 @@ class AccountUserViewController: UIViewController {
             guard let currentUsers = Auth.auth().currentUser else { return }
             infoUser = Users(user: currentUsers)
             ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
-            
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-//        let uid = infoUser!.userId
         
         let db = Firestore.firestore()
 
@@ -65,11 +62,11 @@ class AccountUserViewController: UIViewController {
         }
     }
    
-    @IBAction func signOutButton(_ sender: UIBarButtonItem) {
+    @IBAction func menuAccount(_ sender: UIBarButtonItem) {
         
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let cancel = UIAlertAction(title: "Cancel", style: .default) { _ in }
+        let cancel = UIAlertAction(title: "Назад", style: .default) { _ in }
         let signOutAcc = UIAlertAction(title: "Выйти из аккаунта", style: .destructive) {[weak self] _ in
             
             do {

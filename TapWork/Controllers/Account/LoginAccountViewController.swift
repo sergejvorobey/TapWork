@@ -60,6 +60,12 @@ class LoginAccountViewController: UIViewController {
                                                object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        emailUser.text = ""
+        passwordUser.text = ""
+    }
+    
     @IBAction func signInAccount(_ sender: UIButton) {
         
         guard let email = emailUser.text, let password = passwordUser.text, email != "",
@@ -108,7 +114,7 @@ extension LoginAccountViewController {
                                                 message: message,
                                                 preferredStyle: .alert)
         
-        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        let cancel = UIAlertAction(title: "Назад", style: .default, handler: nil)
         
         alertController.addAction(cancel)
         present(alertController, animated: true, completion: nil)

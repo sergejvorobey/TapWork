@@ -11,7 +11,6 @@ import Firebase
 
 class AddVacansyController: UIViewController {
     
-    
     @IBOutlet weak var headingVacansy: UITextField!
     @IBOutlet weak var categoryButtonLabel: UIButton!
     @IBOutlet weak var descriptionVacansyHeadingLabel: UILabel!
