@@ -55,6 +55,7 @@ class EditAccountViewController: UIViewController {
         ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
     }
     
+    //action alert open photo menu (camera,photo library)
     @objc func setupPhotoUserMenu(_ sender: Any) {
         
         let cameraIcon = #imageLiteral(resourceName: "camera")

@@ -22,7 +22,6 @@ class CategoriesController: UIViewController {
         self.tableView.dataSource = self
         
         tableView.tableFooterView = UIView()
-        
         categories = categoryProvider.categories
     }
     

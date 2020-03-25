@@ -113,4 +113,21 @@ class MainScreenController: UITableViewController {
     @IBAction func userAccount(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "ShowUserAccount", sender: nil)
     }
+    
+    @IBAction func filterButton(_ sender: UIBarButtonItem) {
+        
+        let actionSheet = UIAlertController(title: "Сортировка вакансий:", message: nil, preferredStyle: .actionSheet)
+        
+        let cancel = UIAlertAction(title: "Назад", style: .destructive)
+        let sortingByCategory = UIAlertAction(title: "По категории", style: .default) { [weak self] _ in
+            self?.performSegue(withIdentifier: "CategoriesController", sender: nil)
+        }
+
+        let sortingPrice = UIAlertAction(title: "По бюджету", style: .default) { _ in }
+        
+        actionSheet.addAction(sortingByCategory)
+        actionSheet.addAction(sortingPrice)
+        actionSheet.addAction(cancel)
+        present(actionSheet, animated: true)
+    }
 }
