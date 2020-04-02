@@ -36,7 +36,7 @@ class RegisterAccountController: UIViewController {
             registerButton.tintColor = .white
         }
     }
-
+    
     @IBAction func registerButton(_ sender: UIButton) {
         
         guard let email = emailTextField.text,
@@ -50,10 +50,10 @@ class RegisterAccountController: UIViewController {
             password != "",
             confirmPassword != ""
             //confirmPassword != password
-                   else {
-                    alertError(withMessage: "Пожалуйста, заполните все поля!")
-                   return
-            }
+            else {
+                alertError(withMessage: "Пожалуйста, заполните все поля!")
+                return
+        }
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] (user, error) in
             if error == nil {
                 if user != nil {
@@ -64,14 +64,14 @@ class RegisterAccountController: UIViewController {
                         "email": email,
                         "password": password,
                         "uid": user?.user.uid as Any]) { (error) in
-//                    db.collection("users").addDocument(data: [
-//                        "firstName": firstName,
-//                        "lastName": lastName,
-//                        "email": email,
-//                        "uid": user?.user.uid as Any ]) { (error) in
-                        if error == nil {
-                            self?.performSegue(withIdentifier: "MainScreenController", sender: nil)
-                        }
+                            //                    db.collection("users").addDocument(data: [
+                            //                        "firstName": firstName,
+                            //                        "lastName": lastName,
+                            //                        "email": email,
+                            //                        "uid": user?.user.uid as Any ]) { (error) in
+                            if error == nil {
+                                self?.performSegue(withIdentifier: "MainScreenController", sender: nil)
+                            }
                     }
                 } else {
                     self?.alertError(withMessage: "Пользователь не создан")
@@ -88,27 +88,4 @@ class RegisterAccountController: UIViewController {
     }
 }
 
-extension RegisterAccountController {
-    
-    func alertError(withMessage message: String) {
 
-        let alertController = UIAlertController(title: "Ошибка",
-                                                message: message,
-                                                preferredStyle: .alert)
-
-
-        let cancel = UIAlertAction(title: "Назад", style: .default, handler: nil)
-
-        alertController.addAction(cancel)
-        present(alertController, animated: true, completion: nil)
-    }
-}
-
-extension RegisterAccountController: UITextFieldDelegate {
-    
-    // hide the keyboard when you click on Done text Field
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-}

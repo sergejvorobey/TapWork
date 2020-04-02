@@ -109,23 +109,6 @@ class AddVacansyController: UIViewController {
         }
     }
     
-    @objc func updateChangeFrame (notification: Notification) {
-        
-        guard let userInfo = notification.userInfo as? [String: AnyObject],
-            
-            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-            else { return }
-        
-        if notification.name == UIResponder.keyboardWillShowNotification {
-            
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height + 50, right: 0)
-            
-        } else {
-            
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50 - keyboardFrame.height, right: 0)
-        }
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         headingVacansy.text = ""
         contentVacansy.text = ""
@@ -135,7 +118,7 @@ class AddVacansyController: UIViewController {
         addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
     }
     
-    // MARK: Done button on numberKB
+    // MARK: Done button on numberKeyboard
     func addDoneButtonOnNumberKeyboard() {
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -171,22 +154,6 @@ class AddVacansyController: UIViewController {
     
     @IBAction func addVacansyButton(_ sender: UIButton) {
         
-        let content = contentVacansy.text.count
-        
-        switch content {
-            
-        // MARK: Up to work conditions
-        case _ where content > maxCountDescriptionTextView :
-            print("слишком большое описание")
-        case _ where content < minCountDescriptionTextView :
-            print("слишком короткое описание")
-        case _ where content < maxCountDescriptionTextView &&
-            content > minCountDescriptionTextView :
-            print("norm")
-        default:
-            break
-        }
-        
         guard let headingVacansy = headingVacansy.text,
             let contentVacansy = contentVacansy.text,
             let paymentVacansy = paymentVacansy.text,
@@ -196,37 +163,38 @@ class AddVacansyController: UIViewController {
             paymentVacansy != "",
             phoneNumber != ""
             
-            else { return }
+            else {
+                alertError(withMessage: "Пожалуйста, заполните все поля!")
+                return
+        }
         
-        let vacansy = Vacancy(userId: self.user!.userId,
-                              heading: headingVacansy ,
-                              content: contentVacansy,
-                              phoneNumber: phoneNumber,
-                              payment: paymentVacansy)
-        
-        let vacansyRef = ref?.child(vacansy.heading.lowercased())
-        vacansyRef?.setValue(vacansy.providerToDictionary())
-        tabBarController?.selectedIndex = 0
+         // check valid data in text field
+        let content = contentVacansy.count
+       
+        switch content {
+            
+        case _ where content > maxCountDescriptionTextView :
+            alertError(withMessage: "Cлишком большое описание, максимальное количество символов: 200")
+        case _ where content < minCountDescriptionTextView :
+            alertError(withMessage: "Слишком короткое описание, минимальное количество символов: 20")
+        case _ where content < maxCountDescriptionTextView &&
+            content > minCountDescriptionTextView :
+            print("all right")
+            let vacansy = Vacancy(userId: self.user!.userId,
+                                  heading: headingVacansy ,
+                                  content: contentVacansy,
+                                  phoneNumber: phoneNumber,
+                                  payment: paymentVacansy)
+
+            let vacansyRef = ref?.child(vacansy.userId)
+            vacansyRef?.setValue(vacansy.providerToDictionary())
+            alertMessage(withMessage: "Ваша вакансия опубликована!")
+        default:
+            break
+        }
     }
 }
 
-extension AddVacansyController: UITextFieldDelegate, UITextViewDelegate {
-    
-    // скрываем клавиатуру при нажатии на Done text Field 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    // скрываем клавиатуру при нажатии на Done text View
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
-        if(text == "\n") {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
-    }
-}
+
 
 

@@ -48,7 +48,7 @@ class LoginAccountViewController: UIViewController {
             errorLabel.alpha = 0
             errorLabel.textColor = .red
         }
-
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateChangeFrame(notification:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -71,8 +71,8 @@ class LoginAccountViewController: UIViewController {
         guard let email = emailUser.text, let password = passwordUser.text, email != "",
             password != ""
             else {
-            alertError(withMessage: "Пожалуйста, заполните все поля!")
-            return
+                alertError(withMessage: "Пожалуйста, заполните все поля!")
+                return
         }
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
@@ -87,7 +87,7 @@ class LoginAccountViewController: UIViewController {
             
             self?.activityIndicator.isHidden = false
             
-//            self?.activityIndicator.stopAnimating()
+            //            self?.activityIndicator.stopAnimating()
         }
     }
     
@@ -96,55 +96,3 @@ class LoginAccountViewController: UIViewController {
     }
 }
 
-extension LoginAccountViewController: UITextFieldDelegate {
-    
-    // hide the keyboard when you click on Done text Field
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-}
-
-extension LoginAccountViewController {
-    
-     //error handling method
-    func alertError(withMessage message: String) {
-        
-        let alertController = UIAlertController(title: "Ошибка",
-                                                message: message,
-                                                preferredStyle: .alert)
-        
-        let cancel = UIAlertAction(title: "Назад", style: .default, handler: nil)
-        
-        alertController.addAction(cancel)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    // update keyboard after tap text field
-    @objc func updateChangeFrame (notification: Notification) {
-        
-        guard let userInfo = notification.userInfo as? [String: AnyObject],
-            
-            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-            else { return }
-        
-        if notification.name == UIResponder.keyboardWillShowNotification {
-            
-            self.bottomConstraint.constant = keyboardFrame.height + 5
-            
-            UIView.animate(withDuration: 0.5) {
-                
-                self.view.layoutIfNeeded()
-            }
-            
-        } else {
-            
-            self.bottomConstraint.constant =  100
-            
-            UIView.animate(withDuration: 0.25) {
-                
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
-}

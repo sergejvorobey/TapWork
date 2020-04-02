@@ -17,6 +17,13 @@
 		871D175E23C8F6360095C765 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175C23C8F6360095C765 /* LaunchScreen.storyboard */; };
 		87329CFE240360F40089E9EF /* AccountUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87329CFD240360F40089E9EF /* AccountUserViewController.swift */; };
 		87329D01240463EB0089E9EF /* ModelUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87329D00240463EB0089E9EF /* ModelUsers.swift */; };
+		875F6A362435EF3E002C652D /* LoginControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A352435EF3E002C652D /* LoginControllerExtensions.swift */; };
+		875F6A382435F0E3002C652D /* RegisterAccountExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A372435F0E3002C652D /* RegisterAccountExtensions.swift */; };
+		875F6A3B2435F194002C652D /* EditAccountControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A3A2435F194002C652D /* EditAccountControllerExtensions.swift */; };
+		875F6A3E2435F639002C652D /* AddVacansyControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A3D2435F639002C652D /* AddVacansyControllerExtensions.swift */; };
+		875F6A41243602F1002C652D /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A40243602F1002C652D /* MessageViewController.swift */; };
+		875F6A432436037D002C652D /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A422436037D002C652D /* MessageCell.swift */; };
+		875F6A452436065D002C652D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A442436065D002C652D /* ChatViewController.swift */; };
 		8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768965B23F9F87400E17CC1 /* AddVacansyController.swift */; };
 		879F596A23F4D0C200D4D124 /* ResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F596923F4D0C200D4D124 /* ResponseViewController.swift */; };
 		879F599023F9797A00D4D124 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F598F23F9797A00D4D124 /* TabBarController.swift */; };
@@ -51,6 +58,13 @@
 		871D175F23C8F6360095C765 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87329CFD240360F40089E9EF /* AccountUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUserViewController.swift; sourceTree = "<group>"; };
 		87329D00240463EB0089E9EF /* ModelUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelUsers.swift; sourceTree = "<group>"; };
+		875F6A352435EF3E002C652D /* LoginControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginControllerExtensions.swift; sourceTree = "<group>"; };
+		875F6A372435F0E3002C652D /* RegisterAccountExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAccountExtensions.swift; sourceTree = "<group>"; };
+		875F6A3A2435F194002C652D /* EditAccountControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountControllerExtensions.swift; sourceTree = "<group>"; };
+		875F6A3D2435F639002C652D /* AddVacansyControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVacansyControllerExtensions.swift; sourceTree = "<group>"; };
+		875F6A40243602F1002C652D /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		875F6A422436037D002C652D /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		875F6A442436065D002C652D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8768965B23F9F87400E17CC1 /* AddVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVacansyController.swift; sourceTree = "<group>"; };
 		879F596923F4D0C200D4D124 /* ResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseViewController.swift; sourceTree = "<group>"; };
 		879F598F23F9797A00D4D124 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -134,10 +148,9 @@
 		871D175023C8F6350095C765 /* TapWork */ = {
 			isa = PBXGroup;
 			children = (
+				875F6A392435F117002C652D /* HelperFile */,
 				87FFD9B02426CD6000A8ECE7 /* HelperFunctionAuth */,
 				87D65A0B240852F20093D75F /* HelperExtensions */,
-				871D175123C8F6350095C765 /* AppDelegate.swift */,
-				871D175323C8F6350095C765 /* SceneDelegate.swift */,
 				879F599523F99F2300D4D124 /* Navigation */,
 				879F596623F4D00900D4D124 /* Controllers */,
 				879F596723F4D02F00D4D124 /* View */,
@@ -160,15 +173,42 @@
 			name = Category;
 			sourceTree = "<group>";
 		};
+		875F6A392435F117002C652D /* HelperFile */ = {
+			isa = PBXGroup;
+			children = (
+				871D175123C8F6350095C765 /* AppDelegate.swift */,
+				871D175323C8F6350095C765 /* SceneDelegate.swift */,
+			);
+			name = HelperFile;
+			sourceTree = "<group>";
+		};
+		875F6A3C2435F298002C652D /* Vacansy */ = {
+			isa = PBXGroup;
+			children = (
+				87F68A6F23EF7E2200D4C454 /* ShowInfoVacansyViewController.swift */,
+				8768965B23F9F87400E17CC1 /* AddVacansyController.swift */,
+				879F596923F4D0C200D4D124 /* ResponseViewController.swift */,
+			);
+			path = Vacansy;
+			sourceTree = "<group>";
+		};
+		875F6A3F243602D4002C652D /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				875F6A40243602F1002C652D /* MessageViewController.swift */,
+				875F6A442436065D002C652D /* ChatViewController.swift */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
 		879F596623F4D00900D4D124 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				875F6A3F243602D4002C652D /* Messages */,
+				875F6A3C2435F298002C652D /* Vacansy */,
 				871397C723FC5E1700FB7732 /* Account */,
 				870B9D67240DD478006EB3EC /* MainScreen */,
-				87F68A6F23EF7E2200D4C454 /* ShowInfoVacansyViewController.swift */,
 				87329CFF240365950089E9EF /* Category */,
-				8768965B23F9F87400E17CC1 /* AddVacansyController.swift */,
-				879F596923F4D0C200D4D124 /* ResponseViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -177,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */,
+				875F6A422436037D002C652D /* MessageCell.swift */,
 				871397CD23FCBF3800FB7732 /* SpecializationCell.swift */,
 				87C9097323FB1FA700C262FC /* CategoryCell.swift */,
 			);
@@ -206,6 +247,10 @@
 			isa = PBXGroup;
 			children = (
 				87D65A0C240853170093D75F /* HelperExtensions.swift */,
+				875F6A352435EF3E002C652D /* LoginControllerExtensions.swift */,
+				875F6A372435F0E3002C652D /* RegisterAccountExtensions.swift */,
+				875F6A3A2435F194002C652D /* EditAccountControllerExtensions.swift */,
+				875F6A3D2435F639002C652D /* AddVacansyControllerExtensions.swift */,
 			);
 			name = HelperExtensions;
 			sourceTree = "<group>";
@@ -343,11 +388,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */,
+				875F6A3B2435F194002C652D /* EditAccountControllerExtensions.swift in Sources */,
 				87FFD9B22426CDD200A8ECE7 /* CheckValid.swift in Sources */,
 				87329CFE240360F40089E9EF /* AccountUserViewController.swift in Sources */,
 				8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */,
 				879F599023F9797A00D4D124 /* TabBarController.swift in Sources */,
+				875F6A41243602F1002C652D /* MessageViewController.swift in Sources */,
 				871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */,
+				875F6A3E2435F639002C652D /* AddVacansyControllerExtensions.swift in Sources */,
 				87F68A7023EF7E2200D4C454 /* ShowInfoVacansyViewController.swift in Sources */,
 				87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */,
 				87F68A6A23EF2B8500D4C454 /* MainScreenController.swift in Sources */,
@@ -357,13 +405,17 @@
 				879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */,
 				871D175223C8F6350095C765 /* AppDelegate.swift in Sources */,
 				870B9D6B240DDDD0006EB3EC /* LaunchScreenViewController.swift in Sources */,
+				875F6A432436037D002C652D /* MessageCell.swift in Sources */,
+				875F6A362435EF3E002C652D /* LoginControllerExtensions.swift in Sources */,
 				87329D01240463EB0089E9EF /* ModelUsers.swift in Sources */,
 				871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */,
 				87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */,
 				871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */,
 				879F596A23F4D0C200D4D124 /* ResponseViewController.swift in Sources */,
 				87D65A0D240853170093D75F /* HelperExtensions.swift in Sources */,
+				875F6A382435F0E3002C652D /* RegisterAccountExtensions.swift in Sources */,
 				87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */,
+				875F6A452436065D002C652D /* ChatViewController.swift in Sources */,
 				87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

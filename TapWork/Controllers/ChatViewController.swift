@@ -1,17 +1,18 @@
 //
-//  NavigationController.swift
+//  ChatViewController.swift
 //  TapWork
 //
-//  Created by Sergey Vorobey on 16/02/2020.
+//  Created by Sergey Vorobey on 02/04/2020.
 //  Copyright © 2020 Сергей. All rights reserved.
 //
 
 import UIKit
 
-class NavigationController: UINavigationController {
+class ChatViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
     }
 }

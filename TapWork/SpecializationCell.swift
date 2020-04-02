@@ -11,5 +11,4 @@ import UIKit
 class SpecializationCell: UITableViewCell {
 
     @IBOutlet weak var specializationLabel: UILabel!
-
 }

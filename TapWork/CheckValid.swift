@@ -7,22 +7,9 @@
 //
 
 import Foundation
-import UIKit
 
-struct CheckValid {
-    
-    func alertError(withMessage message: String) {
-        
-        let alertController = UIAlertController(title: "Ошибка",
-                                                message: message,
-                                                preferredStyle: .alert)
-     
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
 
-        alertController.addAction(cancel)
-        alertController.present(alertController, animated: true, completion: nil)
-    }
+
     
 //    func displayWarning(withText text: String) {
 //        
@@ -34,4 +21,4 @@ struct CheckValid {
 ////            self?.errorLabel.alpha = 0
 //        }
 //    }
-}
+

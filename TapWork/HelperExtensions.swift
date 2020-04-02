@@ -42,5 +42,16 @@ extension Date {
             return seconds == 1 ? "1 секунда назад": "\(seconds) секунд назад"
         }
     }
+    
+    func publicationDate(withDate date: Date) -> String {
+        
+        var currentDatePublic = ""
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM, HH:mm"
+        formatter.locale = Locale(identifier: "ru_RU")
+        currentDatePublic = formatter.string(from: date)
+        return currentDatePublic
+    }
 }
 

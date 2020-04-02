@@ -21,8 +21,6 @@ class MainScreenController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        navigationController?.navigationBar.isHidden = false
-        
         navigationItem.title = "TAP WORK"
         
         spinner()
@@ -30,6 +28,22 @@ class MainScreenController: UITableViewController {
         refDatebase()
         
         tableView.tableFooterView = UIView()
+        tableView.addSubview(self.refreshControll)
+    }
+    
+    // refresh spinner
+    lazy var refreshControll: UIRefreshControl = {
+        let refreshControll = UIRefreshControl()
+        refreshControll.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        refreshControll.tintColor = UIColor.red
+        return refreshControll
+        
+    }()
+    
+    @objc func handleRefresh(_ refreshControll: UIRefreshControl) {
+        
+        self.tableView.reloadData()
+        refreshControll.endRefreshing()
     }
     
     // activity indicator
@@ -91,7 +105,10 @@ class MainScreenController: UITableViewController {
         let datePublic = vacansy.timestamp
         let date = Date(timeIntervalSince1970: datePublic / 1000)
         
-        vacanciesCell.publicationDateLabel.text = date.calenderTimeSinceNow()
+        //        vacanciesCell.publicationDateLabel.text = date.calenderTimeSinceNow()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        vacanciesCell.publicationDateLabel.text = date.publicationDate(withDate: date)
         
         return vacanciesCell
     }
@@ -122,7 +139,7 @@ class MainScreenController: UITableViewController {
         let sortingByCategory = UIAlertAction(title: "По категории", style: .default) { [weak self] _ in
             self?.performSegue(withIdentifier: "CategoriesController", sender: nil)
         }
-
+        
         let sortingPrice = UIAlertAction(title: "По бюджету", style: .default) { _ in }
         
         actionSheet.addAction(sortingByCategory)
