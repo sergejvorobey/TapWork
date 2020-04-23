@@ -10,26 +10,27 @@ import UIKit
 
 class SpecializationController: UITableViewController {
     
-    private var specializations: [Specialization] = []
-    private let specializationsProvider: SpecializationsProvider = SpecializationsProvider()
+//    private var specializations: [Specialization] = []
+//    private let specializationsProvider: SpecializationsProvider = SpecializationsProvider()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView()
-        specializations = specializationsProvider.specializations
+//        specializations = specializationsProvider.specializations
         
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return specializations.count
+//        return specializations.count
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let specializationCell = tableView.dequeueReusableCell(withIdentifier: "SpecializationCell", for: indexPath) as! SpecializationCell
         
-        specializationCell.specializationLabel.text = specializations[indexPath.row].nameSpecialization.rawValue
+//        specializationCell.specializationLabel.text = specializations[indexPath.row].nameSpecialization.rawValue
         
         return specializationCell
         

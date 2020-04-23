@@ -15,7 +15,7 @@ class LoginAccountViewController: UIViewController {
     @IBOutlet weak var passwordUser: UITextField!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var registerAccountButton: UIButton!
-    @IBOutlet weak var errorLabel: UILabel!
+
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -42,11 +42,6 @@ class LoginAccountViewController: UIViewController {
             registerAccountButton.backgroundColor = .red
             registerAccountButton.layer.cornerRadius = 15
             registerAccountButton.tintColor = .white
-        }
-        
-        if let errorLabel = errorLabel {
-            errorLabel.alpha = 0
-            errorLabel.textColor = .red
         }
         
         NotificationCenter.default.addObserver(self,
@@ -96,3 +91,53 @@ class LoginAccountViewController: UIViewController {
     }
 }
 
+extension LoginAccountViewController {
+    
+    func alertError(withMessage message: String) {
+        
+        let alertController = UIAlertController(title: "Ошибка",
+                                                message: message,
+                                                preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: "Назад", style: .default, handler: nil)
+        
+        alertController.addAction(cancel)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc func updateChangeFrame (notification: Notification) {
+        
+        guard let userInfo = notification.userInfo as? [String: AnyObject],
+            
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            else { return }
+        
+        if notification.name == UIResponder.keyboardWillShowNotification {
+            
+            self.bottomConstraint.constant = keyboardFrame.height + 5
+            
+            UIView.animate(withDuration: 0.5) {
+                
+                self.view.layoutIfNeeded()
+            }
+            
+        } else {
+            
+            self.bottomConstraint.constant =  100
+            
+            UIView.animate(withDuration: 0.25) {
+                
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+}
+
+extension LoginAccountViewController: UITextFieldDelegate {
+    
+    // hide the keyboard when you click on Done text Field
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}

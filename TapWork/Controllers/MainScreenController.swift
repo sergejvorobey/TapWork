@@ -17,13 +17,14 @@ class MainScreenController: UITableViewController {
     private var ref: DatabaseReference!
     private var queryRef:DatabaseQuery!
     private var vacancies = Array<Vacancy>()
+    private let spinner = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "TAP WORK"
         
-        spinner()
+        spinnerStart()
         
         refDatebase()
         
@@ -43,24 +44,24 @@ class MainScreenController: UITableViewController {
     @objc func handleRefresh(_ refreshControll: UIRefreshControl) {
         
         self.tableView.reloadData()
-        refreshControll.endRefreshing()
+        let deadline = DispatchTime.now() + .milliseconds(700)
+        DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
+            refreshControll.endRefreshing()
+        }) 
     }
     
     // activity indicator
-    private func spinner() {
+    private func spinnerStart() {
         
-        let spinner = UIActivityIndicatorView()
         spinner.startAnimating()
         spinner.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
-        //        spinner.stopAnimating()
         spinner.hidesWhenStopped = true
         tableView.backgroundView = spinner
     }
     
     private func spinnerStop() {
         
-        let spinner = UIActivityIndicatorView()
         spinner.stopAnimating()
         spinner.hidesWhenStopped = true
     }
@@ -99,6 +100,8 @@ class MainScreenController: UITableViewController {
         let vacansy = vacancies[indexPath.row]
         
         vacanciesCell.headingLabel.text = vacansy.heading
+        vacanciesCell.cityVacansyLabel.text = "Москва" //TODO: peredelati
+        vacanciesCell.categoryVacansyLabel.styleLabel(with: "Общепит/Рестораны")
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "
         
@@ -106,9 +109,8 @@ class MainScreenController: UITableViewController {
         let date = Date(timeIntervalSince1970: datePublic / 1000)
         
         //        vacanciesCell.publicationDateLabel.text = date.calenderTimeSinceNow()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd HH:mm"
         vacanciesCell.publicationDateLabel.text = date.publicationDate(withDate: date)
+        spinnerStop()
         
         return vacanciesCell
     }
@@ -148,3 +150,5 @@ class MainScreenController: UITableViewController {
         present(actionSheet, animated: true)
     }
 }
+
+

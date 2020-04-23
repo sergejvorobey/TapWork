@@ -11,6 +11,8 @@ import UIKit
 class VacansyTableViewCell: UITableViewCell {
 
     @IBOutlet weak var headingLabel: UILabel!
+    @IBOutlet weak var cityVacansyLabel: UILabel!
+    @IBOutlet weak var categoryVacansyLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var paymentLabel: UILabel!
     @IBOutlet weak var publicationDateLabel: UILabel!

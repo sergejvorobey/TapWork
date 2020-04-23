@@ -42,6 +42,7 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return categories.count
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,7 +51,7 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
         
         let category = categories[indexPath.row]
         
-        categoryCell.categoryLabel.text = category.nameCategories.rawValue
+        categoryCell.categoryLabel.text = category.name?.rawValue
         
         categoryCell.accessoryType = .disclosureIndicator
         

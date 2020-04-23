@@ -55,3 +55,14 @@ extension Date {
     }
 }
 
+//MARK: change style label 
+extension UILabel {
+    func styleLabel(with text: String)  {
+        self.text = text
+        let swiftColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 1)
+        self.backgroundColor = swiftColor
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+
+    }
+}
