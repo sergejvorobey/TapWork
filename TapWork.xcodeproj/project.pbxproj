@@ -29,8 +29,10 @@
 		87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BB3BA123F9D691004F3C61 /* CategoriesController.swift */; };
 		87BD43D8244F5DF0000B6865 /* ShowInfoVacansyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD43D7244F5DF0000B6865 /* ShowInfoVacansyCell.swift */; };
 		87BD43DD2450C513000B6865 /* Categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 87BD43DC2450C513000B6865 /* Categories.json */; };
+		87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */; };
 		87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C9097123FB0B4E00C262FC /* ModelCategories.swift */; };
 		87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C9097323FB1FA700C262FC /* CategoryCell.swift */; };
+		87CAB24B2455184400487580 /* MenuVacansyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CAB24A2455184400487580 /* MenuVacansyViewController.swift */; };
 		87D65A0A240816A20093D75F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87D65A09240816A10093D75F /* GoogleService-Info.plist */; };
 		87D65A0D240853170093D75F /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D65A0C240853170093D75F /* HelperExtensions.swift */; };
 		87F68A6A23EF2B8500D4C454 /* MainScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6923EF2B8500D4C454 /* MainScreenController.swift */; };
@@ -68,8 +70,10 @@
 		87BB3BA123F9D691004F3C61 /* CategoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesController.swift; sourceTree = "<group>"; };
 		87BD43D7244F5DF0000B6865 /* ShowInfoVacansyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoVacansyCell.swift; sourceTree = "<group>"; };
 		87BD43DC2450C513000B6865 /* Categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Categories.json; sourceTree = "<group>"; };
+		87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryLoaderJSON.swift; sourceTree = "<group>"; };
 		87C9097123FB0B4E00C262FC /* ModelCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCategories.swift; sourceTree = "<group>"; };
 		87C9097323FB1FA700C262FC /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		87CAB24A2455184400487580 /* MenuVacansyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVacansyViewController.swift; sourceTree = "<group>"; };
 		87D65A09240816A10093D75F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87D65A0C240853170093D75F /* HelperExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperExtensions.swift; sourceTree = "<group>"; };
 		87F68A6923EF2B8500D4C454 /* MainScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenController.swift; sourceTree = "<group>"; };
@@ -182,8 +186,8 @@
 		875F6A3C2435F298002C652D /* Vacansy */ = {
 			isa = PBXGroup;
 			children = (
+				87CAB249245517F400487580 /* Menu */,
 				87F68A6F23EF7E2200D4C454 /* ShowInfoVacansyViewController.swift */,
-				8768965B23F9F87400E17CC1 /* AddVacansyController.swift */,
 				879F596923F4D0C200D4D124 /* ResponseViewController.swift */,
 			);
 			path = Vacansy;
@@ -245,8 +249,18 @@
 			isa = PBXGroup;
 			children = (
 				87BD43DC2450C513000B6865 /* Categories.json */,
+				87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */,
 			);
 			name = JSON;
+			sourceTree = "<group>";
+		};
+		87CAB249245517F400487580 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				8768965B23F9F87400E17CC1 /* AddVacansyController.swift */,
+				87CAB24A2455184400487580 /* MenuVacansyViewController.swift */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 		87D65A0B240852F20093D75F /* HelperExtensions */ = {
@@ -396,10 +410,12 @@
 				8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */,
 				879F599023F9797A00D4D124 /* TabBarController.swift in Sources */,
 				875F6A41243602F1002C652D /* MessageViewController.swift in Sources */,
+				87CAB24B2455184400487580 /* MenuVacansyViewController.swift in Sources */,
 				871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */,
 				87BD43D8244F5DF0000B6865 /* ShowInfoVacansyCell.swift in Sources */,
 				87F68A7023EF7E2200D4C454 /* ShowInfoVacansyViewController.swift in Sources */,
 				87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */,
+				87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */,
 				87F68A6A23EF2B8500D4C454 /* MainScreenController.swift in Sources */,
 				879F599223F99A6900D4D124 /* NavigationController.swift in Sources */,
 				87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */,
@@ -574,7 +590,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -596,7 +612,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

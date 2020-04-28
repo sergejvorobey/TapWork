@@ -1,1 +1,20 @@
-
+[
+    {
+        "nameCategory": "Общепит",
+        "listOfSpecializations": [
+            "Официанты", "Бармены", "Повара", "Управляющая должность"
+        ]
+    },
+    {
+        "nameCategory": "Музыканты",
+        "listOfSpecializations": [
+            "Певцы", "Инструменталисты", "Dj", "Шоу - программа"
+        ]
+    },
+    {
+        "nameCategory": "Доставка",
+        "listOfSpecializations": [
+            "Курьеры"
+        ]
+    }
+]

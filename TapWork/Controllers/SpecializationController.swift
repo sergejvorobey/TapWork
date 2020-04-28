@@ -10,27 +10,46 @@ import UIKit
 
 class SpecializationController: UITableViewController {
     
-//    private var specializations: [Specialization] = []
-//    private let specializationsProvider: SpecializationsProvider = SpecializationsProvider()
+    var specializations = [CategoriesList]()
+    private var professions = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        showSpecializations()
         tableView.tableFooterView = UIView()
-//        specializations = specializationsProvider.specializations
         
     }
     
+    private func showSpecializations()  {
+        
+        var profession = [String]()
+        
+        for specialization in specializations {
+            navigationItem.title = specialization.nameCategory
+            profession = specialization.listOfSpecializations as! [String]
+            professions.append(contentsOf: profession)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        navigationItem.title = "Cпециализации"
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return specializations.count
-        return 1
+
+        return professions.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let specializationCell = tableView.dequeueReusableCell(withIdentifier: "SpecializationCell", for: indexPath) as! SpecializationCell
         
-//        specializationCell.specializationLabel.text = specializations[indexPath.row].nameSpecialization.rawValue
+        let specialization = professions[indexPath.row]
+        
+        specializationCell.specializationLabel.text = specialization
+//        specializationCell.c
         
         return specializationCell
         
@@ -39,7 +58,11 @@ class SpecializationController: UITableViewController {
     //MARK: update cells specialization
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        } else {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        }
         
         tableView.deselectRow(at: indexPath, animated: true)
         

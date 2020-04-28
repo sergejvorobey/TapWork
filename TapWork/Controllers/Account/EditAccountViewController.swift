@@ -44,13 +44,14 @@ class EditAccountViewController: UIViewController {
             saveButton.setTitleColor(.white, for: .normal)
         }
         
-        photoUser.image = #imageLiteral(resourceName: "userIcon")
+//        photoUser.image = #imageLiteral(resourceName: "userIcon")
         photoUser.layer.borderWidth = 1
         photoUser.layer.masksToBounds = false
         photoUser.layer.cornerRadius = photoUser.frame.height / 2
         photoUser.clipsToBounds = true
         
         guard let currentUsers = Auth.auth().currentUser else { return }
+        
         infoUser = Users(user: currentUsers)
         ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
     }

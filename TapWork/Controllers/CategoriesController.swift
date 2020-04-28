@@ -12,8 +12,7 @@ class CategoriesController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private var categories:[Category] = []
-    private let categoryProvider: CategoriesProvider = CategoriesProvider()
+    private let categories = DataLoader().categoryData
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +21,6 @@ class CategoriesController: UIViewController {
         self.tableView.dataSource = self
         
         tableView.tableFooterView = UIView()
-        categories = categoryProvider.categories
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,7 +49,7 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
         
         let category = categories[indexPath.row]
         
-        categoryCell.categoryLabel.text = category.name?.rawValue
+        categoryCell.categoryLabel.text = category.nameCategory
         
         categoryCell.accessoryType = .disclosureIndicator
         
@@ -66,10 +64,13 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SpecializationController" {
-            //            guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            //            let category = categories[indexPath.row]
-            //            let newHumanVC = segue.destination as! SpecializationController
-            //            newHumanVC.
+            
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            
+            let category = categories[indexPath.row]
+            let categoryInfoVC = segue.destination as! SpecializationController
+            
+            categoryInfoVC.specializations = [category]
         }
     }
     

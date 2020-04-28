@@ -22,6 +22,12 @@ class AccountUserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //MARK: TODO
+        imageUser.layer.borderWidth = 1
+        imageUser.layer.masksToBounds = false
+        imageUser.layer.cornerRadius = imageUser.frame.height / 2
+        imageUser.clipsToBounds = true
+        
         if let topItem = navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "",
                                                         style: .plain,

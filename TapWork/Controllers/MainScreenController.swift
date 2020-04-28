@@ -25,47 +25,26 @@ class MainScreenController: UITableViewController {
         navigationItem.title = "TAP WORK"
         
         spinnerStart()
-        
+
         refDatebase()
         
         tableView.tableFooterView = UIView()
         tableView.addSubview(self.refreshControll)
+        
+        view.changeColorView()
+
     }
     
     // refresh spinner
-    lazy var refreshControll: UIRefreshControl = {
-        let refreshControll = UIRefreshControl()
-        refreshControll.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
-        refreshControll.tintColor = UIColor.red
-        return refreshControll
-        
-    }()
+     private lazy var refreshControll: UIRefreshControl = {
+          let refreshControll = UIRefreshControl()
+          refreshControll.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+          refreshControll.tintColor = UIColor.red
+          return refreshControll
+          
+      }()
     
-    @objc func handleRefresh(_ refreshControll: UIRefreshControl) {
-        
-        self.tableView.reloadData()
-        let deadline = DispatchTime.now() + .milliseconds(700)
-        DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
-            refreshControll.endRefreshing()
-        }) 
-    }
-    
-    // activity indicator
-    private func spinnerStart() {
-        
-        spinner.startAnimating()
-        spinner.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        
-        spinner.hidesWhenStopped = true
-        tableView.backgroundView = spinner
-    }
-    
-    private func spinnerStop() {
-        
-        spinner.stopAnimating()
-        spinner.hidesWhenStopped = true
-    }
-    
+    //reference database
     private func refDatebase() {
         ref = Database.database().reference(withPath: "vacancies")
     }
@@ -95,21 +74,25 @@ class MainScreenController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacansyTableViewCell
         
         let vacansy = vacancies[indexPath.row]
         
         vacanciesCell.headingLabel.text = vacansy.heading
         vacanciesCell.cityVacansyLabel.text = "Москва" //TODO: peredelati
-        vacanciesCell.categoryVacansyLabel.styleLabel(with: "Общепит/Рестораны")
+        vacanciesCell.categoryVacansyLabel.styleLabel(with: "Общепит")
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "
+        
+        vacanciesCell.changeCellColor()
         
         let datePublic = vacansy.timestamp
         let date = Date(timeIntervalSince1970: datePublic / 1000)
         
         //        vacanciesCell.publicationDateLabel.text = date.calenderTimeSinceNow()
         vacanciesCell.publicationDateLabel.text = date.publicationDate(withDate: date)
+        
         spinnerStop()
         
         return vacanciesCell
@@ -124,13 +107,9 @@ class MainScreenController: UITableViewController {
         if segue.identifier == "ShowVacansyVC" {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let vacansy = vacancies[indexPath.row]
-            let newHumanVC = segue.destination as! ShowInfoVacansyViewController
-            newHumanVC.vacansyInfo = vacansy
+            let showInfoVacansyVC = segue.destination as! ShowInfoVacansyViewController
+            showInfoVacansyVC.vacansyInfo = vacansy
         }
-    }
-    
-    @IBAction func userAccount(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "ShowUserAccount", sender: nil)
     }
     
     @IBAction func filterButton(_ sender: UIBarButtonItem) {
@@ -152,3 +131,28 @@ class MainScreenController: UITableViewController {
 }
 
 
+extension MainScreenController {
+    
+      @objc func handleRefresh(_ refreshControll: UIRefreshControl) {
+          self.tableView.reloadData()
+          let deadline = DispatchTime.now() + .milliseconds(700)
+          DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
+              refreshControll.endRefreshing()
+          })
+      }
+      
+      // activity indicator
+      private func spinnerStart() {
+          spinner.startAnimating()
+          spinner.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+          
+          spinner.hidesWhenStopped = true
+          tableView.backgroundView = spinner
+      }
+      
+      private func spinnerStop() {
+          spinner.stopAnimating()
+          spinner.hidesWhenStopped = true
+      }
+    
+}

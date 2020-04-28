@@ -55,14 +55,48 @@ extension Date {
     }
 }
 
-//MARK: change style label 
+//MARK: change style label
 extension UILabel {
     func styleLabel(with text: String)  {
         self.text = text
-        let swiftColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 1)
+        let swiftColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         self.backgroundColor = swiftColor
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
 
     }
 }
+
+extension UITextView{
+
+    func setPlaceholder(with text: String) {
+
+        let placeholderLabel = UILabel()
+//        let textView = UITextView()
+        placeholderLabel.text = text
+        placeholderLabel.font = UIFont.italicSystemFont(ofSize: (self.font?.pointSize)!)
+        placeholderLabel.sizeToFit()
+        placeholderLabel.tag = 222
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: (self.font?.pointSize)! / 2)
+        placeholderLabel.textColor = UIColor.lightGray
+        placeholderLabel.isHidden = !self.text.isEmpty
+
+        self.addSubview(placeholderLabel)
+    }
+
+    func checkPlaceholder() {
+        let placeholderLabel = self.viewWithTag(222) as! UILabel
+        placeholderLabel.isHidden = !self.text.isEmpty
+    }
+}
+
+extension UIView {
+    
+    func changeColorView() {
+        
+        let color = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+        self.backgroundColor = color
+        
+    }
+}
+

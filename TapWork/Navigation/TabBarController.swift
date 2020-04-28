@@ -16,11 +16,11 @@ class TabBarController: UITabBarController {
         tabBar.tintColor = .red
         tabBar.unselectedItemTintColor = .black
         tabBar.barTintColor = .white
-        tabBar.items![0].title = "Вакансии"
-        tabBar.items![1].title = "Опубликовать вакансию"
-        tabBar.items![2].title = "Сообщения"
-//        tabBar.items![2].isEnabled = false //доработать 
-
+        tabBar.items![0].title = "Лента"
+        tabBar.items![1].title = "Сообщения"
+        tabBar.items![2].title = "Избранное"
+        tabBar.items![3].title = "Меню"
+        
         navigationController?.navigationBar.isHidden = true
     }
 }
