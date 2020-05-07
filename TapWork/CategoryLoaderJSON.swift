@@ -38,6 +38,8 @@ class DataLoader {
                 self.callBack?(nil, false, error.localizedDescription)
             }
         }
+//        print(categoryData)
+        
     }
     func completionHandler(callBack: @escaping categoriesCallBack) {
         self.callBack = callBack

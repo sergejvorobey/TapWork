@@ -21,17 +21,13 @@ class CategoriesController: UIViewController {
         self.tableView.dataSource = self
         
         tableView.tableFooterView = UIView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        navigationItem.title = "Категории"
-        guard let navigation = navigationController else {return}
-        navigation.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.red,
-            NSAttributedString.Key.font: UIFont(name: "Apple SD Gothic Neo", size: 20.0)!
-        ]
+        navigationItem.title = "Категория"
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
+        }
     }
 }
 
@@ -40,7 +36,7 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return categories.count
-
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -49,7 +45,7 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
         
         let category = categories[indexPath.row]
         
-        categoryCell.categoryLabel.text = category.nameCategory
+        categoryCell.categoryLabel.text = category.category
         
         categoryCell.accessoryType = .disclosureIndicator
         
@@ -70,7 +66,9 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
             let category = categories[indexPath.row]
             let categoryInfoVC = segue.destination as! SpecializationController
             
-            categoryInfoVC.specializations = [category]
+            for specializations in [category] {
+                categoryInfoVC.specializations = specializations.specialization!
+            }
         }
     }
     

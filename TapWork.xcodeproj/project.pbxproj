@@ -33,8 +33,18 @@
 		87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C9097123FB0B4E00C262FC /* ModelCategories.swift */; };
 		87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C9097323FB1FA700C262FC /* CategoryCell.swift */; };
 		87CAB24B2455184400487580 /* MenuVacansyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CAB24A2455184400487580 /* MenuVacansyViewController.swift */; };
+		87D05227245C978F000B2F61 /* Cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 87D05226245C978F000B2F61 /* Cities.json */; };
+		87D05254245D9723000B2F61 /* ModelCities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D05253245D9723000B2F61 /* ModelCities.swift */; };
+		87D05257245D978E000B2F61 /* CitiesLoaderAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D05256245D978E000B2F61 /* CitiesLoaderAPI.swift */; };
 		87D65A0A240816A20093D75F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87D65A09240816A10093D75F /* GoogleService-Info.plist */; };
 		87D65A0D240853170093D75F /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D65A0C240853170093D75F /* HelperExtensions.swift */; };
+		87F497532461A32E009B25A0 /* ProfessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F497522461A32E009B25A0 /* ProfessionsController.swift */; };
+		87F497552461A368009B25A0 /* ProfessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F497542461A368009B25A0 /* ProfessionCell.swift */; };
+		87F4975724630AD4009B25A0 /* RefDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F4975624630AD4009B25A0 /* RefDatabase.swift */; };
+		87F4975A24645EDC009B25A0 /* CheckNetworkConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F4975924645EDC009B25A0 /* CheckNetworkConnectivity.swift */; };
+		87F4975C246482A2009B25A0 /* ShowErrorMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F4975B246482A2009B25A0 /* ShowErrorMethod.swift */; };
+		87F497802464A743009B25A0 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F4977F2464A743009B25A0 /* Validators.swift */; };
+		87F497822464A803009B25A0 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F497812464A803009B25A0 /* AuthError.swift */; };
 		87F68A6A23EF2B8500D4C454 /* MainScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6923EF2B8500D4C454 /* MainScreenController.swift */; };
 		87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */; };
 		87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */; };
@@ -74,8 +84,18 @@
 		87C9097123FB0B4E00C262FC /* ModelCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCategories.swift; sourceTree = "<group>"; };
 		87C9097323FB1FA700C262FC /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		87CAB24A2455184400487580 /* MenuVacansyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVacansyViewController.swift; sourceTree = "<group>"; };
+		87D05226245C978F000B2F61 /* Cities.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Cities.json; sourceTree = "<group>"; };
+		87D05253245D9723000B2F61 /* ModelCities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCities.swift; sourceTree = "<group>"; };
+		87D05256245D978E000B2F61 /* CitiesLoaderAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesLoaderAPI.swift; sourceTree = "<group>"; };
 		87D65A09240816A10093D75F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87D65A0C240853170093D75F /* HelperExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperExtensions.swift; sourceTree = "<group>"; };
+		87F497522461A32E009B25A0 /* ProfessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionsController.swift; sourceTree = "<group>"; };
+		87F497542461A368009B25A0 /* ProfessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionCell.swift; sourceTree = "<group>"; };
+		87F4975624630AD4009B25A0 /* RefDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefDatabase.swift; sourceTree = "<group>"; };
+		87F4975924645EDC009B25A0 /* CheckNetworkConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNetworkConnectivity.swift; sourceTree = "<group>"; };
+		87F4975B246482A2009B25A0 /* ShowErrorMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowErrorMethod.swift; sourceTree = "<group>"; };
+		87F4977F2464A743009B25A0 /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
+		87F497812464A803009B25A0 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		87F68A6923EF2B8500D4C454 /* MainScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenController.swift; sourceTree = "<group>"; };
 		87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelVacancies.swift; sourceTree = "<group>"; };
 		87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacansyTableViewCell.swift; sourceTree = "<group>"; };
@@ -148,8 +168,9 @@
 		871D175023C8F6350095C765 /* TapWork */ = {
 			isa = PBXGroup;
 			children = (
+				87D05255245D9764000B2F61 /* LoaderAPI */,
 				875F6A392435F117002C652D /* HelperFile */,
-				87FFD9B02426CD6000A8ECE7 /* HelperFunctionAuth */,
+				87FFD9B02426CD6000A8ECE7 /* Firebase */,
 				87D65A0B240852F20093D75F /* HelperExtensions */,
 				879F599523F99F2300D4D124 /* Navigation */,
 				879F596623F4D00900D4D124 /* Controllers */,
@@ -169,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				87BB3BA123F9D691004F3C61 /* CategoriesController.swift */,
+				87F497522461A32E009B25A0 /* ProfessionsController.swift */,
 				871397C923FCBC5900FB7732 /* SpecializationController.swift */,
 			);
 			name = Category;
@@ -217,11 +239,9 @@
 		879F596723F4D02F00D4D124 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */,
-				87BD43D7244F5DF0000B6865 /* ShowInfoVacansyCell.swift */,
+				87D05223245B5AA6000B2F61 /* VacansyCell */,
 				875F6A422436037D002C652D /* MessageCell.swift */,
-				871397CD23FCBF3800FB7732 /* SpecializationCell.swift */,
-				87C9097323FB1FA700C262FC /* CategoryCell.swift */,
+				87D05222245B5A75000B2F61 /* Category&SpecViewCell */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -232,6 +252,7 @@
 				87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */,
 				87329D00240463EB0089E9EF /* ModelUsers.swift */,
 				87C9097123FB0B4E00C262FC /* ModelCategories.swift */,
+				87D05253245D9723000B2F61 /* ModelCities.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				87BD43DC2450C513000B6865 /* Categories.json */,
+				87D05226245C978F000B2F61 /* Cities.json */,
 				87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */,
 			);
 			name = JSON;
@@ -263,20 +285,60 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
+		87D05222245B5A75000B2F61 /* Category&SpecViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				87C9097323FB1FA700C262FC /* CategoryCell.swift */,
+				871397CD23FCBF3800FB7732 /* SpecializationCell.swift */,
+				87F497542461A368009B25A0 /* ProfessionCell.swift */,
+			);
+			name = "Category&SpecViewCell";
+			sourceTree = "<group>";
+		};
+		87D05223245B5AA6000B2F61 /* VacansyCell */ = {
+			isa = PBXGroup;
+			children = (
+				87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */,
+				87BD43D7244F5DF0000B6865 /* ShowInfoVacansyCell.swift */,
+			);
+			name = VacansyCell;
+			sourceTree = "<group>";
+		};
+		87D05255245D9764000B2F61 /* LoaderAPI */ = {
+			isa = PBXGroup;
+			children = (
+				87D05256245D978E000B2F61 /* CitiesLoaderAPI.swift */,
+			);
+			name = LoaderAPI;
+			sourceTree = "<group>";
+		};
 		87D65A0B240852F20093D75F /* HelperExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				87F4975824645E56009B25A0 /* CheckNetwork */,
 				87D65A0C240853170093D75F /* HelperExtensions.swift */,
 			);
 			name = HelperExtensions;
 			sourceTree = "<group>";
 		};
-		87FFD9B02426CD6000A8ECE7 /* HelperFunctionAuth */ = {
+		87F4975824645E56009B25A0 /* CheckNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				87F4975924645EDC009B25A0 /* CheckNetworkConnectivity.swift */,
+			);
+			name = CheckNetwork;
+			sourceTree = "<group>";
+		};
+		87FFD9B02426CD6000A8ECE7 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
 				87FFD9B12426CDD200A8ECE7 /* CheckValid.swift */,
+				87F497812464A803009B25A0 /* AuthError.swift */,
+				87F4977F2464A743009B25A0 /* Validators.swift */,
+				87F4975B246482A2009B25A0 /* ShowErrorMethod.swift */,
+				87F4975624630AD4009B25A0 /* RefDatabase.swift */,
 			);
-			name = HelperFunctionAuth;
+			name = Firebase;
 			sourceTree = "<group>";
 		};
 		EB92BD2BD420574FCD1128ED /* Frameworks */ = {
@@ -347,6 +409,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87D05227245C978F000B2F61 /* Cities.json in Resources */,
 				87D65A0A240816A20093D75F /* GoogleService-Info.plist in Resources */,
 				871D175E23C8F6360095C765 /* LaunchScreen.storyboard in Resources */,
 				871D175B23C8F6360095C765 /* Assets.xcassets in Resources */,
@@ -406,14 +469,18 @@
 			files = (
 				87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */,
 				87FFD9B22426CDD200A8ECE7 /* CheckValid.swift in Sources */,
+				87F4975724630AD4009B25A0 /* RefDatabase.swift in Sources */,
 				87329CFE240360F40089E9EF /* AccountUserViewController.swift in Sources */,
 				8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */,
 				879F599023F9797A00D4D124 /* TabBarController.swift in Sources */,
 				875F6A41243602F1002C652D /* MessageViewController.swift in Sources */,
 				87CAB24B2455184400487580 /* MenuVacansyViewController.swift in Sources */,
 				871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */,
+				87F497552461A368009B25A0 /* ProfessionCell.swift in Sources */,
 				87BD43D8244F5DF0000B6865 /* ShowInfoVacansyCell.swift in Sources */,
 				87F68A7023EF7E2200D4C454 /* ShowInfoVacansyViewController.swift in Sources */,
+				87F497802464A743009B25A0 /* Validators.swift in Sources */,
+				87D05257245D978E000B2F61 /* CitiesLoaderAPI.swift in Sources */,
 				87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */,
 				87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */,
 				87F68A6A23EF2B8500D4C454 /* MainScreenController.swift in Sources */,
@@ -424,14 +491,19 @@
 				871D175223C8F6350095C765 /* AppDelegate.swift in Sources */,
 				870B9D6B240DDDD0006EB3EC /* LaunchScreenViewController.swift in Sources */,
 				875F6A432436037D002C652D /* MessageCell.swift in Sources */,
+				87F497532461A32E009B25A0 /* ProfessionsController.swift in Sources */,
 				87329D01240463EB0089E9EF /* ModelUsers.swift in Sources */,
 				871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */,
+				87F4975A24645EDC009B25A0 /* CheckNetworkConnectivity.swift in Sources */,
 				87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */,
 				871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */,
 				879F596A23F4D0C200D4D124 /* ResponseViewController.swift in Sources */,
 				87D65A0D240853170093D75F /* HelperExtensions.swift in Sources */,
 				87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */,
+				87F4975C246482A2009B25A0 /* ShowErrorMethod.swift in Sources */,
+				87F497822464A803009B25A0 /* AuthError.swift in Sources */,
 				875F6A452436065D002C652D /* ChatViewController.swift in Sources */,
+				87D05254245D9723000B2F61 /* ModelCities.swift in Sources */,
 				87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,34 +16,27 @@ class LoginAccountViewController: UIViewController {
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var registerAccountButton: UIButton!
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
+    //    private let showAlert = ShowError()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        changeStyleButton()
+        changeFrameKeyboard()
+        
         emailUser.delegate = self
         passwordUser.delegate = self
         
-        activityIndicator.isHidden = true
+
         
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         navigationController?.navigationBar.isHidden = true
-        
-        if let signInButton = signInButton {
-            signInButton.setTitle("Войти", for: .normal)
-            signInButton.backgroundColor = .red
-            signInButton.layer.cornerRadius = 15
-            signInButton.tintColor = .white
-        }
-        
-        if let registerAccountButton = registerAccountButton {
-            registerAccountButton.setTitle("Зарегистрироваться", for: .normal)
-            registerAccountButton.backgroundColor = .red
-            registerAccountButton.layer.cornerRadius = 15
-            registerAccountButton.tintColor = .white
-        }
-        
+    }
+    
+    // When the keyboard appears, indent from the keyboard to the buttons
+    private func changeFrameKeyboard() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateChangeFrame(notification:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -53,56 +46,6 @@ class LoginAccountViewController: UIViewController {
                                                selector: #selector(updateChangeFrame(notification:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        emailUser.text = ""
-        passwordUser.text = ""
-    }
-    
-    @IBAction func signInAccount(_ sender: UIButton) {
-        
-        guard let email = emailUser.text, let password = passwordUser.text, email != "",
-            password != ""
-            else {
-                alertError(withMessage: "Пожалуйста, заполните все поля!")
-                return
-        }
-        
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
-            if error != nil {
-                self?.alertError(withMessage: "Неверный логин или пароль!")
-                return
-            }
-            
-            self?.activityIndicator.startAnimating()
-            
-            self?.signInButton.titleLabel?.isHidden = true
-            
-            self?.activityIndicator.isHidden = false
-            
-            //            self?.activityIndicator.stopAnimating()
-        }
-    }
-    
-    @IBAction func registerAnAccount(_ sender: UIButton) {
-        performSegue(withIdentifier: "RegisterAccount", sender: nil)
-    }
-}
-
-extension LoginAccountViewController {
-    
-    func alertError(withMessage message: String) {
-        
-        let alertController = UIAlertController(title: "Ошибка",
-                                                message: message,
-                                                preferredStyle: .alert)
-        
-        let cancel = UIAlertAction(title: "Назад", style: .default, handler: nil)
-        
-        alertController.addAction(cancel)
-        present(alertController, animated: true, completion: nil)
     }
     
     @objc func updateChangeFrame (notification: Notification) {
@@ -130,6 +73,81 @@ extension LoginAccountViewController {
                 self.view.layoutIfNeeded()
             }
         }
+    }
+    
+    // change style button
+    private func changeStyleButton() {
+        guard let signInButton = signInButton, let registerAccountButton = registerAccountButton else {return}
+        
+        signInButton.changeStyleButton(with: "Войти")
+        registerAccountButton.changeStyleButton(with: "Зарегистрироваться")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        emailUser.text = ""
+        passwordUser.text = ""
+    }
+    
+    private func singIn(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
+        
+        guard Validators.isFailedEmailOrPassword(email: email,
+                                                 password: password)
+            else {
+                completion(.failure(AuthError.notFilled))
+                return
+        }
+        
+        guard let email = email, let password = password else {
+            completion(.failure(AuthError.unknownError))
+            return
+        }
+        
+        guard Validators.isSimpleEmail(email) else {
+            completion(.failure(AuthError.invalidEmail))
+            return
+        }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+            guard let _ = result else {
+                completion(.failure(AuthError.fieldsDataNotFound))
+                return
+            }
+            if error == nil {
+                completion(.success)
+            }
+            //                completion(.success)
+        } 
+        //        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
+        //            if error != nil {
+        //                self?.showAlert(title: "Ошибка", message: "Пожалуйста, заполните все поля!")
+        //                return
+        //            }
+        //
+        //            self?.activityIndicator.startAnimating()
+        //
+        //            self?.signInButton.titleLabel?.isHidden = true
+        //
+        //            self?.activityIndicator.isHidden = false
+        //
+        //            //self?.activityIndicator.stopAnimating()
+        //        }
+    }
+    
+    @IBAction func signInAccount(_ sender: UIButton) {
+        
+        singIn(email: emailUser.text, password: passwordUser.text) { (result) in
+            switch result {
+            case .success:
+                self.showAlert(title: "Успешно", message: "Вы авторизованы!")
+            case .failure(let error):
+                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
+    }
+    
+    @IBAction func registerAnAccount(_ sender: UIButton) {
+        performSegue(withIdentifier: "RegisterAccount", sender: nil)
     }
 }
 

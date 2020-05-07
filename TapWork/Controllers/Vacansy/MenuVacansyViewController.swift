@@ -24,7 +24,7 @@ class MenuVacansyViewController: UIViewController {
     }
     
     @IBAction func addVacansyButton(_ sender: UIButton) {
-        
+        performSegue(withIdentifier: "AddVacansy", sender: nil)
     }
     
     @IBAction func userAccountButton(_ sender: UIButton) {

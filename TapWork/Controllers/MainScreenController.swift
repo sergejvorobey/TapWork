@@ -11,13 +11,13 @@ import Firebase
 
 class MainScreenController: UITableViewController {
     
-    @IBOutlet weak var imageAccount: UIBarButtonItem!
-    
-    private var user: Users!
+//    private var user: Users!
     private var ref: DatabaseReference!
-    private var queryRef:DatabaseQuery!
+//    private var queryRef:DatabaseQuery!
     private var vacancies = Array<Vacancy>()
     private let spinner = UIActivityIndicatorView()
+    
+//    private let refDatabase = RefDatabase().ref
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,13 +45,14 @@ class MainScreenController: UITableViewController {
       }()
     
     //reference database
-    private func refDatebase() {
+    private func refDatebase()  {
         ref = Database.database().reference(withPath: "vacancies")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+//        refDatabase?.observe(.value) { [weak self] (snapshot) in
         ref.observe(.value) { [weak self] (snapshot) in
             
             var _vacancies = Array<Vacancy>()
@@ -80,8 +81,8 @@ class MainScreenController: UITableViewController {
         let vacansy = vacancies[indexPath.row]
         
         vacanciesCell.headingLabel.text = vacansy.heading
-        vacanciesCell.cityVacansyLabel.text = "Москва" //TODO: peredelati
-        vacanciesCell.categoryVacansyLabel.styleLabel(with: "Общепит")
+        vacanciesCell.cityVacansyLabel.text = "Город: не выбран" //TODO: peredelati
+        vacanciesCell.categoryVacansyLabel.styleLabel(with: "  Категория: не выбрана  ") //TODO
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "
         
@@ -154,5 +155,4 @@ extension MainScreenController {
           spinner.stopAnimating()
           spinner.hidesWhenStopped = true
       }
-    
 }

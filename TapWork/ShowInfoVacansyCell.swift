@@ -20,7 +20,8 @@ class ShowInfoVacansyCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        cityVacansyLabel.text = "Москва" //TODO: peredelati
+        cityVacansyLabel.text = "Город не выбран" //TODO: peredelati
+        categotyVacansyLabel.styleLabel(with: "Город не выбран")
 
         if let button = self.responseButtonLabel {
             button.layer.cornerRadius = 10
@@ -31,15 +32,6 @@ class ShowInfoVacansyCell: UITableViewCell {
     }
     
     @IBAction func responseButton(_ sender: UIButton) {
-    }
-    
-   private func styleCategoryLabel() {
-        if let category = categotyVacansyLabel {
-            let swiftColor = UIColor(red: 221/255, green: 221/255, blue: 221/255, alpha: 1)
-            category.backgroundColor = swiftColor
-            category.layer.cornerRadius = 10
-            category.layer.masksToBounds = true
-        }
     }
 }
 

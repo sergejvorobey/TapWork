@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 
 class EditAccountViewController: UIViewController {
     
@@ -23,37 +24,73 @@ class EditAccountViewController: UIViewController {
     private var infoUser: Users!
     private var ref: DatabaseReference!
     private let db = Firestore.firestore()
-    var imageOfChanged = false
+    
+    private var imageOfChanged = false
+    private var image: UIImage? = nil
+    private let checkNetwork = CheckNetwork()
+    private let showAlert = ShowError()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegateItems()
+        refDatabase()
+        photoUser.changeStyleImage()
+        saveButtonLabel.changeStyleButton(with: "Сохранить")
+
+        tappedImagePicker()
+        
+    }
+    
+    private func delegateItems() {
         firstNameUser.delegate = self
         lastNameUser.delegate = self
         spezialization.delegate = self
-        
-        // After tap photo User open image picker
+    }
+    
+    // After tap photo User open image picker
+    private func tappedImagePicker() {
         let imageTap = UITapGestureRecognizer(target: self, action: #selector(setupPhotoUserMenu))
         photoUser.addGestureRecognizer(imageTap)
         photoUser.isUserInteractionEnabled = true
-        
-        if let saveButton = saveButtonLabel {
-            saveButton.layer.backgroundColor = UIColor.red.cgColor
-            saveButton.layer.cornerRadius = 10
-            saveButton.setTitle("Сохранить", for: .normal)
-            saveButton.setTitleColor(.white, for: .normal)
-        }
-        
-//        photoUser.image = #imageLiteral(resourceName: "userIcon")
-        photoUser.layer.borderWidth = 1
-        photoUser.layer.masksToBounds = false
-        photoUser.layer.cornerRadius = photoUser.frame.height / 2
-        photoUser.clipsToBounds = true
-        
+    }
+    
+    private func refDatabase() {
         guard let currentUsers = Auth.auth().currentUser else { return }
         
         infoUser = Users(user: currentUsers)
         ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
+    }
+    
+    // read data in database by UserID
+    private func getDataOfDatabase() {
+        db.collection("users").document(infoUser.userId).addSnapshotListener {[weak self] querySnapshot, error in
+            
+            guard let querySnapshot = querySnapshot, querySnapshot.exists else {return}
+            
+            guard let userData = querySnapshot.data() else {return}
+            
+            if let error = error {
+                print("Error retreiving collection: \(error)")
+                self?.showAlert.alertError(fromController: self!, withMessage: "Ошибка при получении данных")
+            } else {
+                let firstName = userData["firstName"]
+                //                let email = userData["email"]
+                let lastName = userData["lastName"]
+                let specialization = userData["spezialization"]
+                
+                self?.firstNameUser.text = firstName as? String
+                self?.lastNameUser.text = lastName as? String
+                self?.spezialization.text = specialization as? String
+                
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        getDataOfDatabase()
     }
     
     //action alert open photo menu (camera,photo library)
@@ -65,6 +102,7 @@ class EditAccountViewController: UIViewController {
         let actionSheet = UIAlertController(title: nil,
                                             message: nil,
                                             preferredStyle: .actionSheet)
+        
         let camera = UIAlertAction(title: "Камера", style: .default) { _ in
             self.chooseImagePicker(source: .camera)
         }
@@ -86,36 +124,61 @@ class EditAccountViewController: UIViewController {
         present(actionSheet, animated: true)
     }
     
-    // read data in database by UserID
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    // update Image Profile in Storage and upload in Firestore
+    private func updatePhotoUser() {
         
-        db.collection("users").document(infoUser.userId).addSnapshotListener {[weak self] querySnapshot,
+        guard let imageSelected = self.image else {return}
+        guard let imageData = imageSelected.jpegData(compressionQuality: 0.4) else {return}
+        
+        let storageRef = Storage.storage().reference(forURL: "gs://tapwork-5c676.appspot.com")
+        let storageProfileRef = storageRef.child("profile").child(infoUser.userId)
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        
+        let uploadTask = storageProfileRef.putData(imageData, metadata: metadata)
+        
+        uploadTask.observe(.progress) { snapshot in
+            // Upload reported progress
+            let percentComplete = 100.0 * Double(snapshot.progress!.completedUnitCount)
+                / Double(snapshot.progress!.totalUnitCount)
             
-            error in
-            
-            guard let querySnapshot = querySnapshot, querySnapshot.exists else {return}
-            
-            guard let userData = querySnapshot.data() else {return}
-            
-            if let error = error {
-                print("Error retreiving collection: \(error)")
-                self?.alertError(withMessage: "Ошибка при получении данных")
+            if percentComplete != 100 {
+                self.displaySignUpPendingAlert()
             } else {
-                let firstName = userData["firstName"]
-                //                let email = userData["email"]
-                let lastName = userData["lastName"]
-                let specialization = userData["spezialization"]
-                
-                self?.firstNameUser.text = firstName as? String
-                self?.lastNameUser.text = lastName as? String
-                self?.spezialization.text = specialization as? String
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        storageProfileRef.putData(imageData, metadata: metadata) { (storageMetaData, error) in
+            
+            if error != nil {
+                print(error?.localizedDescription as Any)
+                return
+            }
+            
+            storageProfileRef.downloadURL {[weak self] (url, error) in
+                if let metaImageUrl = url?.absoluteString {
+                    
+                    self?.db.collection("users").document(self!.infoUser.userId).updateData([
+                        "profileImageUrl": metaImageUrl
+                    ])
+                    
+                    if let err = error {
+                        print("Error updating document: \(err)")
+                        self?.showAlert.alertError(fromController: self!, withMessage: "Ошибка обновления данных!")
+                    } else {
+                        print("Document successfully updated")
+                        // self?.alertError(withMessage: "Данные успешно обновлены!")
+                        // self?.displaySignUpPendingAlert()
+                    }
+                }
             }
         }
     }
     
-    //save data in database by UserID
-    @IBAction func savePressed(_ sender: UIButton) {
+    // update data in FirebaseFirestore by UserID
+    private func updateData() {
         
         guard let firstName = firstNameUser.text,
             let lastName = lastNameUser.text,
@@ -128,31 +191,47 @@ class EditAccountViewController: UIViewController {
         ]) {[weak self] err in
             if let err = err {
                 print("Error updating document: \(err)")
-                self?.alertError(withMessage: "Ошибка обновления данных!")
+                self?.showAlert.alertError(fromController: self!, withMessage: "Ошибка обновления данных!")
             } else {
                 print("Document successfully updated")
-                self?.alertError(withMessage: "Данные успешно обновлены!")
+                self?.showAlert.alertError(fromController: self!, withMessage: "Данные успешно обновлены!")
             }
         }
     }
-}
-
-extension EditAccountViewController {
     
-    func alertError(withMessage message: String) {
+    //check to network connected
+    @IBAction func savePressed(_ sender: UIButton) {
         
-        let alertController = UIAlertController(title: "",
-                                                message: message,
-                                                preferredStyle: .alert)
+        if checkNetwork.isConnectedToNetwork(){
+            print("Internet Connection Available!")
+            updateData()
+        } else {
+            print("Internet Connection not Available!")
+            showAlert.alertError(fromController: self, withMessage: "Ошибка интернет соединения!")
+        }
+    }
+    
+    // alert with progress update Image in Firebase
+    private func displaySignUpPendingAlert()  {
         
-        let cancel = UIAlertAction(title: "Назад", style: .default)/* {[weak self] _ in
-         self?.performSegue(withIdentifier: "EditAccountViewController", sender: nil)
-         }*/
-        alertController.addAction(cancel)
-        present(alertController, animated: true, completion: nil)
+        //create an alert controller
+        let alert = UIAlertController(title: "Загрузка", message: nil, preferredStyle: .alert)
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isUserInteractionEnabled = false
+        activityIndicator.startAnimating()
+        
+        alert.view.addSubview(activityIndicator)
+        alert.view.heightAnchor.constraint(equalToConstant: 95).isActive = true
+        
+        activityIndicator.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor, constant: 0).isActive = true
+        activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
+        
+        present(alert, animated: true)
     }
 }
 
+//MARK: Text field Delegate
 extension EditAccountViewController: UITextFieldDelegate {
     
     // hide the keyboard when you click on Done text Field
@@ -162,6 +241,7 @@ extension EditAccountViewController: UITextFieldDelegate {
     }
 }
 
+//MARK: Image Picker
 extension EditAccountViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
@@ -178,14 +258,29 @@ extension EditAccountViewController: UIImagePickerControllerDelegate, UINavigati
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        photoUser.image = info[.editedImage] as? UIImage
-        photoUser.contentMode = .scaleAspectFill
-        photoUser.clipsToBounds = true
+        if let imageSelected = info[.editedImage] as? UIImage {
+            image = imageSelected
+            photoUser.image = imageSelected
+            photoUser.contentMode = .scaleAspectFill
+            photoUser.clipsToBounds = true
+            
+            imageOfChanged = true
+        }
         
-        imageOfChanged = true
-        
-        dismiss(animated: true)
+        if let imageOriginal = info[.originalImage] as? UIImage {
+            image = imageOriginal
+            photoUser.image = imageOriginal
+            
+            imageOfChanged = true
+        }
+            dismiss(animated: true)
+        if checkNetwork.isConnectedToNetwork() {
+            print("Internet Connection Available!")
+            updatePhotoUser()
+        } else {
+            print("Internet Connection not Available!")
+            showAlert.alertError(fromController: self, withMessage: "Ошибка загрузки фотографии, проверьте интернет!")
+        }
     }
 }
-
 

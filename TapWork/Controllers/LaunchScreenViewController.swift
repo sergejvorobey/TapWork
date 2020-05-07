@@ -13,6 +13,8 @@ class LaunchScreenViewController: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var headingApp: UILabel!
+    private let checkNetwork = CheckNetwork()
+    private let showAlert = ShowError()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,7 @@ class LaunchScreenViewController: UIViewController {
         checkUser()
         
         navigationController?.navigationBar.isHidden = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
     }
     
@@ -37,24 +40,20 @@ class LaunchScreenViewController: UIViewController {
         //если акк есть ->> на главный экран
         Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
             
-            if user != nil {
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                    
-                    self?.activityIndicator.stopAnimating()
-                    
-                    self?.performSegue(withIdentifier: "MainVC", sender: nil)
-                    
+            if (self?.checkNetwork.isConnectedToNetwork())! {
+                if user != nil {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
+                        self?.activityIndicator.stopAnimating()
+                        self?.performSegue(withIdentifier: "MainVC", sender: nil)
+                    }
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
+                        self?.activityIndicator.stopAnimating()
+                        self?.performSegue(withIdentifier: "LoginAccountController", sender: nil)
+                    }
                 }
-                
             } else {
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                    
-                    self?.activityIndicator.stopAnimating()
-                    
-                    self?.performSegue(withIdentifier: "LoginAccountController", sender: nil)
-                }
+                self?.showAlert.alertError(fromController: self!, withMessage: "Проверьте интернет соединение!")
             }
         }
     }

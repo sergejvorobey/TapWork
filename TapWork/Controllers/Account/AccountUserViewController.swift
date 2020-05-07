@@ -18,32 +18,33 @@ class AccountUserViewController: UIViewController {
     
     private var infoUser: Users!
     private var ref: DatabaseReference!
-
+    private var image = #imageLiteral(resourceName: "userImage")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MARK: TODO
-        imageUser.layer.borderWidth = 1
-        imageUser.layer.masksToBounds = false
-        imageUser.layer.cornerRadius = imageUser.frame.height / 2
-        imageUser.clipsToBounds = true
+        imageUser.changeStyleImage()
+        refDatabase()
+        setupNavigationBar()
         
-        if let topItem = navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "",
-                                                        style: .plain,
-                                                        target: nil, action: nil)
-            
-            guard let currentUsers = Auth.auth().currentUser else { return }
-            infoUser = Users(user: currentUsers)
-            ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
-        }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
+    private func setupNavigationBar() {
+        guard let topItem = navigationController?.navigationBar.topItem else {return}
+        topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                    style: .plain,
+                                                    target: nil, action: nil)
+    }
+    
+    private func refDatabase() {
+        guard let currentUsers = Auth.auth().currentUser else { return }
+        infoUser = Users(user: currentUsers)
+        ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
+    }
+    
+    private func getDataOfDatabase() {
         let db = Firestore.firestore()
-
+        
         db.collection("users").document(infoUser.userId).addSnapshotListener {[weak self] querySnapshot, error in
             
             guard let querySnapshot = querySnapshot, querySnapshot.exists else {return}
@@ -55,8 +56,10 @@ class AccountUserViewController: UIViewController {
             } else {
                 guard let firstName = userData["firstName"],
                     let email = userData["email"],
-                    let lastName = userData["lastName"] else {return}
-                let specialization = userData["spezialization"] ?? "не указана"
+                    let lastName = userData["lastName"],
+                    let specialization = userData["spezialization"],
+                    let profileImage = userData["profileImageUrl"] as? String  else {return}
+                
                 let fullName = """
                 \(firstName)
                 \(lastName)
@@ -64,12 +67,22 @@ class AccountUserViewController: UIViewController {
                 self?.nameUserLabel.text = fullName
                 self?.emailUserLabel.text = email as? String
                 self?.specializationUserLabel.text = "Профессия: \(specialization)"
+                
+                if profileImage == "" {
+                    self?.imageUser.image = self?.image
+                } else if let url = URL(string: profileImage) {
+                    self?.imageUser.loadImage(from: url)
+                }
             }
         }
     }
-   
-    @IBAction func menuAccount(_ sender: UIBarButtonItem) {
-        
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        getDataOfDatabase()
+    }
+    
+    private func showMenu() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let cancel = UIAlertAction(title: "Назад", style: .default) { _ in }
@@ -96,4 +109,10 @@ class AccountUserViewController: UIViewController {
         actionSheet.addAction(cancel)
         present(actionSheet, animated: true)
     }
+    
+    @IBAction func menuAccount(_ sender: UIBarButtonItem) {
+        showMenu()
+    }
 }
+
+

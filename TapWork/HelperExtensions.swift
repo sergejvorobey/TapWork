@@ -59,9 +59,10 @@ extension Date {
 extension UILabel {
     func styleLabel(with text: String)  {
         self.text = text
-        let swiftColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+        let swiftColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
         self.backgroundColor = swiftColor
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = 8
+//        self.layer.borderWidth = 0.1
         self.layer.masksToBounds = true
 
     }
@@ -72,7 +73,6 @@ extension UITextView{
     func setPlaceholder(with text: String) {
 
         let placeholderLabel = UILabel()
-//        let textView = UITextView()
         placeholderLabel.text = text
         placeholderLabel.font = UIFont.italicSystemFont(ofSize: (self.font?.pointSize)!)
         placeholderLabel.sizeToFit()
@@ -97,6 +97,68 @@ extension UIView {
         let color = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         self.backgroundColor = color
         
+    }
+}
+
+extension UIImageView {
+    
+    func loadImage(from url: URL) {
+//        image = nil
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard let data = data, let newImage = UIImage(data: data)
+                else {
+                    print("dont load image from \(url)")
+                    return
+            }
+            
+            DispatchQueue.main.async {
+                self.image = newImage
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func changeStyleImage() {
+        self.layer.borderWidth = 0.3
+        self.layer.masksToBounds = false
+        self.layer.cornerRadius = self.frame.height / 2
+        self.clipsToBounds = true
+    }
+}
+
+extension UIButton {
+    
+    func changeStyleButton(with text: String) {
+
+        self.setTitle(text, for: .normal)
+        self.backgroundColor = .red
+        self.layer.cornerRadius = 15
+        self.tintColor = .white
+    }
+    
+    func changeButtonDisclosure(with text: String) {
+        
+        let disclosure = UITableViewCell()
+        disclosure.frame = self.bounds
+        disclosure.accessoryType = .disclosureIndicator
+        disclosure.isUserInteractionEnabled = false
+        self.setTitle(text, for: .normal)
+        self.layer.cornerRadius = 5
+        self.layer.borderWidth = 0.2
+        self.layer.masksToBounds = true
+        
+        self.addSubview(disclosure)
+    }
+}
+
+extension UIViewController {
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Назад", style: .default)
+        alertController.addAction(cancel)
+        present(alertController, animated: true, completion: nil)
     }
 }
 

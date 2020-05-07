@@ -11,5 +11,8 @@ target 'TapWork' do
   pod 'Firebase/Database'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Storage'
+  pod 'Alamofire', '~> 5.1'
+  pod 'iOSDropDown'
 
 end

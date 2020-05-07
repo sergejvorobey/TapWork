@@ -8,17 +8,15 @@
 
 import UIKit
 import Firebase
+import iOSDropDown
 
 class AddVacansyController: UIViewController {
     
     @IBOutlet weak var headingVacansy: UITextField!
-    
     @IBOutlet weak var categoryButtonLabel: UIButton!
-    @IBOutlet weak var cityButtonLabel: UIButton!
-    
+    @IBOutlet weak var dropDownCities: DropDown!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
-    
     @IBOutlet weak var descriptionVacansyHeadingLabel: UILabel!
     @IBOutlet weak var contentVacansy: UITextView!
     @IBOutlet weak var paymentVacansy: UITextField!
@@ -29,34 +27,31 @@ class AddVacansyController: UIViewController {
     private let maxCountDescriptionTextView = 200
     private let minCountDescriptionTextView = 20
     
+    private var citiesList = [Items]()
+    
     private var ref: DatabaseReference?
     private var user: Users?
     private var vacancies = Array<Vacancy>()
-    let disclosureCity = UITableViewCell()
+    private let showAlert = ShowError()
+    
     let disclosureCategory = UITableViewCell()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cityLabel.text = ""
-        categoryLabel.text = ""
-
+        parseData()
         settingLabelAndButton()
-        
-        self.addDoneButtonOnNumberKeyboard()
-        
-        guard let currentUser = Auth.auth().currentUser else {
-            return
-        }
-        
-        user = Users(user: currentUser)
-        
-        ref = Database.database().reference(withPath: "vacancies")
+        addDoneButtonOnNumberKeyboard()
+        refDatabase()
+        observerKeyboard()
+
+    }
+    
+    private func observerKeyboard() {
         
         headingVacansy.addTarget(self,
                                  action: #selector(addVacansyColorChanged),
                                  for: .editingChanged)
-        
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateChangeFrame(notification:)),
@@ -67,12 +62,6 @@ class AddVacansyController: UIViewController {
                                                selector: #selector(updateChangeFrame(notification:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
-        
-        
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        contentVacansy.checkPlaceholder()
     }
     
     // изменяем цвет кнопки при заполнении данных в nameVacansy
@@ -87,12 +76,17 @@ class AddVacansyController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-//         contentVacansy.text = ""
-//         contentVacansy.setPlaceholder(with: "Максимально 200 символов")
-        
+    func textViewDidChange(_ textView: UITextView) {
+        contentVacansy.checkPlaceholder()
+    }
+    
+    private func refDatabase() {
+        guard let currentUser = Auth.auth().currentUser else {return}
+        user = Users(user: currentUser)
+        ref = Database.database().reference(withPath: "vacancies")
+    }
+    
+    private func getDataDatabase() {
         ref?.observe(.value) { [weak self] (snapshot) in
             var _vacancies = Array<Vacancy>()
             for item in snapshot.children {
@@ -103,9 +97,14 @@ class AddVacansyController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getDataDatabase()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-       
+        
         if contentVacansy.text.isEmpty == true {
             contentVacansy.checkPlaceholder()
         }
@@ -115,6 +114,8 @@ class AddVacansyController: UIViewController {
         super.viewWillDisappear(true)
         contentVacansy.text = ""
         headingVacansy.text = ""
+        dropDownCities.text = ""
+        cityLabel.text = " не выбран "
         paymentVacansy.text = ""
         phoneNumber.text = ""
         addVacansyLabel.isEnabled = false
@@ -122,7 +123,7 @@ class AddVacansyController: UIViewController {
     }
     
     // MARK: Done button on numberKeyboard
-    func addDoneButtonOnNumberKeyboard() {
+   private func addDoneButtonOnNumberKeyboard() {
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         
@@ -151,13 +152,8 @@ class AddVacansyController: UIViewController {
     }
     
     @IBAction func categoryVacansyButton (_ sender: UIButton) {
-        
-        // MARK: drop-down list of categories
+        performSegue(withIdentifier: "CategoriesController", sender: nil)
     }
-    
-    @IBAction func cityVacansyButton(_ sender: UIButton) {
-    }
-    
     
     @IBAction func addVacansyButton(_ sender: UIButton) {
         
@@ -171,22 +167,22 @@ class AddVacansyController: UIViewController {
             phoneNumber != ""
             
             else {
-                alertError(withMessage: "Пожалуйста, заполните все поля!")
+                showAlert.alertError(fromController: self, withMessage: "Пожалуйста, заполните все поля!")
                 return
         }
         
         // check valid data in text field
         let content = contentVacansy.count
-        
+       
         switch content {
             
         case _ where content > maxCountDescriptionTextView :
-            alertError(withMessage: "Cлишком большое описание, максимальное количество символов: 200")
+            showAlert.alertError(fromController: self, withMessage: "Cлишком большое описание,максимальное количество символов: \(maxCountDescriptionTextView)")
         case _ where content < minCountDescriptionTextView :
-            alertError(withMessage: "Слишком короткое описание, минимальное количество символов: 20")
+            showAlert.alertError(fromController: self, withMessage: "Слишком короткое описание, минимальное количество символов: \(minCountDescriptionTextView)")
         case _ where content < maxCountDescriptionTextView &&
             content > minCountDescriptionTextView :
-//            print("all right")
+ 
             let vacansy = Vacancy(userId: self.user!.userId,
                                   heading: headingVacansy ,
                                   content: contentVacansy,
@@ -195,7 +191,9 @@ class AddVacansyController: UIViewController {
             
             let vacansyRef = ref?.child(vacansy.heading)
             vacansyRef?.setValue(vacansy.providerToDictionary())
+//            showAlert.alertError(fromController: self, withMessage: "Ваша вакансия опубликована!")
             alertMessage(withMessage: "Ваша вакансия опубликована!")
+//            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         default:
             break
         }
@@ -204,63 +202,29 @@ class AddVacansyController: UIViewController {
 
 extension AddVacansyController {
     
-    func settingLabelAndButton() {
-         
+    private func settingLabelAndButton() {
+        
         navigationItem.title = "Cоздать вакансию"
-        
-//        guard let navigation = navigationController else {return}
-//        
-//        navigation.navigationBar.titleTextAttributes = [
-//            NSAttributedString.Key.foregroundColor: UIColor.red,
-//            NSAttributedString.Key.font: UIFont(name: "Apple SD Gothic Neo", size: 20.0)!
-//        ]
-        
-        guard let categoryButton = categoryButtonLabel, let cityButton = cityButtonLabel else {return}
-        
-        categoryButton.setTitle("Выберите категорию:", for: .normal)
-        cityButton.setTitle("Выберите город:", for: .normal)
-        
-        disclosureCategory.frame = categoryButton.bounds
-        disclosureCity.frame = cityButton.bounds
-        disclosureCategory.accessoryType = .disclosureIndicator
-        disclosureCity.accessoryType = .disclosureIndicator
-        disclosureCategory.isUserInteractionEnabled = false
-        disclosureCity.isUserInteractionEnabled = false
-        
-        categoryButton.layer.cornerRadius = 10
-        categoryButton.layer.borderWidth = 0.5
-        categoryButton.layer.masksToBounds = true
-        
-        cityButton.layer.cornerRadius = 10
-        cityButton.layer.borderWidth = 0.5
-        cityButton.layer.masksToBounds = true
-        
-        categoryButton.addSubview(disclosureCategory)
-        cityButton.addSubview(disclosureCity)
+
+        guard let categoryButton = categoryButtonLabel else {return}
+        categoryButton.changeButtonDisclosure(with: "Выберите категорию:")
         
         guard let headingVacansy = descriptionVacansyHeadingLabel else  {return}
-            headingVacansy.text = "Описание вакансии"
- 
-        guard let addButton = addVacansyLabel else {return}
-            addButton.isEnabled = false
-            addButton.layer.backgroundColor = UIColor.lightGray.cgColor
-            addButton.layer.cornerRadius = 10
-            addButton.setTitle("Добавить вакансию", for: .normal)
-            addButton.setTitleColor(.white, for: .normal)
+        headingVacansy.text = "Описание вакансии:"
         
-        guard let city = cityLabel, let category = categoryLabel else {return}
+        guard let addButton = addVacansyLabel else {return}
+        addButton.changeStyleButton(with: "Добавить вакансию")
 
-        city.styleLabel(with: " Город не выбран ")
-        category.styleLabel(with: " Категория не выбрана ")
+        guard let city = cityLabel, let category = categoryLabel else {return}
+        city.styleLabel(with: " не выбран ")
+        category.styleLabel(with: " не выбрана ")
         
         guard let content = contentVacansy else {return}
-
         content.layer.borderWidth = 0.5
         content.layer.cornerRadius = 10
         content.delegate = self
         content.text = ""
         content.setPlaceholder(with: "Максимально 200 символов")
-        
     }
 }
 
@@ -290,23 +254,21 @@ extension AddVacansyController: UITextFieldDelegate, UITextViewDelegate {
                                                 preferredStyle: .alert)
         
         let cancel = UIAlertAction(title: "Назад", style: .default) {[weak self] _ in
-//            self?.tabBarController?.selectedIndex = 0
+            
+//            self?.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            
+//            self?.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            
+            self?.headingVacansy.text = ""
+            self?.contentVacansy.text = ""
+            self?.paymentVacansy.text = ""
+            self?.phoneNumber.text = ""
         }
+        
         alertController.addAction(cancel)
         present(alertController, animated: true, completion: nil)
     }
     
-    // alert message after check error
-    func alertError(withMessage message: String) {
-        
-        let alertController = UIAlertController(title: "",
-                                                message: message,
-                                                preferredStyle: .alert)
-        
-        let cancel = UIAlertAction(title: "Назад", style: .default)
-        alertController.addAction(cancel)
-        present(alertController, animated: true, completion: nil)
-    }
     
     // keyboard hide and show
     @objc func updateChangeFrame (notification: Notification) {
@@ -318,13 +280,42 @@ extension AddVacansyController: UITextFieldDelegate, UITextViewDelegate {
         
         if notification.name == UIResponder.keyboardWillShowNotification {
             
-//            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height + 50, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
             
         } else {
             
-//            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50 - keyboardFrame.height, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
     }
 }
 
-
+//MARK: Load API data
+extension AddVacansyController {
+    
+    private func parseData() {
+        
+        let dataLoader = CitiesLoaderAPI()
+        dataLoader.getAllCitiesName()
+        
+        dataLoader.completionHandler { [weak self] (cities, status, message) in
+            
+            if status {
+                guard let self = self else {return}
+                guard let _cities = cities else {return}
+                
+                self.citiesList = _cities
+                
+                var arrayCities = [String]()
+                
+                for city in self.citiesList {
+                    arrayCities.append(city.title!)
+                    self.dropDownCities.optionArray = arrayCities
+                    // The the Closure returns Selected Index and String
+                    self.dropDownCities.didSelect{(selectedText , _ ,_) in
+                        self.cityLabel.text = " \(selectedText) "
+                    }
+                }
+            }
+        }
+    }
+}

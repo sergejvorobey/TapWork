@@ -17,7 +17,6 @@ class RegisterAccountController: UIViewController {
     @IBOutlet weak var lastNameUserTextField: UITextField!
     @IBOutlet weak var passwordUserTextField: UITextField!
     @IBOutlet weak var confirmPassUserTextField: UITextField!
-    
     @IBOutlet weak var registerButtonLabel: UIButton!
     
     override func viewDidLoad() {
@@ -29,78 +28,82 @@ class RegisterAccountController: UIViewController {
         passwordUserTextField.delegate = self
         confirmPassUserTextField.delegate = self
         
-        if let registerButton = registerButtonLabel {
-            registerButton.setTitle("Зарегистрировать", for: .normal)
-            registerButton.backgroundColor = .red
-            registerButton.layer.cornerRadius = 15
-            registerButton.tintColor = .white
+        changeStyleButton()
+    }
+    
+    private func changeStyleButton() {
+        guard let registerButton = registerButtonLabel else {return}
+        
+        registerButton.changeStyleButton(with: "Зарегистрировать")
+    }
+    
+   private func register(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
+        
+        guard Validators.isFailed(firstname: firstNameUserTextField.text,
+                                  lastName: lastNameUserTextField.text,
+                                  email: email,
+                                  password: password)
+        else {
+            completion(.failure(AuthError.notFilled))
+            return
+        }
+        
+        guard let email = email, let password = password else {
+            completion(.failure(AuthError.unknownError))
+            return
+        }
+        
+        guard Validators.isSimpleEmail(email) else {
+            completion(.failure(AuthError.invalidEmail))
+            return
+        }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            guard let _ = result else {
+                completion(.failure(error!))
+                return
+            }
+            
+//            let db = Firestore.firestore()
+//            db.collection("users").addDocument(data: [
+//                "firstName": self.firstNameUserTextField.text!,
+//                "lastName": self.lastNameUserTextField.text!,
+//                "email": email,
+//                "uid": result!.user.uid as Any ])
+            let db = Firestore.firestore()
+            db.collection("users").document((result?.user.uid)!).setData([
+                    "firstName": self.firstNameUserTextField.text!,
+                    "lastName": self.lastNameUserTextField.text!,
+                    "email": email,
+                    "password": password,
+                    "spezialization": "не указана",
+                    "profileImageUrl": "",
+                    "uid": result?.user.uid as Any])
+            { (error) in
+                if error != nil {
+                    completion(.failure(AuthError.serverError))
+                }
+                completion(.success)
+                 self.performSegue(withIdentifier: "MainScreenController", sender: nil)
+            }
         }
     }
     
     @IBAction func registerButton(_ sender: UIButton) {
-        
-        guard let email = emailTextField.text,
-            let firstName = firstNameUserTextField.text ,
-            let lastName = lastNameUserTextField.text,
-            let password = passwordUserTextField.text,
-            let confirmPassword = confirmPassUserTextField.text,
-            email != "",
-            firstName != "",
-            lastName != "",
-            password != "",
-            confirmPassword != ""
-            //confirmPassword != password
-            else {
-                alertError(withMessage: "Пожалуйста, заполните все поля!")
-                return
-        }
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self] (user, error) in
-            if error == nil {
-                if user != nil {
-                    let db = Firestore.firestore()
-                    db.collection("users").document((user?.user.uid)!).setData([
-                        "firstName": firstName,
-                        "lastName": lastName,
-                        "email": email,
-                        "password": password,
-                        "uid": user?.user.uid as Any]) { (error) in
-                            //                    db.collection("users").addDocument(data: [
-                            //                        "firstName": firstName,
-                            //                        "lastName": lastName,
-                            //                        "email": email,
-                            //                        "uid": user?.user.uid as Any ]) { (error) in
-                            if error == nil {
-                                self?.performSegue(withIdentifier: "MainScreenController", sender: nil)
-                            }
-                    }
-                } else {
-                    self?.alertError(withMessage: "Пользователь не создан")
-                }
-            } else {
-                print(error!.localizedDescription)
-                self?.alertError(withMessage: "Адрес электронной почты уже используется другой учетной записью.")
+        register(email: emailTextField.text, password: passwordUserTextField.text) { (result) in
+            switch result {
+            case .success:
+                print("OK")
+//                self.showAlert(title: "Успешно", message: "Вы зарегистрированны")
+//                self.performSegue(withIdentifier: "MainScreenController", sender: nil)
+            case .failure(let error):
+                self.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }
     
     @IBAction func cancelButton (_ sender: UIBarButtonItem) {
         dismiss(animated: true)
-    }
-}
-
-extension RegisterAccountController {
-    
-    func alertError(withMessage message: String) {
-        
-        let alertController = UIAlertController(title: "Ошибка",
-                                                message: message,
-                                                preferredStyle: .alert)
-        
-        
-        let cancel = UIAlertAction(title: "Назад", style: .default, handler: nil)
-        
-        alertController.addAction(cancel)
-        present(alertController, animated: true, completion: nil)
     }
 }
 

@@ -42,7 +42,7 @@ extension ShowInfoVacansyViewController: UITableViewDelegate, UITableViewDataSou
 
         if let vacansyInfo = vacansyInfo {
             vacancyCell.headingVacansyLabel.text = vacansyInfo.heading
-            vacancyCell.categotyVacansyLabel.styleLabel(with: "Общепит/Рестораны") // TODO: dodelati
+            vacancyCell.categotyVacansyLabel.styleLabel(with: "  Категория не выбрана  ") // TODO: dodelati
             vacancyCell.contentVacansyLabel.text = vacansyInfo.content
             vacancyCell.paymentVacansyLabel.text = vacansyInfo.payment + " ₽ "
         }
