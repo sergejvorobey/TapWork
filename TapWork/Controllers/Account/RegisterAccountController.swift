@@ -22,12 +22,7 @@ class RegisterAccountController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        emailTextField.delegate = self
-        firstNameUserTextField.delegate = self
-        lastNameUserTextField.delegate = self
-        passwordUserTextField.delegate = self
-        confirmPassUserTextField.delegate = self
-        
+        delegates()
         changeStyleButton()
     }
     
@@ -37,9 +32,22 @@ class RegisterAccountController: UIViewController {
         registerButton.changeStyleButton(with: "Зарегистрировать")
     }
     
+    private func delegates() {
+        emailTextField.delegate = self
+        firstNameUserTextField.delegate = self
+        lastNameUserTextField.delegate = self
+        passwordUserTextField.delegate = self
+        confirmPassUserTextField.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.view.activityStopAnimating()
+    }
+    
    private func register(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
         
-        guard Validators.isFailed(firstname: firstNameUserTextField.text,
+        guard Validators.isFilled(firstname: firstNameUserTextField.text,
                                   lastName: lastNameUserTextField.text,
                                   email: email,
                                   password: password)
@@ -63,7 +71,6 @@ class RegisterAccountController: UIViewController {
                 completion(.failure(error!))
                 return
             }
-            
 //            let db = Firestore.firestore()
 //            db.collection("users").addDocument(data: [
 //                "firstName": self.firstNameUserTextField.text!,
@@ -84,7 +91,6 @@ class RegisterAccountController: UIViewController {
                     completion(.failure(AuthError.serverError))
                 }
                 completion(.success)
-                 self.performSegue(withIdentifier: "MainScreenController", sender: nil)
             }
         }
     }
@@ -93,9 +99,10 @@ class RegisterAccountController: UIViewController {
         register(email: emailTextField.text, password: passwordUserTextField.text) { (result) in
             switch result {
             case .success:
-                print("OK")
-//                self.showAlert(title: "Успешно", message: "Вы зарегистрированны")
-//                self.performSegue(withIdentifier: "MainScreenController", sender: nil)
+//                self.showAlert(title: "Успешно", message: "Вы зарегистрированны!")
+                self.view.activityStartAnimating(activityColor: .red,
+                                                 backgroundColor: UIColor.black.withAlphaComponent(0.1))
+                self.performSegue(withIdentifier: "MainScreenController", sender: nil)
             case .failure(let error):
                 self.showAlert(title: "Ошибка", message: error.localizedDescription)
             }

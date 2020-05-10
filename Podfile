@@ -14,5 +14,6 @@ target 'TapWork' do
   pod 'Firebase/Storage'
   pod 'Alamofire', '~> 5.1'
   pod 'iOSDropDown'
+  pod 'NVActivityIndicatorView'
 
 end

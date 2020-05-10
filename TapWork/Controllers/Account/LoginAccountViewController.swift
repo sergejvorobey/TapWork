@@ -15,7 +15,7 @@ class LoginAccountViewController: UIViewController {
     @IBOutlet weak var passwordUser: UITextField!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var registerAccountButton: UIButton!
-
+    
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     //    private let showAlert = ShowError()
@@ -25,14 +25,15 @@ class LoginAccountViewController: UIViewController {
         
         changeStyleButton()
         changeFrameKeyboard()
-        
-        emailUser.delegate = self
-        passwordUser.delegate = self
-        
-
+        delegates()
         
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        navigationController?.navigationBar.isHidden = true
+        //        navigationController?.navigationBar.isHidden = true
+    }
+    
+    private func delegates() {
+        emailUser.delegate = self
+        passwordUser.delegate = self
     }
     
     // When the keyboard appears, indent from the keyboard to the buttons
@@ -77,7 +78,8 @@ class LoginAccountViewController: UIViewController {
     
     // change style button
     private func changeStyleButton() {
-        guard let signInButton = signInButton, let registerAccountButton = registerAccountButton else {return}
+        guard let signInButton = signInButton,
+            let registerAccountButton = registerAccountButton else {return}
         
         signInButton.changeStyleButton(with: "Войти")
         registerAccountButton.changeStyleButton(with: "Зарегистрироваться")
@@ -85,13 +87,14 @@ class LoginAccountViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.view.activityStopAnimating()
         emailUser.text = ""
         passwordUser.text = ""
     }
     
     private func singIn(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
         
-        guard Validators.isFailedEmailOrPassword(email: email,
+        guard Validators.isFilledEmailOrPassword(email: email,
                                                  password: password)
             else {
                 completion(.failure(AuthError.notFilled))
@@ -116,22 +119,7 @@ class LoginAccountViewController: UIViewController {
             if error == nil {
                 completion(.success)
             }
-            //                completion(.success)
-        } 
-        //        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
-        //            if error != nil {
-        //                self?.showAlert(title: "Ошибка", message: "Пожалуйста, заполните все поля!")
-        //                return
-        //            }
-        //
-        //            self?.activityIndicator.startAnimating()
-        //
-        //            self?.signInButton.titleLabel?.isHidden = true
-        //
-        //            self?.activityIndicator.isHidden = false
-        //
-        //            //self?.activityIndicator.stopAnimating()
-        //        }
+        }
     }
     
     @IBAction func signInAccount(_ sender: UIButton) {
@@ -139,7 +127,9 @@ class LoginAccountViewController: UIViewController {
         singIn(email: emailUser.text, password: passwordUser.text) { (result) in
             switch result {
             case .success:
-                self.showAlert(title: "Успешно", message: "Вы авторизованы!")
+                //                self.showAlert(title: "Успешно", message: "Вы авторизованы!")
+                self.view.activityStartAnimating(activityColor: .red,
+                                                 backgroundColor: UIColor.black.withAlphaComponent(0.1))
             case .failure(let error):
                 self.showAlert(title: "Ошибка", message: error.localizedDescription)
             }

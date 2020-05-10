@@ -8,52 +8,51 @@
 
 import UIKit
 import Firebase
+import NVActivityIndicatorView
 
 class MainScreenController: UITableViewController {
     
-//    private var user: Users!
-    private var ref: DatabaseReference!
-//    private var queryRef:DatabaseQuery!
+
     private var vacancies = Array<Vacancy>()
     private let spinner = UIActivityIndicatorView()
-    
-//    private let refDatabase = RefDatabase().ref
-    
+    var nvActivityIndicator: NVActivityIndicatorView?
+//    let spinner2 = NVActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "TAP WORK"
         
-        spinnerStart()
-
-        refDatebase()
-        
         tableView.tableFooterView = UIView()
-        tableView.addSubview(self.refreshControll)
+        tableView.addSubview(refreshControll)
         
         view.changeColorView()
-
+        
     }
     
     // refresh spinner
-     private lazy var refreshControll: UIRefreshControl = {
-          let refreshControll = UIRefreshControl()
-          refreshControll.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
-          refreshControll.tintColor = UIColor.red
-          return refreshControll
-          
-      }()
+    private lazy var refreshControll: UIRefreshControl = {
+        let refreshControll = UIRefreshControl()
+        refreshControll.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        refreshControll.tintColor = UIColor.red
+        return refreshControll
+        
+    }()
+    
+    @objc func handleRefresh(_ refreshControll: UIRefreshControl) {
+        self.tableView.reloadData()
+        let deadline = DispatchTime.now() + .milliseconds(700)
+        DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
+            refreshControll.endRefreshing()
+        })
+    }
     
     //reference database
     private func refDatebase()  {
-        ref = Database.database().reference(withPath: "vacancies")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        //        ref = Database.database().reference(withPath: "vacancies")
+        let ref = Database.database().reference(withPath: "vacancies")
         
-//        refDatabase?.observe(.value) { [weak self] (snapshot) in
         ref.observe(.value) { [weak self] (snapshot) in
+            //        ref.observe(.value) { [weak self] (snapshot) in
             
             var _vacancies = Array<Vacancy>()
             
@@ -66,6 +65,14 @@ class MainScreenController: UITableViewController {
             
             self?.tableView.reloadData()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        spinnerStart()
+        refDatebase()
+      
     }
     
     // MARK: - Table view data source
@@ -81,8 +88,8 @@ class MainScreenController: UITableViewController {
         let vacansy = vacancies[indexPath.row]
         
         vacanciesCell.headingLabel.text = vacansy.heading
-        vacanciesCell.cityVacansyLabel.text = "Город: не выбран" //TODO: peredelati
-        vacanciesCell.categoryVacansyLabel.styleLabel(with: "  Категория: не выбрана  ") //TODO
+        vacanciesCell.cityVacansyLabel.text = "Город" //TODO: peredelati
+        vacanciesCell.categoryVacansyLabel.styleLabel(with: " Категория ") //TODO
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "
         
@@ -131,28 +138,23 @@ class MainScreenController: UITableViewController {
     }
 }
 
-
 extension MainScreenController {
     
-      @objc func handleRefresh(_ refreshControll: UIRefreshControl) {
-          self.tableView.reloadData()
-          let deadline = DispatchTime.now() + .milliseconds(700)
-          DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
-              refreshControll.endRefreshing()
-          })
-      }
-      
-      // activity indicator
-      private func spinnerStart() {
-          spinner.startAnimating()
-          spinner.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-          
-          spinner.hidesWhenStopped = true
-          tableView.backgroundView = spinner
-      }
-      
-      private func spinnerStop() {
-          spinner.stopAnimating()
-          spinner.hidesWhenStopped = true
-      }
+    // activity indicator
+    private func spinnerStart() {
+        
+        //        self.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.1))
+        spinner.startAnimating()
+        spinner.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        //                  spinner.hidesWhenStopped = true
+        tableView.backgroundView = spinner
+        //        tableView.backgroundView = nvActivityIndicator
+    }
+    
+    private func spinnerStop() {
+        spinner.stopAnimating()
+        spinner.hidesWhenStopped = true
+        //        self.view.activityStopAnimating()
+    }
+    
 }

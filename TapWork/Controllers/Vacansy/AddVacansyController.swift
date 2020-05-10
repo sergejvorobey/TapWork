@@ -24,17 +24,13 @@ class AddVacansyController: UIViewController {
     @IBOutlet weak var addVacansyLabel: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    private let maxCountDescriptionTextView = 200
-    private let minCountDescriptionTextView = 20
-    
     private var citiesList = [Items]()
     
     private var ref: DatabaseReference?
     private var user: Users?
     private var vacancies = Array<Vacancy>()
-    private let showAlert = ShowError()
     
-    let disclosureCategory = UITableViewCell()
+//    let disclosureCategory = UITableViewCell()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +38,9 @@ class AddVacansyController: UIViewController {
         parseData()
         settingLabelAndButton()
         addDoneButtonOnNumberKeyboard()
-        refDatabase()
+        
         observerKeyboard()
-
+        
     }
     
     private func observerKeyboard() {
@@ -80,13 +76,17 @@ class AddVacansyController: UIViewController {
         contentVacansy.checkPlaceholder()
     }
     
-    private func refDatabase() {
+    
+    private func getDataDatabase(completion: @escaping (AuthResult) -> Void) {
+        guard Validators.isConnectedToNetwork()  else {
+            completion(.failure(AuthError.serverError))
+            return
+        }
+        
         guard let currentUser = Auth.auth().currentUser else {return}
         user = Users(user: currentUser)
         ref = Database.database().reference(withPath: "vacancies")
-    }
-    
-    private func getDataDatabase() {
+        
         ref?.observe(.value) { [weak self] (snapshot) in
             var _vacancies = Array<Vacancy>()
             for item in snapshot.children {
@@ -95,11 +95,19 @@ class AddVacansyController: UIViewController {
             }
             self?.vacancies = _vacancies
         }
+        completion(.success)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getDataDatabase()
+        getDataDatabase { (result) in
+            switch result {
+            case .success:
+                break
+            case .failure(let error):
+                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -118,12 +126,12 @@ class AddVacansyController: UIViewController {
         cityLabel.text = " не выбран "
         paymentVacansy.text = ""
         phoneNumber.text = ""
-        addVacansyLabel.isEnabled = false
-        addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
+        //        addVacansyLabel.isEnabled = false
+        //        addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
     }
     
     // MARK: Done button on numberKeyboard
-   private func addDoneButtonOnNumberKeyboard() {
+    private func addDoneButtonOnNumberKeyboard() {
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         
@@ -155,47 +163,68 @@ class AddVacansyController: UIViewController {
         performSegue(withIdentifier: "CategoriesController", sender: nil)
     }
     
-    @IBAction func addVacansyButton(_ sender: UIButton) {
+    // MARK: Add vacansy method in database
+    private func addVacansy(heading: String?,
+                            content: String?,
+                            payment: String?,
+                            phone: String?,
+                            completion: @escaping (AuthResult) -> Void) {
         
-        guard let headingVacansy = headingVacansy.text,
-            let contentVacansy = contentVacansy.text,
-            let paymentVacansy = paymentVacansy.text,
-            let phoneNumber = phoneNumber.text,
-            headingVacansy != "",
-            contentVacansy != "",
-            paymentVacansy != "",
-            phoneNumber != ""
-            
+        guard Validators.isConnectedToNetwork()  else {
+            completion(.failure(AuthError.serverError))
+            return
+        }
+        
+        guard Validators.isFilledVacansy(headingVacansy: headingVacansy.text,
+                                         contentVacansy: contentVacansy.text,
+                                         paymentVacansy: paymentVacansy.text,
+                                         phoneNumber: phoneNumber.text)
             else {
-                showAlert.alertError(fromController: self, withMessage: "Пожалуйста, заполните все поля!")
+                completion(.failure(AuthError.notFilled))
                 return
         }
         
-        // check valid data in text field
-        let content = contentVacansy.count
-       
-        switch content {
-            
-        case _ where content > maxCountDescriptionTextView :
-            showAlert.alertError(fromController: self, withMessage: "Cлишком большое описание,максимальное количество символов: \(maxCountDescriptionTextView)")
-        case _ where content < minCountDescriptionTextView :
-            showAlert.alertError(fromController: self, withMessage: "Слишком короткое описание, минимальное количество символов: \(minCountDescriptionTextView)")
-        case _ where content < maxCountDescriptionTextView &&
-            content > minCountDescriptionTextView :
- 
-            let vacansy = Vacancy(userId: self.user!.userId,
-                                  heading: headingVacansy ,
-                                  content: contentVacansy,
-                                  phoneNumber: phoneNumber,
-                                  payment: paymentVacansy)
-            
-            let vacansyRef = ref?.child(vacansy.heading)
-            vacansyRef?.setValue(vacansy.providerToDictionary())
-//            showAlert.alertError(fromController: self, withMessage: "Ваша вакансия опубликована!")
-            alertMessage(withMessage: "Ваша вакансия опубликована!")
-//            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-        default:
-            break
+        guard let heading = heading,
+            let content = content,
+            let payment = payment,
+            let phone = phone
+            else {
+                completion(.failure(AuthError.unknownError))
+                return
+        }
+        
+        guard Validators.checkLengthFiedls(headingVacansy: heading, contentVacansy: content, paymentVacansy: payment, phoneNumber: phone) else {
+            completion(.failure(AuthError.lengthFiedls))
+            return
+        }
+        let vacansy = Vacancy(userId: self.user!.userId,
+                              heading: heading ,
+                              content: content,
+                              phoneNumber: phone,
+                              payment: payment)
+        let vacansyRef = ref?.child(vacansy.heading)
+        vacansyRef?.setValue(vacansy.providerToDictionary())
+        
+        completion(.success)
+    }
+    
+    @IBAction func addVacansyButton(_ sender: UIButton) {
+        
+        addVacansy(heading: headingVacansy.text,
+                   content: contentVacansy.text,
+                   payment: paymentVacansy.text,
+                   phone: phoneNumber.text)
+        { (result) in
+            switch result {
+                
+            case .success:
+                self.showAlert(title: "Успешно!", message: "Вакансия опубликована!")
+//                self.dismiss(animated: true, completion: nil)
+                self.tabBarController?.selectedIndex = 0
+            case .failure(let error):
+                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+           
+            }
         }
     }
 }
@@ -205,7 +234,7 @@ extension AddVacansyController {
     private func settingLabelAndButton() {
         
         navigationItem.title = "Cоздать вакансию"
-
+        
         guard let categoryButton = categoryButtonLabel else {return}
         categoryButton.changeButtonDisclosure(with: "Выберите категорию:")
         
@@ -214,7 +243,7 @@ extension AddVacansyController {
         
         guard let addButton = addVacansyLabel else {return}
         addButton.changeStyleButton(with: "Добавить вакансию")
-
+        
         guard let city = cityLabel, let category = categoryLabel else {return}
         city.styleLabel(with: " не выбран ")
         category.styleLabel(with: " не выбрана ")
@@ -245,30 +274,6 @@ extension AddVacansyController: UITextFieldDelegate, UITextViewDelegate {
         }
         return true
     }
-    
-    // alert message after successful added vacansy
-    func alertMessage(withMessage message: String) {
-        
-        let alertController = UIAlertController(title: "",
-                                                message: message,
-                                                preferredStyle: .alert)
-        
-        let cancel = UIAlertAction(title: "Назад", style: .default) {[weak self] _ in
-            
-//            self?.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-            
-//            self?.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-            
-            self?.headingVacansy.text = ""
-            self?.contentVacansy.text = ""
-            self?.paymentVacansy.text = ""
-            self?.phoneNumber.text = ""
-        }
-        
-        alertController.addAction(cancel)
-        present(alertController, animated: true, completion: nil)
-    }
-    
     
     // keyboard hide and show
     @objc func updateChangeFrame (notification: Notification) {

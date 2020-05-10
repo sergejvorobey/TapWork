@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import NVActivityIndicatorView
 
 
 extension Date {
@@ -62,16 +63,16 @@ extension UILabel {
         let swiftColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
         self.backgroundColor = swiftColor
         self.layer.cornerRadius = 8
-//        self.layer.borderWidth = 0.1
+        //        self.layer.borderWidth = 0.1
         self.layer.masksToBounds = true
-
+        
     }
 }
 
 extension UITextView{
-
+    
     func setPlaceholder(with text: String) {
-
+        
         let placeholderLabel = UILabel()
         placeholderLabel.text = text
         placeholderLabel.font = UIFont.italicSystemFont(ofSize: (self.font?.pointSize)!)
@@ -80,10 +81,10 @@ extension UITextView{
         placeholderLabel.frame.origin = CGPoint(x: 5, y: (self.font?.pointSize)! / 2)
         placeholderLabel.textColor = UIColor.lightGray
         placeholderLabel.isHidden = !self.text.isEmpty
-
+        
         self.addSubview(placeholderLabel)
     }
-
+    
     func checkPlaceholder() {
         let placeholderLabel = self.viewWithTag(222) as! UILabel
         placeholderLabel.isHidden = !self.text.isEmpty
@@ -101,24 +102,7 @@ extension UIView {
 }
 
 extension UIImageView {
-    
-    func loadImage(from url: URL) {
-//        image = nil
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            guard let data = data, let newImage = UIImage(data: data)
-                else {
-                    print("dont load image from \(url)")
-                    return
-            }
-            
-            DispatchQueue.main.async {
-                self.image = newImage
-            }
-        }
-        
-        task.resume()
-    }
-    
+
     func changeStyleImage() {
         self.layer.borderWidth = 0.3
         self.layer.masksToBounds = false
@@ -130,7 +114,7 @@ extension UIImageView {
 extension UIButton {
     
     func changeStyleButton(with text: String) {
-
+        
         self.setTitle(text, for: .normal)
         self.backgroundColor = .red
         self.layer.cornerRadius = 15
@@ -156,9 +140,36 @@ extension UIViewController {
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Назад", style: .default)
+        let cancel = UIAlertAction(title: "Закрыть", style: .default)
         alertController.addAction(cancel)
         present(alertController, animated: true, completion: nil)
     }
 }
 
+extension UIView {
+    
+    func activityStartAnimating(activityColor: UIColor, backgroundColor: UIColor) {
+        
+        let backgroundView = UIView()
+        backgroundView.frame = CGRect.init(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
+        backgroundView.backgroundColor = backgroundColor
+        backgroundView.tag = 475647
+        
+        let actibityIndocatorView = NVActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50), type: .circleStrokeSpin, color: activityColor, padding: .none)
+        actibityIndocatorView.center = self.center
+        
+        actibityIndocatorView.startAnimating()
+        self.isUserInteractionEnabled = false
+        
+        backgroundView.addSubview(actibityIndocatorView)
+        self.addSubview(backgroundView)
+//        self.addSubview(actibityIndocatorView)
+    }
+    
+    func activityStopAnimating() {
+        if let background = viewWithTag(475647){
+            background.removeFromSuperview()
+        }
+        self.isUserInteractionEnabled = true
+    }
+}

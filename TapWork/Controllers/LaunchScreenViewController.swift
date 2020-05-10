@@ -11,10 +11,7 @@ import Firebase
 
 class LaunchScreenViewController: UIViewController {
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var headingApp: UILabel!
-    private let checkNetwork = CheckNetwork()
-    private let showAlert = ShowError()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,34 +23,44 @@ class LaunchScreenViewController: UIViewController {
         
     }
     
-    // метод проверяет на наличие реги юзера
-    private func checkUser() {
+    private func checkUserAuth(completion: @escaping (AuthResult) -> Void) {
+        guard Validators.isConnectedToNetwork()  else {
+            completion(.failure(AuthError.serverError))
+            return
+        }
         
-        let delay = 2 // seconds
-        
-        activityIndicator.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        activityIndicator.frame = CGRect(x: 0.0, y: 0.0,width: 150.0, height: 150.0)
-        activityIndicator.style = .large
-        
-        self.activityIndicator.startAnimating()
-        
-        //если акк есть ->> на главный экран
-        Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
+        Auth.auth().addStateDidChangeListener {(auth, user) in
             
-            if (self?.checkNetwork.isConnectedToNetwork())! {
-                if user != nil {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                        self?.activityIndicator.stopAnimating()
-                        self?.performSegue(withIdentifier: "MainVC", sender: nil)
-                    }
-                } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                        self?.activityIndicator.stopAnimating()
-                        self?.performSegue(withIdentifier: "LoginAccountController", sender: nil)
-                    }
+            let delay = 2
+            self.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.1))
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
+                
+                switch user {
+                case _ where user != nil:
+                    completion(.success)
+                    //                print("Jump Main screen")
+                    self.performSegue(withIdentifier: "MainVC", sender: nil)
+                case _ where user == nil:
+                    completion(.success)
+                    //                print("Jump Login screen")
+                    self.performSegue(withIdentifier: "LoginAccountController", sender: nil)
+                default:
+                    completion(.failure(AuthError.unknownError))
+                    
                 }
-            } else {
-                self?.showAlert.alertError(fromController: self!, withMessage: "Проверьте интернет соединение!")
+            }
+        }
+    }
+    
+    private func checkUser() {
+        checkUserAuth { (result) in
+            switch result {
+            case .success:
+                //             self.showAlert(title: "Успешно", message: "Вы авторизованы!")
+                print("Jump choice screen")
+               //              self.performSegue(withIdentifier: "MainVC", sender: nil)
+            case .failure(let error):
+                self.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }

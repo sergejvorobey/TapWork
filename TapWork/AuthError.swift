@@ -17,6 +17,7 @@ enum AuthError {
     case notFilled
     case invalidEmail
     case fieldsDataNotFound
+    case lengthFiedls
     case unknownError
     case serverError
     
@@ -34,7 +35,9 @@ extension AuthError: LocalizedError {
         case .unknownError:
             return NSLocalizedString("Unknown Error", comment: "")
         case .serverError:
-            return NSLocalizedString("Server Error", comment: "")
+            return NSLocalizedString("Проверьте интернет соединение!", comment: "")
+        case .lengthFiedls:
+            return NSLocalizedString("Проверьте максимальную и минимальную длину полей!", comment: "")
         }
     }
 }

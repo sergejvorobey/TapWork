@@ -291,6 +291,9 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - NVActivityIndicatorView (4.8.0):
+    - NVActivityIndicatorView/Presenter (= 4.8.0)
+  - NVActivityIndicatorView/Presenter (4.8.0)
   - PromisesObjC (1.2.8)
 
 DEPENDENCIES:
@@ -303,6 +306,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - FirebaseFirestoreSwift
   - iOSDropDown
+  - NVActivityIndicatorView
 
 SPEC REPOS:
   trunk:
@@ -331,6 +335,7 @@ SPEC REPOS:
     - iOSDropDown
     - leveldb-library
     - nanopb
+    - NVActivityIndicatorView
     - PromisesObjC
 
 SPEC CHECKSUMS:
@@ -359,8 +364,9 @@ SPEC CHECKSUMS:
   iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
 
-PODFILE CHECKSUM: 91e39d311d3e34b4e49ab637bd05cecc8cc85380
+PODFILE CHECKSUM: 275ebfe0455ca6c06b0b63fdfcff58ded00ebe04
 
 COCOAPODS: 1.8.4

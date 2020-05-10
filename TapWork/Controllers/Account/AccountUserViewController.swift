@@ -18,8 +18,7 @@ class AccountUserViewController: UIViewController {
     
     private var infoUser: Users!
     private var ref: DatabaseReference!
-    private var image = #imageLiteral(resourceName: "userImage")
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,10 +67,11 @@ class AccountUserViewController: UIViewController {
                 self?.emailUserLabel.text = email as? String
                 self?.specializationUserLabel.text = "Профессия: \(specialization)"
                 
-                if profileImage == "" {
-                    self?.imageUser.image = self?.image
-                } else if let url = URL(string: profileImage) {
-                    self?.imageUser.loadImage(from: url)
+                if profileImage != "" {
+                    let url = URL(string: profileImage)
+                    ImageService.getImage(withURL: url!) { (image) in
+                        self?.imageUser.image = image
+                    }
                 }
             }
         }
@@ -82,7 +82,7 @@ class AccountUserViewController: UIViewController {
         getDataOfDatabase()
     }
     
-    private func showMenu() {
+    private func alertMenu() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let cancel = UIAlertAction(title: "Назад", style: .default) { _ in }
@@ -111,7 +111,7 @@ class AccountUserViewController: UIViewController {
     }
     
     @IBAction func menuAccount(_ sender: UIBarButtonItem) {
-        showMenu()
+        alertMenu()
     }
 }
 
