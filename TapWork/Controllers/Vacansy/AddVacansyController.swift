@@ -30,8 +30,6 @@ class AddVacansyController: UIViewController {
     private var user: Users?
     private var vacancies = Array<Vacancy>()
     
-//    let disclosureCategory = UITableViewCell()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,9 +43,9 @@ class AddVacansyController: UIViewController {
     
     private func observerKeyboard() {
         
-        headingVacansy.addTarget(self,
-                                 action: #selector(addVacansyColorChanged),
-                                 for: .editingChanged)
+//        headingVacansy.addTarget(self,
+//                                 action: #selector(addVacansyColorChanged),
+//                                 for: .editingChanged)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateChangeFrame(notification:)),
@@ -61,16 +59,16 @@ class AddVacansyController: UIViewController {
     }
     
     // изменяем цвет кнопки при заполнении данных в nameVacansy
-    @objc private func addVacansyColorChanged () {
-        
-        if headingVacansy.text?.isEmpty == false {
-            addVacansyLabel.isEnabled = true
-            addVacansyLabel.layer.backgroundColor = UIColor.red.cgColor
-        } else {
-            addVacansyLabel.isEnabled = false
-            addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
-        }
-    }
+//    @objc private func addVacansyColorChanged () {
+//
+//        if headingVacansy.text?.isEmpty == false {
+//            addVacansyLabel.isEnabled = true
+//            addVacansyLabel.layer.backgroundColor = UIColor.red.cgColor
+//        } else {
+//            addVacansyLabel.isEnabled = false
+//            addVacansyLabel.layer.backgroundColor = UIColor.lightGray.cgColor
+//        }
+//    }
     
     func textViewDidChange(_ textView: UITextView) {
         contentVacansy.checkPlaceholder()
@@ -100,12 +98,12 @@ class AddVacansyController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getDataDatabase { (result) in
+        getDataDatabase {[weak self] (result) in
             switch result {
             case .success:
                 break
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }
@@ -120,6 +118,7 @@ class AddVacansyController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
+        
         contentVacansy.text = ""
         headingVacansy.text = ""
         dropDownCities.text = ""
@@ -214,15 +213,15 @@ class AddVacansyController: UIViewController {
                    content: contentVacansy.text,
                    payment: paymentVacansy.text,
                    phone: phoneNumber.text)
-        { (result) in
+        {[weak self] (result) in
             switch result {
                 
             case .success:
-                self.showAlert(title: "Успешно!", message: "Вакансия опубликована!")
+                self?.showAlert(title: "Успешно!", message: "Вакансия опубликована!")
 //                self.dismiss(animated: true, completion: nil)
-                self.tabBarController?.selectedIndex = 0
+                self?.tabBarController?.selectedIndex = 0
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
            
             }
         }

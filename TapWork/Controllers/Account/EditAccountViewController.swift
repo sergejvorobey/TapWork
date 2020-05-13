@@ -23,7 +23,6 @@ class EditAccountViewController: UIViewController {
     private var ref: DatabaseReference!
     private let db = Firestore.firestore()
     
-    private var imageOfChanged = false
     private var image: UIImage? = nil
     
     override func viewDidLoad() {
@@ -36,7 +35,7 @@ class EditAccountViewController: UIViewController {
         
         tappedImagePicker()
         
-        navigationItem.title = "Редактировать "
+        navigationItem.title = "Редактировать"
         
         
     }
@@ -93,13 +92,13 @@ class EditAccountViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        getDataOfDatabase { (result) in
+        getDataOfDatabase {[weak self] (result) in
             switch result {
                 
             case .success:
                 break
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }

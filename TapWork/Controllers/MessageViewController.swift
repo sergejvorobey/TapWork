@@ -12,6 +12,9 @@ class MessageViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    private var messages = [String]()
+    private let spinner = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,7 +22,19 @@ class MessageViewController: UIViewController {
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
 
-        navigationItem.title = "Сообщения"
+        navigationItem.title = "Сообщения Test"
+        
+        tableView.separatorColor = UIColor.clear
+        
+
+    }
+
+    func checkMessages() -> String? {
+        if messages.isEmpty == true {
+            navigationItem.title = "Сообщений нет"
+            tableView.isHidden = true
+        }
+        return nil
     }
 }
 
@@ -32,6 +47,15 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let messageCell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as! MessageCell
+        
+//        if checkMessages() != nil {
+            messageCell.nameUserMessage.text = "Sergey Vorobey"
+            messageCell.messageText.text = "Я по поводу вакансии, вот моя визитка. Посмотрите пожалуйста!"
+            messageCell.datePublic.text = "22:22, 12.05"
+            messageCell.countMessage.text = "1"
+            messageCell.imageUser.image = #imageLiteral(resourceName: "userImage")
+            messageCell.imageUser.changeStyleImage()
+//        }
         
         return messageCell
     }

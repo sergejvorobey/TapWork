@@ -9,14 +9,16 @@
 import UIKit
 import Firebase
 import NVActivityIndicatorView
+import BonsaiController
 
 class MainScreenController: UITableViewController {
     
-
+    
+    
     private var vacancies = Array<Vacancy>()
     private let spinner = UIActivityIndicatorView()
     var nvActivityIndicator: NVActivityIndicatorView?
-//    let spinner2 = NVActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +30,7 @@ class MainScreenController: UITableViewController {
         view.changeColorView()
         
     }
+  
     
     // refresh spinner
     private lazy var refreshControll: UIRefreshControl = {
@@ -63,7 +66,9 @@ class MainScreenController: UITableViewController {
             self?.vacancies = _vacancies
             self?.vacancies.sort(by: {$0.timestamp > $1.timestamp})
             
-            self?.tableView.reloadData()
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
         }
     }
     
@@ -72,7 +77,7 @@ class MainScreenController: UITableViewController {
         
         spinnerStart()
         refDatebase()
-      
+    
     }
     
     // MARK: - Table view data source
@@ -112,11 +117,14 @@ class MainScreenController: UITableViewController {
     
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowVacansyVC" {
+        if segue.identifier == "DetailVacansyVC" {
+            segue.destination.transitioningDelegate = self
+            segue.destination.modalPresentationStyle = .custom
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let vacansy = vacancies[indexPath.row]
-            let showInfoVacansyVC = segue.destination as! ShowInfoVacansyViewController
-            showInfoVacansyVC.vacansyInfo = vacansy
+            let showInfoVacansyVC = segue.destination as! DetailVacansyViewController
+            showInfoVacansyVC.detailVacansy = vacansy
+            
         }
     }
     
@@ -135,6 +143,38 @@ class MainScreenController: UITableViewController {
         actionSheet.addAction(sortingPrice)
         actionSheet.addAction(cancel)
         present(actionSheet, animated: true)
+    }
+}
+
+//MARK: Present modally response vacansy controller
+extension MainScreenController: BonsaiControllerDelegate {
+    // return the frame of your Bonsai View Controller
+    func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
+        
+        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height - 250 /*containerViewFrame.height / 2*/), 
+                      size: CGSize(width: containerViewFrame.width,
+                                   height: containerViewFrame.height / 2))
+    }
+    
+    // return a Bonsai Controller with SlideIn or Bubble transition animator
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    
+        /// With Background Color ///
+    
+        // Slide animation from .left, .right, .top, .bottom
+        return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
+        
+        // or Bubble animation initiated from a view
+        //return BonsaiController(fromView: yourOriginView, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
+    
+    
+        /// With Blur Style ///
+        
+        // Slide animation from .left, .right, .top, .bottom
+        //return BonsaiController(fromDirection: .bottom, blurEffectStyle: .light, presentedViewController: presented, delegate: self)
+        
+        // or Bubble animation initiated from a view
+        //return BonsaiController(fromView: yourOriginView, blurEffectStyle: .dark,  presentedViewController: presented, delegate: self)
     }
 }
 
@@ -158,3 +198,6 @@ extension MainScreenController {
     }
     
 }
+
+
+

@@ -66,7 +66,7 @@ class RegisterAccountController: UIViewController {
             return
         }
         
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+        Auth.auth().createUser(withEmail: email, password: password) {[weak self] (result, error) in
             guard let _ = result else {
                 completion(.failure(error!))
                 return
@@ -79,8 +79,8 @@ class RegisterAccountController: UIViewController {
 //                "uid": result!.user.uid as Any ])
             let db = Firestore.firestore()
             db.collection("users").document((result?.user.uid)!).setData([
-                    "firstName": self.firstNameUserTextField.text!,
-                    "lastName": self.lastNameUserTextField.text!,
+                    "firstName": self!.firstNameUserTextField.text!,
+                    "lastName": self!.lastNameUserTextField.text!,
                     "email": email,
                     "password": password,
                     "spezialization": "не указана",
@@ -96,15 +96,15 @@ class RegisterAccountController: UIViewController {
     }
     
     @IBAction func registerButton(_ sender: UIButton) {
-        register(email: emailTextField.text, password: passwordUserTextField.text) { (result) in
+        register(email: emailTextField.text, password: passwordUserTextField.text) {[weak self] (result) in
             switch result {
             case .success:
 //                self.showAlert(title: "Успешно", message: "Вы зарегистрированны!")
-                self.view.activityStartAnimating(activityColor: .red,
+                self?.view.activityStartAnimating(activityColor: .red,
                                                  backgroundColor: UIColor.black.withAlphaComponent(0.1))
-                self.performSegue(withIdentifier: "MainScreenController", sender: nil)
+                self?.performSegue(withIdentifier: "MainScreenController", sender: nil)
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }

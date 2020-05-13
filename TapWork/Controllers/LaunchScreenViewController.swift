@@ -29,21 +29,21 @@ class LaunchScreenViewController: UIViewController {
             return
         }
         
-        Auth.auth().addStateDidChangeListener {(auth, user) in
+        Auth.auth().addStateDidChangeListener {[weak self](auth, user) in
             
             let delay = 2
-            self.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.1))
+            self?.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.1))
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
                 
                 switch user {
                 case _ where user != nil:
                     completion(.success)
                     //                print("Jump Main screen")
-                    self.performSegue(withIdentifier: "MainVC", sender: nil)
+                    self?.performSegue(withIdentifier: "MainVC", sender: nil)
                 case _ where user == nil:
                     completion(.success)
                     //                print("Jump Login screen")
-                    self.performSegue(withIdentifier: "LoginAccountController", sender: nil)
+                    self?.performSegue(withIdentifier: "LoginAccountController", sender: nil)
                 default:
                     completion(.failure(AuthError.unknownError))
                     
@@ -53,14 +53,14 @@ class LaunchScreenViewController: UIViewController {
     }
     
     private func checkUser() {
-        checkUserAuth { (result) in
+        checkUserAuth {[weak self] (result) in
             switch result {
             case .success:
                 //             self.showAlert(title: "Успешно", message: "Вы авторизованы!")
                 print("Jump choice screen")
                //              self.performSegue(withIdentifier: "MainVC", sender: nil)
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }

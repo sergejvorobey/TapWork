@@ -22,5 +22,6 @@ class TabBarController: UITabBarController {
         tabBar.items![3].title = "Меню"
         
         navigationController?.navigationBar.isHidden = true
+        
     }
 }

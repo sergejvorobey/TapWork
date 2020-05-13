@@ -15,5 +15,7 @@ target 'TapWork' do
   pod 'Alamofire', '~> 5.1'
   pod 'iOSDropDown'
   pod 'NVActivityIndicatorView'
+  pod 'MessageKit'
+  pod 'BonsaiController'
 
 end

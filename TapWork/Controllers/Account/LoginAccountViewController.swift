@@ -124,14 +124,14 @@ class LoginAccountViewController: UIViewController {
     
     @IBAction func signInAccount(_ sender: UIButton) {
         
-        singIn(email: emailUser.text, password: passwordUser.text) { (result) in
+        singIn(email: emailUser.text, password: passwordUser.text) {[weak self] (result) in
             switch result {
             case .success:
                 //                self.showAlert(title: "Успешно", message: "Вы авторизованы!")
-                self.view.activityStartAnimating(activityColor: .red,
+                self?.view.activityStartAnimating(activityColor: .red,
                                                  backgroundColor: UIColor.black.withAlphaComponent(0.1))
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }

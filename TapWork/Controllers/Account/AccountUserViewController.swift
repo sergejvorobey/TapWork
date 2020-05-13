@@ -15,6 +15,8 @@ class AccountUserViewController: UIViewController {
     @IBOutlet weak var nameUserLabel: UILabel!
     @IBOutlet weak var emailUserLabel: UILabel!
     @IBOutlet weak var specializationUserLabel: UILabel!
+
+    @IBOutlet weak var ratingLabel: UILabel!
     
     private var infoUser: Users!
     private var ref: DatabaseReference!
@@ -22,11 +24,20 @@ class AccountUserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageUser.changeStyleImage()
-        refDatabase()
+        changeStyle()
+
         setupNavigationBar()
         
     }
+    
+    private func changeStyle() {
+        
+        imageUser.changeStyleImage()
+
+        ratingLabel.text = "Рейтинг: Вне рейтинга"
+        
+    }
+    
     
     private func setupNavigationBar() {
         guard let topItem = navigationController?.navigationBar.topItem else {return}
@@ -35,13 +46,16 @@ class AccountUserViewController: UIViewController {
                                                     target: nil, action: nil)
     }
     
-    private func refDatabase() {
+    private func getDataOfDatabase(completion: @escaping (AuthResult) -> Void) {
+        guard Validators.isConnectedToNetwork()  else {
+            completion(.failure(AuthError.serverError))
+            return
+        }
+        
         guard let currentUsers = Auth.auth().currentUser else { return }
-        infoUser = Users(user: currentUsers)
-        ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
-    }
-    
-    private func getDataOfDatabase() {
+               infoUser = Users(user: currentUsers)
+               ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
+        
         let db = Firestore.firestore()
         
         db.collection("users").document(infoUser.userId).addSnapshotListener {[weak self] querySnapshot, error in
@@ -50,8 +64,8 @@ class AccountUserViewController: UIViewController {
             
             guard let userData = querySnapshot.data() else {return}
             
-            if let error = error {
-                print("Error retreiving collection: \(error)")
+            if error != nil {
+                completion(.failure(error!))
             } else {
                 guard let firstName = userData["firstName"],
                     let email = userData["email"],
@@ -74,12 +88,20 @@ class AccountUserViewController: UIViewController {
                     }
                 }
             }
+            completion(.success)
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        getDataOfDatabase()
+        getDataOfDatabase { (result) in
+            switch result {
+            case .success:
+                break
+            case .failure(let error):
+                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
     }
     
     private func alertMenu() {
@@ -100,11 +122,15 @@ class AccountUserViewController: UIViewController {
             
             self?.navigationController?.pushViewController(launchSVC, animated: true)
         }
-        let editUserAcc = UIAlertAction(title: "Редактировать аккаунт", style: .default) {[weak self] _ in
-            self?.performSegue(withIdentifier: "EditAccountViewController", sender: nil)
+        let editUserAcc = UIAlertAction(title: "Редактировать аккаунт", style: .default) { _ in
+            self.performSegue(withIdentifier: "EditAccountViewController", sender: nil)
+        }
+        let profDataUser = UIAlertAction(title: "Обо мне", style: .default) { _ in
+            self.performSegue(withIdentifier: "ProfDataUserController", sender: nil)
         }
         
         actionSheet.addAction(editUserAcc)
+        actionSheet.addAction(profDataUser)
         actionSheet.addAction(signOutAcc)
         actionSheet.addAction(cancel)
         present(actionSheet, animated: true)
