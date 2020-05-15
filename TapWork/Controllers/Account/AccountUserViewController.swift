@@ -18,26 +18,54 @@ class AccountUserViewController: UIViewController {
 
     @IBOutlet weak var ratingLabel: UILabel!
     
+//    private var currentUser = Array<CurrentUser>()
+    private var roleUserString = ""
+    
     private var infoUser: Users!
     private var ref: DatabaseReference!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        changeStyle()
+        changeStyleItems()
+//        refDatebase()
 
-        setupNavigationBar()
-        
     }
     
-    private func changeStyle() {
+    // test method
+//    private func refDatebase()  {
+//
+//        guard let currentUsers = Auth.auth().currentUser else { return }
+//        infoUser = Users(user: currentUsers)
+//        ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
+//
+//        let db = Firestore.firestore()
+//        db.collection("users").document(infoUser.userId).addSnapshotListener { (snapshot, _) in
+//
+//            let data = snapshot?.data()
+//
+//            do {
+//                let jsonData = try JSONSerialization.data(withJSONObject: data as Any, options: .prettyPrinted)
+//                let user = try JSONDecoder().decode(CurrentUser.self, from: jsonData)
+////                print(user)
+//                self.currentUser = [user]
+//                print(self.currentUser)
+//            }
+//            catch {
+//
+//            }
+//        }
+//    }
+    
+    private func changeStyleItems() {
         
+        setupNavigationBar()
         imageUser.changeStyleImage()
 
-        ratingLabel.text = "Рейтинг: Вне рейтинга"
+        ratingLabel.text = "Рейтинг: Вне рейтинга" //TODO
         
     }
-    
     
     private func setupNavigationBar() {
         guard let topItem = navigationController?.navigationBar.topItem else {return}
@@ -71,7 +99,10 @@ class AccountUserViewController: UIViewController {
                     let email = userData["email"],
                     let lastName = userData["lastName"],
                     let specialization = userData["spezialization"],
-                    let profileImage = userData["profileImageUrl"] as? String  else {return}
+                    let profileImage = userData["profileImageUrl"] as? String,
+                    let roleUser = userData["roleUser"] as? String else {return}
+                
+                self?.roleUserString = roleUser
                 
                 let fullName = """
                 \(firstName)
@@ -128,9 +159,17 @@ class AccountUserViewController: UIViewController {
         let profDataUser = UIAlertAction(title: "Обо мне", style: .default) { _ in
             self.performSegue(withIdentifier: "ProfDataUserController", sender: nil)
         }
+        let forEmployer = UIAlertAction(title: "Для работодателя", style: .default) { _ in
+            self.performSegue(withIdentifier: "EmployerCollectionController", sender: nil)
+        }
         
         actionSheet.addAction(editUserAcc)
         actionSheet.addAction(profDataUser)
+        
+        if self.roleUserString == "Работодатель" {
+            actionSheet.addAction(forEmployer)
+        }
+       
         actionSheet.addAction(signOutAcc)
         actionSheet.addAction(cancel)
         present(actionSheet, animated: true)

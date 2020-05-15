@@ -192,7 +192,11 @@ class AddVacansyController: UIViewController {
                 return
         }
         
-        guard Validators.checkLengthFiedls(headingVacansy: heading, contentVacansy: content, paymentVacansy: payment, phoneNumber: phone) else {
+        guard Validators.checkLengthFiedls(headingVacansy: heading,
+                                           contentVacansy: content,
+                                           paymentVacansy: payment,
+                                           phoneNumber: phone)
+            else {
             completion(.failure(AuthError.lengthFiedls))
             return
         }
@@ -218,8 +222,8 @@ class AddVacansyController: UIViewController {
                 
             case .success:
                 self?.showAlert(title: "Успешно!", message: "Вакансия опубликована!")
-//                self.dismiss(animated: true, completion: nil)
-                self?.tabBarController?.selectedIndex = 0
+                self?.dismiss(animated: true, completion: nil)
+//                self?.tabBarController?.selectedIndex = 0
             case .failure(let error):
                 self?.showAlert(title: "Ошибка", message: error.localizedDescription)
            

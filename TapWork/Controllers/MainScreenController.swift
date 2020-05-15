@@ -13,8 +13,6 @@ import BonsaiController
 
 class MainScreenController: UITableViewController {
     
-    
-    
     private var vacancies = Array<Vacancy>()
     private let spinner = UIActivityIndicatorView()
     var nvActivityIndicator: NVActivityIndicatorView?
@@ -31,7 +29,6 @@ class MainScreenController: UITableViewController {
         
     }
   
-    
     // refresh spinner
     private lazy var refreshControll: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
@@ -61,11 +58,12 @@ class MainScreenController: UITableViewController {
             
             for item in snapshot.children {
                 let vacansy = Vacancy(snapshot: item as! DataSnapshot)
+
                 _vacancies.append(vacansy)
             }
             self?.vacancies = _vacancies
             self?.vacancies.sort(by: {$0.timestamp > $1.timestamp})
-            
+
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
@@ -133,8 +131,8 @@ class MainScreenController: UITableViewController {
         let actionSheet = UIAlertController(title: "Сортировка вакансий:", message: nil, preferredStyle: .actionSheet)
         
         let cancel = UIAlertAction(title: "Назад", style: .destructive)
-        let sortingByCategory = UIAlertAction(title: "По категории", style: .default) { [weak self] _ in
-            self?.performSegue(withIdentifier: "CategoriesController", sender: nil)
+        let sortingByCategory = UIAlertAction(title: "По категории", style: .default) {  _ in
+//            self?.performSegue(withIdentifier: "CategoriesController", sender: nil)
         }
         
         let sortingPrice = UIAlertAction(title: "По бюджету", style: .default) { _ in }

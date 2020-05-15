@@ -83,6 +83,7 @@ class RegisterAccountController: UIViewController {
                     "lastName": self!.lastNameUserTextField.text!,
                     "email": email,
                     "password": password,
+                    "roleUser": "Соискатель",
                     "spezialization": "не указана",
                     "profileImageUrl": "",
                     "uid": result?.user.uid as Any])

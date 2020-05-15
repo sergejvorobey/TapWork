@@ -12,6 +12,8 @@ import FirebaseStorage
 
 class EditAccountViewController: UIViewController {
     
+    @IBOutlet weak var roleUserLabel: UILabel!
+    @IBOutlet weak var roleSegmentedControl: UISegmentedControl!
     @IBOutlet weak var firstNameUser: UITextField!
     @IBOutlet weak var lastNameUser: UITextField!
     @IBOutlet weak var spezialization: UITextField!
@@ -28,15 +30,20 @@ class EditAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        changeStyleItems()
+       
+    }
+    
+    private func changeStyleItems() {
+        
         delegateItems()
-        
         photoUser.changeStyleImage()
-        saveButtonLabel.changeStyleButton(with: "Сохранить")
-        
         tappedImagePicker()
-        
+        saveButtonLabel.changeStyleButton(with: "Сохранить")
         navigationItem.title = "Редактировать"
         
+        roleSegmentedControl.setTitle("Соискатель", forSegmentAt: 0)
+        roleSegmentedControl.setTitle("Работодатель", forSegmentAt: 1)
         
     }
     
@@ -55,6 +62,7 @@ class EditAccountViewController: UIViewController {
     
     // read data in database by UserID
     private func getDataOfDatabase(completion: @escaping (AuthResult) -> Void) {
+ 
         guard Validators.isConnectedToNetwork()  else {
             completion(.failure(AuthError.serverError))
             return
@@ -75,15 +83,24 @@ class EditAccountViewController: UIViewController {
                 return
                 
             } else {
-                let firstName = userData["firstName"]
+                let firstName = userData["firstName"] as? String
                 //                let email = userData["email"]
-                let lastName = userData["lastName"]
-                let specialization = userData["spezialization"]
+                let lastName = userData["lastName"] as? String
+                let specialization = userData["spezialization"] as? String
+                let roleUser = userData["roleUser"] as? String
                 
-                self?.firstNameUser.text = firstName as? String
-                self?.lastNameUser.text = lastName as? String
-                self?.spezialization.text = specialization as? String
-                
+                self?.firstNameUser.text = firstName
+                self?.lastNameUser.text = lastName
+                self?.spezialization.text = specialization
+                self?.roleUserLabel.text = roleUser
+
+                if roleUser == "Соискатель"  {
+                    self?.roleSegmentedControl.selectedSegmentIndex = 0
+                    self?.roleUserLabel.textColor = .red
+                } else {
+                    self?.roleSegmentedControl.selectedSegmentIndex = 1
+                    self?.roleUserLabel.textColor = .blue
+                }
             }
             completion(.success)
         }
@@ -185,7 +202,6 @@ class EditAccountViewController: UIViewController {
                     } else {
                         //                        print("Document successfully updated")
                         completion(.success)
-                        
                     }
                 }
             }
@@ -200,21 +216,37 @@ class EditAccountViewController: UIViewController {
         }
         guard let firstName = firstNameUser.text,
             let lastName = lastNameUser.text,
-            let specialization = spezialization.text else {return}
+            let specialization = spezialization.text,
+            let roleUser = roleUserLabel.text else {return}
         
         db.collection("users").document(infoUser.userId).updateData([
             "firstName": firstName,
             "lastName": lastName,
-            "spezialization": specialization
+            "spezialization": specialization,
+            "roleUser": roleUser
             ])
         { (error) in
             if error != nil {
-                completion(.failure(AuthError.serverError))
+                completion(.failure(AuthError.unknownError))
             }
             completion(.success)
         }
     }
     
+    @IBAction func segmentRoleSelection(_ sender: UISegmentedControl) {
+        switch roleSegmentedControl.selectedSegmentIndex {
+            case 0:
+                roleUserLabel.text = roleSegmentedControl.titleForSegment(at: 0)
+            roleUserLabel.textColor = .red
+            case 1:
+            roleUserLabel.text = roleSegmentedControl.titleForSegment(at: 1)
+            roleUserLabel.textColor = .blue
+        default:
+            break
+        }
+    }
+    
+    //update data 
     @IBAction func savePressed(_ sender: UIButton) {
         
         updateDataTextField { (result) in

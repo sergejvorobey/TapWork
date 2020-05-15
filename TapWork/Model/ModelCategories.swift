@@ -8,18 +8,6 @@
 
 import Foundation
 
-//struct CategoriesList: Decodable {
-//    
-//    var category: String?
-//    var specializations: [String?]
-//    
-//    enum CodingKeys: String, CodingKey {
-//
-//        case category = "category"
-//        case specializations = "specializations"
-//    }
-//}
-
 struct CategoriesList: Decodable {
     
     var category: String?

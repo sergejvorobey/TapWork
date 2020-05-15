@@ -20,7 +20,7 @@ struct Vacancy {
     let ref: DatabaseReference?
     
     init(userId: String, heading: String, content: String, phoneNumber: String, payment: String) {
-        
+
         self.userId = userId
         self.heading = heading
         self.content = content
@@ -29,9 +29,9 @@ struct Vacancy {
         self.timestamp = 00
         self.ref = nil
     }
-    
+
     init(snapshot: DataSnapshot) {
-        
+
         let snapshotValue = snapshot.value as! [String: AnyObject]
         userId = snapshotValue["userId"] as! String
         heading = snapshotValue["heading"] as! String
@@ -40,9 +40,9 @@ struct Vacancy {
         payment = snapshotValue["payment"] as! String
         timestamp = snapshotValue["timestamp"] as! Double
         ref = snapshot.ref
-        
+
     }
-    
+
     func providerToDictionary() -> Any {
         return ["userId": userId,
                 "heading": heading,
