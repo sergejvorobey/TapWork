@@ -16,16 +16,23 @@ class EditAccountViewController: UIViewController {
     @IBOutlet weak var roleSegmentedControl: UISegmentedControl!
     @IBOutlet weak var firstNameUser: UITextField!
     @IBOutlet weak var lastNameUser: UITextField!
-    @IBOutlet weak var spezialization: UITextField!
+    @IBOutlet weak var birthUser: UITextField!
+//    @IBOutlet weak var spezialization: UITextField!
+
     @IBOutlet weak var photoUser: UIImageView!
     @IBOutlet weak var saveButtonLabel: UIButton!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
-    private var infoUser: Users!
-    private var ref: DatabaseReference!
-    private let db = Firestore.firestore()
+    var user: CurrentUser?
     
+//    private var infoUser: Users!
+//    private var ref: DatabaseReference!
+    private let db = Firestore.firestore()
     private var image: UIImage? = nil
+
+//    private var userData = [CurrentUser]()
+//    private var userStatus: String?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +41,26 @@ class EditAccountViewController: UIViewController {
        
     }
     
+    private func setupBirthPicker() {
+           self.birthUser.setInputViewDatePicker(target: self, selector: #selector(tapDone))
+       }
+       
+       @objc func tapDone() {
+           if let datePicker = self.birthUser.inputView as? UIDatePicker { // 2-1
+               let dateFormatter = DateFormatter() // 2-2
+               dateFormatter.dateStyle = .medium // 2-3
+               dateFormatter.locale = Locale(identifier: "ru_RU")
+               self.birthUser.text = dateFormatter.string(from: datePicker.date) //2-4
+           }
+           self.birthUser.resignFirstResponder() // 2-5
+       }
+    
     private func changeStyleItems() {
         
         delegateItems()
         photoUser.changeStyleImage()
         tappedImagePicker()
+        setupBirthPicker()
         saveButtonLabel.changeStyleButton(with: "Сохранить")
         navigationItem.title = "Редактировать"
         
@@ -50,7 +72,7 @@ class EditAccountViewController: UIViewController {
     private func delegateItems() {
         firstNameUser.delegate = self
         lastNameUser.delegate = self
-        spezialization.delegate = self
+//        spezialization.delegate = self
     }
     
     // After tap photo User open image picker
@@ -61,61 +83,127 @@ class EditAccountViewController: UIViewController {
     }
     
     // read data in database by UserID
-    private func getDataOfDatabase(completion: @escaping (AuthResult) -> Void) {
- 
+//    private func getDataOfDatabase(completion: @escaping (AuthResult) -> Void) {
+//
+//        guard Validators.isConnectedToNetwork()  else {
+//            completion(.failure(AuthError.serverError))
+//            return
+//        }
+//        guard let currentUsers = Auth.auth().currentUser else { return }
+//
+//        infoUser = Users(user: currentUsers)
+//        ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
+//
+//        db.collection("users").document(infoUser.userId).addSnapshotListener {[weak self] querySnapshot, error in
+//
+//            guard let querySnapshot = querySnapshot, querySnapshot.exists else {return}
+//
+//            guard let userData = querySnapshot.data() else {return}
+//
+//            if error != nil {
+//                completion(.failure(error!))
+//                return
+//
+//            } else {
+//                let firstName = userData["firstName"] as? String
+//                //                let email = userData["email"]
+//                let lastName = userData["lastName"] as? String
+////                let specialization = userData["spezialization"] as? String
+//                let roleUser = userData["roleUser"] as? String
+////                let birth = userData["birth"] as? String
+//
+//                self?.firstNameUser.text = firstName
+//                self?.lastNameUser.text = lastName
+////                self?.spezialization.text = specialization
+////                self?.birthDayButtonLabel.setTitle(birth, for: .normal)
+//                self?.roleUserLabel.text = roleUser
+//
+//                if roleUser == "Соискатель"  {
+//                    self?.roleSegmentedControl.selectedSegmentIndex = 0
+//                    self?.roleUserLabel.textColor = .red
+//                } else {
+//                    self?.roleSegmentedControl.selectedSegmentIndex = 1
+//                    self?.roleUserLabel.textColor = .blue
+//                }
+//            }
+//            completion(.success)
+//        }
+//    }
+    
+    // get data in database by UserID
+//    private func getCurrentUserData(completion: @escaping (AuthResult) -> Void) {
+//
+//        guard Validators.isConnectedToNetwork()  else {
+//            completion(.failure(AuthError.serverError))
+//            return
+//        }
+//
+//        let dataLoader = LoaderUserData()
+//        dataLoader.refDatebase()
+//
+//        dataLoader.completionHandler { [weak self] (user, status, message) in
+//
+//            if status {
+//                guard let self = self else {return}
+//                guard let _user = user else {return}
+//                self.userData = _user
+//
+//                for user in self.userData {
+//                    self.firstNameUser.text = user.firstName
+//                    self.lastNameUser.text = user.lastName
+//                    //                self?.spezialization.text = specialization
+////                    let userBirth = user.birth
+////                    self.birthDayButtonLabel.setTitle(user.birth, for: .normal)
+//                    self.roleUserLabel.text = user.roleUser
+//
+//                    if user.roleUser == "Соискатель"  {
+//                        self.roleSegmentedControl.selectedSegmentIndex = 0
+//                        self.roleUserLabel.textColor = .red
+//                    } else {
+//                        self.roleSegmentedControl.selectedSegmentIndex = 1
+//                        self.roleUserLabel.textColor = .blue
+//                    }
+//                }
+//            }
+//        }
+//        completion(.success)
+//    }
+    
+    // get data in database by UserID
+    private func getDataUserProfile(completion: @escaping (AuthResult) -> Void) {
         guard Validators.isConnectedToNetwork()  else {
-            completion(.failure(AuthError.serverError))
-            return
-        }
-        guard let currentUsers = Auth.auth().currentUser else { return }
+                   completion(.failure(AuthError.serverError))
+                   return
+               }
         
-        infoUser = Users(user: currentUsers)
-        ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
+        guard let userData = user else {return}
         
-        db.collection("users").document(infoUser.userId).addSnapshotListener {[weak self] querySnapshot, error in
+        for data in [userData] {
+            self.firstNameUser.text = data.firstName
+            self.lastNameUser.text = data.lastName
+            self.roleUserLabel.text = data.roleUser
+            self.birthUser.text = data.birth
             
-            guard let querySnapshot = querySnapshot, querySnapshot.exists else {return}
-            
-            guard let userData = querySnapshot.data() else {return}
-            
-            if error != nil {
-                completion(.failure(error!))
-                return
-                
+            if data.roleUser == "Соискатель" {
+                self.roleSegmentedControl.selectedSegmentIndex = 0
+                self.roleUserLabel.textColor = .red
             } else {
-                let firstName = userData["firstName"] as? String
-                //                let email = userData["email"]
-                let lastName = userData["lastName"] as? String
-                let specialization = userData["spezialization"] as? String
-                let roleUser = userData["roleUser"] as? String
-                
-                self?.firstNameUser.text = firstName
-                self?.lastNameUser.text = lastName
-                self?.spezialization.text = specialization
-                self?.roleUserLabel.text = roleUser
-
-                if roleUser == "Соискатель"  {
-                    self?.roleSegmentedControl.selectedSegmentIndex = 0
-                    self?.roleUserLabel.textColor = .red
-                } else {
-                    self?.roleSegmentedControl.selectedSegmentIndex = 1
-                    self?.roleUserLabel.textColor = .blue
-                }
+                self.roleSegmentedControl.selectedSegmentIndex = 1
+                self.roleUserLabel.textColor = .blue
             }
-            completion(.success)
         }
+        completion(.success)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        getDataOfDatabase {[weak self] (result) in
+        getDataUserProfile { (result) in
             switch result {
-                
             case .success:
                 break
             case .failure(let error):
-                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }
@@ -162,7 +250,7 @@ class EditAccountViewController: UIViewController {
         guard let imageData = imageSelected.jpegData(compressionQuality: 0.4) else {return}
         
         let storageRef = Storage.storage().reference(forURL: "gs://tapwork-5c676.appspot.com")
-        let storageProfileRef = storageRef.child("profile").child(infoUser.userId)
+        let storageProfileRef = storageRef.child("profile").child(user!.uid!)
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -193,14 +281,13 @@ class EditAccountViewController: UIViewController {
             storageProfileRef.downloadURL {[weak self] (url, error) in
                 if let metaImageUrl = url?.absoluteString {
                     
-                    self?.db.collection("users").document(self!.infoUser.userId).updateData([
+                    self?.db.collection("users").document(self!.user!.uid!).updateData([
                         "profileImageUrl": metaImageUrl
                     ])
                     
                     if error != nil {
                         completion(.failure(AuthError.serverError))
                     } else {
-                        //                        print("Document successfully updated")
                         completion(.success)
                     }
                 }
@@ -216,13 +303,15 @@ class EditAccountViewController: UIViewController {
         }
         guard let firstName = firstNameUser.text,
             let lastName = lastNameUser.text,
-            let specialization = spezialization.text,
-            let roleUser = roleUserLabel.text else {return}
-        
-        db.collection("users").document(infoUser.userId).updateData([
+//            let specialization = spezialization.text,
+            let roleUser = roleUserLabel.text,
+            let birth = birthUser.text else {return}
+
+        db.collection("users").document(user!.uid!).updateData([
             "firstName": firstName,
             "lastName": lastName,
-            "spezialization": specialization,
+//            "spezialization": specialization,
+            "birth": birth,
             "roleUser": roleUser
             ])
         { (error) in
@@ -245,6 +334,10 @@ class EditAccountViewController: UIViewController {
             break
         }
     }
+    
+   
+    
+  
     
     //update data 
     @IBAction func savePressed(_ sender: UIButton) {
@@ -312,3 +405,5 @@ extension EditAccountViewController: UIImagePickerControllerDelegate, UINavigati
         }
     }
 }
+
+

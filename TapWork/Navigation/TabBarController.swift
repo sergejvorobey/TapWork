@@ -19,7 +19,7 @@ class TabBarController: UITabBarController {
         tabBar.items![0].title = "Лента"
         tabBar.items![1].title = "Сообщения"
         tabBar.items![2].title = "Избранное"
-        tabBar.items![3].title = "Меню"
+        tabBar.items![3].title = "Личный кабинет"
         
         navigationController?.navigationBar.isHidden = true
         

@@ -13,6 +13,6 @@ class ProfDataUserController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-      navigationItem.title = "Обо мне"
+      navigationItem.title = "Профессиональные данные и навыки"
     }
 }

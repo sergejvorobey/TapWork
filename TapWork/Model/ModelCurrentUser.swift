@@ -11,19 +11,26 @@ import Firebase
 
 struct CurrentUser: Decodable {
     
+    var dateRegister: Date?
     var email: String?
     var firstName: String?
     var lastName: String?
+    var birth: String?
     var profileImageUrl: String?
     var roleUser: String?
     var specialization: String?
     var uid: String?
+    var fullName: String {
+        return firstName! + " " + lastName!
+    }
 
     
     enum CodingKeys: String, CodingKey {
+        case dateRegister = "dateRegister"
         case email = "email"
         case firstName = "firstName"
         case lastName = "lastName"
+        case birth = "birth"
         case profileImageUrl = "profileImageUrl"
         case roleUser = "roleUser"
         case specialization = "specialization"
@@ -47,7 +54,7 @@ struct CurrentUser: Decodable {
 //        self.uid = uid
 //        self.ref = nil
 //    }
-    
+//
 //    init(snapshot: DataSnapshot) {
 //        let snapshotValue = snapshot.value as! [String: AnyObject]
 //        email = snapshotValue["email"] as? String

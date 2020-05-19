@@ -20,7 +20,7 @@ class EmployerCollectionController: UICollectionViewController {
         super.viewDidLoad()
         
         
-        navigationItem.title = "Для Работодателя"
+        navigationItem.title = "Сервисы для работодателя"
 
     }
 

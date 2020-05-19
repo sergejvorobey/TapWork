@@ -14,10 +14,12 @@ class Validators {
     //checking text fields for spaces
     static func isFilled(firstname: String?,
                          lastName: String?,
+                         birth: String?,
                          email: String?,
                          password: String?) -> Bool {
         guard !(firstname ?? "").isEmpty,
             !(lastName ?? "").isEmpty,
+            !(birth ?? "").isEmpty,
             !(email ?? "").isEmpty,
             !(password ?? "").isEmpty else {
                 return false

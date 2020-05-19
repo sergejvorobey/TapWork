@@ -13,9 +13,10 @@ import BonsaiController
 
 class MainScreenController: UITableViewController {
     
-    private var vacancies = Array<Vacancy>()
+    private var vacancies = [Vacancy]()
     private let spinner = UIActivityIndicatorView()
     var nvActivityIndicator: NVActivityIndicatorView?
+//    var vacancies = LoaderUserData().vacancies
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ class MainScreenController: UITableViewController {
         view.changeColorView()
         
     }
-  
+    
     // refresh spinner
     private lazy var refreshControll: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
@@ -46,36 +47,68 @@ class MainScreenController: UITableViewController {
         })
     }
     
-    //reference database
-    private func refDatebase()  {
-        //        ref = Database.database().reference(withPath: "vacancies")
-        let ref = Database.database().reference(withPath: "vacancies")
+    //ref database vacancies
+    private func getVacancies(completion: @escaping (AuthResult) -> Void) {
+        guard Validators.isConnectedToNetwork()  else {
+            completion(.failure(AuthError.serverError))
+            return
+        }
         
-        ref.observe(.value) { [weak self] (snapshot) in
-            //        ref.observe(.value) { [weak self] (snapshot) in
+        let dataLoader = LoaderDataFirebase()
+        dataLoader.getDataVacancies()
+        
+        dataLoader.completionHandlerVacansy{[weak self] (vacansy, status, message) in
             
-            var _vacancies = Array<Vacancy>()
-            
-            for item in snapshot.children {
-                let vacansy = Vacancy(snapshot: item as! DataSnapshot)
-
-                _vacancies.append(vacansy)
+            if status {
+                guard let self = self else {return}
+                guard let _vacansy = vacansy else {return}
+                self.vacancies = _vacansy
             }
-            self?.vacancies = _vacancies
-            self?.vacancies.sort(by: {$0.timestamp > $1.timestamp})
-
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
         }
+        completion(.success)
     }
+    
+    //reference database
+//    private func refDatebase()  {
+//
+//        let ref = Database.database().reference(withPath: "vacancies")
+//
+//        ref.observe(.value) { [weak self] (snapshot) in
+//
+//            var _vacancies = Array<Vacancy>()
+//
+//            for item in snapshot.children {
+//                let vacansy = Vacancy(snapshot: item as! DataSnapshot)
+//
+//                _vacancies.append(vacansy)
+//            }
+//            self?.vacancies = _vacancies
+//            self?.vacancies.sort(by: {$0.timestamp > $1.timestamp})
+//
+//            DispatchQueue.main.async {
+//                self?.tableView.reloadData()
+//            }
+//        }
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         spinnerStart()
-        refDatebase()
-    
+
+        getVacancies { (result) in
+            switch result {
+                
+            case .success:
+                break
+            case .failure(let error):
+                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+
+            }
+        }
     }
     
     // MARK: - Table view data source
@@ -99,8 +132,9 @@ class MainScreenController: UITableViewController {
         vacanciesCell.changeCellColor()
         
         let datePublic = vacansy.timestamp
-        let date = Date(timeIntervalSince1970: datePublic / 1000)
         
+        let date = Date(timeIntervalSince1970: datePublic / 1000)
+
         //        vacanciesCell.publicationDateLabel.text = date.calenderTimeSinceNow()
         vacanciesCell.publicationDateLabel.text = date.publicationDate(withDate: date)
         
@@ -194,7 +228,6 @@ extension MainScreenController {
         spinner.hidesWhenStopped = true
         //        self.view.activityStopAnimating()
     }
-    
 }
 
 

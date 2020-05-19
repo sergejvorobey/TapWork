@@ -15,6 +15,7 @@ class RegisterAccountController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var firstNameUserTextField: UITextField!
     @IBOutlet weak var lastNameUserTextField: UITextField!
+    @IBOutlet weak var dateBirthUserTextField: UITextField!
     @IBOutlet weak var passwordUserTextField: UITextField!
     @IBOutlet weak var confirmPassUserTextField: UITextField!
     @IBOutlet weak var registerButtonLabel: UIButton!
@@ -24,6 +25,22 @@ class RegisterAccountController: UIViewController {
         
         delegates()
         changeStyleButton()
+        setupBirthPicker()
+        
+    }
+    
+    private func setupBirthPicker() {
+        self.dateBirthUserTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone))
+    }
+    
+    @objc func tapDone() {
+        if let datePicker = self.dateBirthUserTextField.inputView as? UIDatePicker { // 2-1
+            let dateFormatter = DateFormatter() // 2-2
+            dateFormatter.dateStyle = .medium // 2-3
+            dateFormatter.locale = Locale(identifier: "ru_RU")
+            self.dateBirthUserTextField.text = dateFormatter.string(from: datePicker.date) //2-4
+        }
+        self.dateBirthUserTextField.resignFirstResponder() // 2-5
     }
     
     private func changeStyleButton() {
@@ -49,6 +66,7 @@ class RegisterAccountController: UIViewController {
         
         guard Validators.isFilled(firstname: firstNameUserTextField.text,
                                   lastName: lastNameUserTextField.text,
+                                  birth: dateBirthUserTextField.text,
                                   email: email,
                                   password: password)
         else {
@@ -82,6 +100,8 @@ class RegisterAccountController: UIViewController {
                     "firstName": self!.firstNameUserTextField.text!,
                     "lastName": self!.lastNameUserTextField.text!,
                     "email": email,
+                    "dateRegister": Timestamp(),
+                    "birth": self!.dateBirthUserTextField.text!,
                     "password": password,
                     "roleUser": "Соискатель",
                     "spezialization": "не указана",
