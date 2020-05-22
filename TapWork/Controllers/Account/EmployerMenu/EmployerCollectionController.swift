@@ -45,7 +45,7 @@ class EmployerCollectionController: UICollectionViewController {
             cell.imageEmployerMenu.image = #imageLiteral(resourceName: "plusIcon")
         case 1:
             cell.headerRow.text = "Вакансии в работе"
-            cell.imageEmployerMenu.image = #imageLiteral(resourceName: "settingAcc")
+            cell.imageEmployerMenu.image = #imageLiteral(resourceName: "inWork")
         case 2:
             cell.headerRow.text = "Черновик"
         default:

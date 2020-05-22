@@ -13,29 +13,33 @@ struct CurrentUser: Decodable {
     
     var dateRegister: Date?
     var email: String?
+    var city: String?
     var firstName: String?
     var lastName: String?
     var birth: String?
     var profileImageUrl: String?
     var roleUser: String?
-    var specialization: String?
+//    var specialization: String?
     var uid: String?
     var fullName: String {
         return firstName! + " " + lastName!
+    }
+    var ageAndCity: String {
+        return birth! + ", " + city!
     }
 
     
     enum CodingKeys: String, CodingKey {
         case dateRegister = "dateRegister"
         case email = "email"
+        case city = "city"
         case firstName = "firstName"
         case lastName = "lastName"
         case birth = "birth"
         case profileImageUrl = "profileImageUrl"
         case roleUser = "roleUser"
-        case specialization = "specialization"
+//        case specialization = "specialization"
         case uid = "uid"
-
     }
 }
 //    init(email: String?,

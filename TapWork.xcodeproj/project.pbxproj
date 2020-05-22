@@ -33,6 +33,9 @@
 		87B865C724742806001CBCEE /* Extension + UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865C624742806001CBCEE /* Extension + UIView.swift */; };
 		87B865C924742845001CBCEE /* Extension + UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865C824742845001CBCEE /* Extension + UIImageView.swift */; };
 		87B865CB247429B5001CBCEE /* Extension + UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865CA247429B5001CBCEE /* Extension + UIViewController.swift */; };
+		87B865CE24780BE8001CBCEE /* ActiveVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865CD24780BE8001CBCEE /* ActiveVacansyController.swift */; };
+		87B865D124780C6A001CBCEE /* ActiveVacansyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */; };
+		87B865D324784817001CBCEE /* ChooseStatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D224784817001CBCEE /* ChooseStatusController.swift */; };
 		87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BB3BA123F9D691004F3C61 /* CategoriesController.swift */; };
 		87BD43DD2450C513000B6865 /* Categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 87BD43DC2450C513000B6865 /* Categories.json */; };
 		87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */; };
@@ -96,6 +99,9 @@
 		87B865C624742806001CBCEE /* Extension + UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIView.swift"; sourceTree = "<group>"; };
 		87B865C824742845001CBCEE /* Extension + UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIImageView.swift"; sourceTree = "<group>"; };
 		87B865CA247429B5001CBCEE /* Extension + UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIViewController.swift"; sourceTree = "<group>"; };
+		87B865CD24780BE8001CBCEE /* ActiveVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveVacansyController.swift; sourceTree = "<group>"; };
+		87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveVacansyCell.swift; sourceTree = "<group>"; };
+		87B865D224784817001CBCEE /* ChooseStatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseStatusController.swift; sourceTree = "<group>"; };
 		87BB3BA123F9D691004F3C61 /* CategoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesController.swift; sourceTree = "<group>"; };
 		87BD43DC2450C513000B6865 /* Categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Categories.json; sourceTree = "<group>"; };
 		87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryLoaderJSON.swift; sourceTree = "<group>"; };
@@ -165,8 +171,11 @@
 			children = (
 				879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */,
 				879F599623F9A0A400D4D124 /* RegisterAccountController.swift */,
+				87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */,
+				87B865D224784817001CBCEE /* ChooseStatusController.swift */,
+				87F84F5C246C4B88002AC050 /* ProfDataUserController.swift */,
 				87F7A7D324701CE50070B1FD /* PersonalDataController.swift */,
-				87F7A7CB246ECA000070B1FD /* MenuAccUser */,
+				87B865CC24780A50001CBCEE /* EmployerMenu */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -250,10 +259,10 @@
 		879F596623F4D00900D4D124 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				870B9D67240DD478006EB3EC /* MainScreen */,
 				875F6A3F243602D4002C652D /* Messages */,
 				875F6A3C2435F298002C652D /* Vacansy */,
 				871397C723FC5E1700FB7732 /* Account */,
-				870B9D67240DD478006EB3EC /* MainScreen */,
 				87329CFF240365950089E9EF /* Category */,
 			);
 			path = Controllers;
@@ -262,10 +271,10 @@
 		879F596723F4D02F00D4D124 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				87B865CF24780C04001CBCEE /* EmployerDataCell */,
 				87F7A7D024701A620070B1FD /* PersonalData */,
 				87D05223245B5AA6000B2F61 /* VacansyCell */,
 				875F6A422436037D002C652D /* MessageCell.swift */,
-				87F7A7CE246ECB2E0070B1FD /* EmployerCollectionCell.swift */,
 				87D05222245B5A75000B2F61 /* Category&SpecViewCell */,
 			);
 			name = View;
@@ -290,6 +299,26 @@
 				879F598F23F9797A00D4D124 /* TabBarController.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		87B865CC24780A50001CBCEE /* EmployerMenu */ = {
+			isa = PBXGroup;
+			children = (
+				87F7A7CC246ECA5E0070B1FD /* EmployerCollectionController.swift */,
+				87B865CD24780BE8001CBCEE /* ActiveVacansyController.swift */,
+				8768965B23F9F87400E17CC1 /* AddVacansyController.swift */,
+			);
+			path = EmployerMenu;
+			sourceTree = "<group>";
+		};
+		87B865CF24780C04001CBCEE /* EmployerDataCell */ = {
+			isa = PBXGroup;
+			children = (
+				87F7A7D7247065D50070B1FD /* EmployerTableCell.swift */,
+				87F7A7CE246ECB2E0070B1FD /* EmployerCollectionCell.swift */,
+				87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */,
+			);
+			path = EmployerDataCell;
 			sourceTree = "<group>";
 		};
 		87BD43DB2450C4CF000B6865 /* JSON */ = {
@@ -362,23 +391,11 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
-		87F7A7CB246ECA000070B1FD /* MenuAccUser */ = {
-			isa = PBXGroup;
-			children = (
-				87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */,
-				87F84F5C246C4B88002AC050 /* ProfDataUserController.swift */,
-				87F7A7CC246ECA5E0070B1FD /* EmployerCollectionController.swift */,
-				8768965B23F9F87400E17CC1 /* AddVacansyController.swift */,
-			);
-			path = MenuAccUser;
-			sourceTree = "<group>";
-		};
 		87F7A7D024701A620070B1FD /* PersonalData */ = {
 			isa = PBXGroup;
 			children = (
 				87F7A7D124701A950070B1FD /* PersonalDataCell.swift */,
 				87F7A7D524702B590070B1FD /* ProfPersonalDataCell.swift */,
-				87F7A7D7247065D50070B1FD /* EmployerTableCell.swift */,
 			);
 			path = PersonalData;
 			sourceTree = "<group>";
@@ -542,11 +559,13 @@
 				879F599723F9A0A400D4D124 /* RegisterAccountController.swift in Sources */,
 				879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */,
 				871D175223C8F6350095C765 /* AppDelegate.swift in Sources */,
+				87B865D124780C6A001CBCEE /* ActiveVacansyCell.swift in Sources */,
 				87B865C324742771001CBCEE /* Extension + UITextField.swift in Sources */,
 				870B9D6B240DDDD0006EB3EC /* LaunchScreenViewController.swift in Sources */,
 				875F6A432436037D002C652D /* MessageCell.swift in Sources */,
 				87F497532461A32E009B25A0 /* ProfessionsController.swift in Sources */,
 				87B865BD24742740001CBCEE /* Extension + Date.swift in Sources */,
+				87B865D324784817001CBCEE /* ChooseStatusController.swift in Sources */,
 				87329D01240463EB0089E9EF /* ModelUsers.swift in Sources */,
 				87F7A7D224701A950070B1FD /* PersonalDataCell.swift in Sources */,
 				871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */,
@@ -560,6 +579,7 @@
 				87B865C124742761001CBCEE /* Extension + UIButton.swift in Sources */,
 				87F7A7CD246ECA5E0070B1FD /* EmployerCollectionController.swift in Sources */,
 				87F497822464A803009B25A0 /* AuthError.swift in Sources */,
+				87B865CE24780BE8001CBCEE /* ActiveVacansyController.swift in Sources */,
 				87F7A7CA246E03F10070B1FD /* ModelCurrentUser.swift in Sources */,
 				875F6A452436065D002C652D /* ChatViewController.swift in Sources */,
 				87D05254245D9723000B2F61 /* ModelCities.swift in Sources */,

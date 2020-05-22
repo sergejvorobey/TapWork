@@ -10,5 +10,6 @@ import UIKit
 
 class EmployerTableCell: UITableViewCell {
 
-
+    @IBOutlet weak var descriptionEmployerLabel: UILabel!
+    
 }

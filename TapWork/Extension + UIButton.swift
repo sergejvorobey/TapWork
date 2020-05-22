@@ -16,7 +16,7 @@ extension UIButton {
         
         self.setTitle(text, for: .normal)
         self.backgroundColor = .red
-        self.layer.cornerRadius = 15
+        self.layer.cornerRadius = 5
         self.tintColor = .white
     }
     

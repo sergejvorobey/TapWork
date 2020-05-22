@@ -124,7 +124,7 @@ class MainScreenController: UITableViewController {
         let vacansy = vacancies[indexPath.row]
         
         vacanciesCell.headingLabel.text = vacansy.heading
-        vacanciesCell.cityVacansyLabel.text = "Город" //TODO: peredelati
+        vacanciesCell.cityVacansyLabel.text = vacansy.city
         vacanciesCell.categoryVacansyLabel.styleLabel(with: " Категория ") //TODO
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "

@@ -19,6 +19,7 @@ class RegisterAccountController: UIViewController {
     @IBOutlet weak var passwordUserTextField: UITextField!
     @IBOutlet weak var confirmPassUserTextField: UITextField!
     @IBOutlet weak var registerButtonLabel: UIButton!
+    var statusUser = "Ищу работу"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,8 @@ class RegisterAccountController: UIViewController {
         delegates()
         changeStyleButton()
         setupBirthPicker()
-        
+        navigationItem.title = "Регистрация"
+
     }
     
     private func setupBirthPicker() {
@@ -45,8 +47,16 @@ class RegisterAccountController: UIViewController {
     
     private func changeStyleButton() {
         guard let registerButton = registerButtonLabel else {return}
-        
         registerButton.changeStyleButton(with: "Зарегистрировать")
+        
+    }
+    
+    private func checkStatus() {
+        if statusUser == "Работодатель" {
+            dateBirthUserTextField.isHidden = true
+        } else {
+            dateBirthUserTextField.isHidden = false
+        }
     }
     
     private func delegates() {
@@ -59,21 +69,32 @@ class RegisterAccountController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        checkStatus()
         self.view.activityStopAnimating()
     }
     
-   private func register(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
-        
-        guard Validators.isFilled(firstname: firstNameUserTextField.text,
-                                  lastName: lastNameUserTextField.text,
-                                  birth: dateBirthUserTextField.text,
-                                  email: email,
-                                  password: password)
-        else {
-            completion(.failure(AuthError.notFilled))
-            return
+    private func register(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
+
+        if statusUser == "Работодатель" {
+            guard Validators.isFilledRegisterEmployer(firstname: firstNameUserTextField.text,
+                                                      lastName: lastNameUserTextField.text,
+                                                      email: email,
+                                                      password: password)
+                else {
+                    completion(.failure(AuthError.notFilled))
+                    return
+            }
+        } else {
+        guard Validators.isFilledRegister(firstname: firstNameUserTextField.text,
+                                          lastName: lastNameUserTextField.text,
+                                          birth: dateBirthUserTextField.text,
+                                          email: email,
+                                          password: password)
+            else {
+                completion(.failure(AuthError.notFilled))
+                return
+            }
         }
-        
         guard let email = email, let password = password else {
             completion(.failure(AuthError.unknownError))
             return
@@ -89,30 +110,57 @@ class RegisterAccountController: UIViewController {
                 completion(.failure(error!))
                 return
             }
-//            let db = Firestore.firestore()
-//            db.collection("users").addDocument(data: [
-//                "firstName": self.firstNameUserTextField.text!,
-//                "lastName": self.lastNameUserTextField.text!,
-//                "email": email,
-//                "uid": result!.user.uid as Any ])
+//            db.collection("users").document((result?.user.uid)!).setData([
+            //                    "firstName": self!.firstNameUserTextField.text!,
+            //                    "lastName": self!.lastNameUserTextField.text!,
+            //                    "city": "не указан",
+            //                    "email": email,
+            //                    "dateRegister": Timestamp(),
+            //                    "birth": self!.dateBirthUserTextField.text!,
+            //                    "password": password,
+            //                    "roleUser": "Соискатель",
+            //                    "spezialization": "не указана",
+            //                    "profileImageUrl": "",
+            //                    "uid": result?.user.uid as Any])
+            
             let db = Firestore.firestore()
-            db.collection("users").document((result?.user.uid)!).setData([
+            if self?.statusUser == "Ищу работу" {
+                db.collection("users")
+                    .document((result?.user.uid)!)
+                    .collection("userData")
+                    .document("personalData").setData([
+                        "firstName": self!.firstNameUserTextField.text!,
+                        "lastName": self!.lastNameUserTextField.text!,
+                        "city": "не указан",
+                        "email": email,
+                        "dateRegister": Timestamp(),
+                        "birth": self!.dateBirthUserTextField.text!,
+                        "password": password,
+                        "roleUser": self!.statusUser,
+                        "profileImageUrl": "",
+                        "uid": result?.user.uid as Any ])
+            } else {
+                db.collection("users")
+                .document((result?.user.uid)!)
+                .collection("userData")
+                .document("personalData").setData([
                     "firstName": self!.firstNameUserTextField.text!,
                     "lastName": self!.lastNameUserTextField.text!,
+                    "city": "не указан",
                     "email": email,
                     "dateRegister": Timestamp(),
-                    "birth": self!.dateBirthUserTextField.text!,
+                    "birth": "Не указано",
                     "password": password,
-                    "roleUser": "Соискатель",
-                    "spezialization": "не указана",
+                    "roleUser": self!.statusUser,
                     "profileImageUrl": "",
-                    "uid": result?.user.uid as Any])
-            { (error) in
-                if error != nil {
-                    completion(.failure(AuthError.serverError))
-                }
-                completion(.success)
+                    "uid": result?.user.uid as Any ])
             }
+//            { (error) in
+//                if error != nil {
+//                    completion(.failure(AuthError.serverError))
+//                }
+                completion(.success)
+//            }
         }
     }
     

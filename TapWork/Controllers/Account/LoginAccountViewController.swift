@@ -137,7 +137,7 @@ class LoginAccountViewController: UIViewController {
     }
     
     @IBAction func registerAnAccount(_ sender: UIButton) {
-        performSegue(withIdentifier: "RegisterAccount", sender: nil)
+        performSegue(withIdentifier: "chooseStatus", sender: nil)
     }
 }
 

@@ -12,7 +12,7 @@ import SystemConfiguration
 class Validators {
     
     //checking text fields for spaces
-    static func isFilled(firstname: String?,
+    static func isFilledRegister(firstname: String?,
                          lastName: String?,
                          birth: String?,
                          email: String?,
@@ -26,12 +26,39 @@ class Validators {
         }
         return true
     }
+    static func isFilledRegisterEmployer(firstname: String?,
+                         lastName: String?,
+                         email: String?,
+                         password: String?) -> Bool {
+        guard !(firstname ?? "").isEmpty,
+            !(lastName ?? "").isEmpty,
+            !(email ?? "").isEmpty,
+            !(password ?? "").isEmpty else {
+                return false
+        }
+        return true
+    }
+    
+    static func isFilledUser(firstname: String?,
+                         lastName: String?,
+                         city: String?,
+                         birth: String?) -> Bool {
+        guard !(firstname ?? "").isEmpty,
+            !(lastName ?? "").isEmpty,
+            !(city ?? "").isEmpty,
+            !(birth ?? "").isEmpty else {
+                return false
+        }
+        return true
+    }
     
     static func isFilledVacansy(headingVacansy: String?,
+                                cityVacansy: String?,
                                 contentVacansy: String?,
                                 paymentVacansy: String?,
                                 phoneNumber: String?) -> Bool {
         guard !(headingVacansy ?? "").isEmpty,
+            !(cityVacansy ?? "").isEmpty,
             !(contentVacansy ?? "").isEmpty,
             !(paymentVacansy ?? "").isEmpty,
             !(phoneNumber ?? "").isEmpty else {

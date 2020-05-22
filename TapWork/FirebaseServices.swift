@@ -15,25 +15,24 @@ class LoaderDataFirebase {
     private var infoUser: Users!
     private var ref: DatabaseReference!
     
-//    var userDataArray = [CurrentUser]()
-//    var vacancies = [Vacancy]()
-    
-   
-    
     typealias userCallBack = (_ user: [CurrentUser]?, _ status: Bool, _ message: String) -> Void
     typealias vacansyCallBack = (_ vacansy: [Vacancy]?, _ status: Bool, _ message: String) -> Void
+    private var callBack: userCallBack?
+    private var vacansyCallBack: vacansyCallBack?
     
-    var callBack: userCallBack?
-    var vacansyCallBack: vacansyCallBack?
-    
-    func refDatebase()  {
+    func getDatabaseUser()  {
         
         guard let currentUsers = Auth.auth().currentUser else { return }
         infoUser = Users(user: currentUsers)
-        ref = Database.database().reference(withPath: "users").child(String(infoUser.userId))
-        
+//        ref = Database.database().reference(withPath: "users").child(String(infoUser.userId)).child("personalData").child(String(infoUser.userId))
+//
         let db = Firestore.firestore()
-        db.collection("users").document(infoUser.userId).addSnapshotListener { (snapshot, _) in
+        db.collection("users")
+            .document(infoUser.userId)
+            .collection("userData")
+            .document("personalData")
+            .addSnapshotListener { (snapshot, _)  in
+
             guard let snapshot = snapshot, snapshot.exists else {return}
             
             guard let data = snapshot.data() else {return}
@@ -41,17 +40,17 @@ class LoaderDataFirebase {
             if let timestamp = data["dateRegister"] as? Timestamp {
                 
                 let dateRegister = timestamp.dateValue()
-                let userDataArray = [CurrentUser(dateRegister: dateRegister,
+                let userDataDict = [CurrentUser(dateRegister: dateRegister,
                                                   email: data["email"] as? String,
+                                                  city: data["city"] as? String,
                                                   firstName: data["firstName"] as? String,
                                                   lastName: data["lastName"] as? String,
                                                   birth: data["birth"] as? String,
                                                   profileImageUrl: data["profileImageUrl"] as? String,
                                                   roleUser: data["roleUser"] as? String,
-                                                  specialization: data["specialization"] as? String,
+//                                                  specialization: data["specialization"] as? String,
                                                   uid: data["uid"] as? String)]
-                
-                self.callBack?(userDataArray, true,"")
+                self.callBack?(userDataDict, true,"")
             }
             
 //            self.callBack?(userDataArray, true,"")
@@ -80,11 +79,7 @@ class LoaderDataFirebase {
                 let vacansy = Vacancy(snapshot: item as! DataSnapshot)
                
                 _vacancies.append(vacansy)
-//                _vacancies.append(vacansy)
-//                self.vacancies.append(vacansy)
-//                print(_vacancies)
             }
-//            self.vacancies = _vacancies
             _vacancies.sort(by: {$0.timestamp > $1.timestamp})
             self.vacansyCallBack?(_vacancies, true,"")
         }

@@ -11,11 +11,9 @@ import Firebase
 
 class PersonalDataController: UITableViewController {
     
-//    let sectionHeaderHeight: CGFloat = 25
     private var userData = [CurrentUser]()
     private var userStatus: String?
-//    private var currentData = LoaderUserData().userDataArray
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,31 +38,76 @@ class PersonalDataController: UITableViewController {
         }
     }
     
-    @IBAction func menuAccount(_ sender: UIBarButtonItem) {
+    // title + info button Employer Cell
+    lazy var headerView: UIView = {
+        
+        let frame: CGRect = tableView.frame
+
+        var label = UILabel()
+        label = UILabel(frame: CGRect(x: 10, y: 10, width: 300, height: 20))
+        label.text = "СЕРВИСЫ ДЛЯ РАБОТОДАТЕЛЕЙ"
+        label.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.light)
+        
+        var infoButton = UIButton(frame: CGRect(x: frame.size.width - 50, y: 5, width: 30, height: 30))
+        infoButton.setTitle("?", for: .normal)
+        infoButton.setTitleColor(.black, for: .normal)
+        infoButton.layer.cornerRadius = 15
+        infoButton.layer.borderWidth = 0.3
+        infoButton.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
+        
+        let headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+        headerView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+        
+        headerView.addSubview(infoButton)
+        headerView.addSubview(label)
+        return headerView
+    }()
+    
+    @objc func buttonTapped(sender: UIButton) {
+        
+        self.showAlert(title: "Сервисы для работодателей", message: "В этом меню вы можете: создавать, редактировать и удалять свои публикации")
+    }
+    
+    private func exitAccount() {
         
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let cancel = UIAlertAction(title: "Назад", style: .default) { _ in }
-        let signOutAcc = UIAlertAction(title: "Выйти из аккаунта", style: .destructive) {[weak self] _ in
-            
-            do {
-                try Auth.auth().signOut()
-                
-            } catch {
-                print(error.localizedDescription)
-            }
-            let launchScreenVC = self?.storyboard?.instantiateViewController(withIdentifier: "LaunchScreen")
-            
-            guard let launchSVC = launchScreenVC else { return }
-            
-            self?.navigationController?.pushViewController(launchSVC, animated: true)
-        }
         
+        let signOutAcc = UIAlertAction(title: "Выйти из аккаунта", style: .destructive) { (actionSheet) in
+            
+            
+            let alert = UIAlertController(title: "Выйти из аккаунта",
+                                          message: "Вы уверенны что хотите выйти?",
+                                          preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Выйти", style: .default, handler: { _ in
+                
+                do {
+                    try Auth.auth().signOut()
+                } catch {
+                    print(error.localizedDescription)
+                }
+                let launchScreenVC = self.storyboard?.instantiateViewController(withIdentifier: "LaunchScreen")
+                
+                guard let launchSVC = launchScreenVC else { return }
+                
+                self.navigationController?.pushViewController(launchSVC, animated: true)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Не выходить", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true)
+        }
+         
         actionSheet.addAction(signOutAcc)
         actionSheet.addAction(cancel)
         present(actionSheet, animated: true)
     }
     
+    @IBAction func menuAccount(_ sender: UIBarButtonItem) {
+       exitAccount()
+    }
     
     // refresh spinner
        private lazy var refreshControll: UIRefreshControl = {
@@ -92,7 +135,7 @@ class PersonalDataController: UITableViewController {
         }
         
         let dataLoader = LoaderDataFirebase()
-        dataLoader.refDatebase()
+        dataLoader.getDatabaseUser()
         
         dataLoader.completionHandler { [weak self] (user, status, message) in
             
@@ -111,10 +154,9 @@ class PersonalDataController: UITableViewController {
     }
     
     // MARK: - Table view data source
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
 
-        if userStatus == "Соискатель" {
+        if userStatus == "Ищу работу" {
             return 2
         } else {
             return 3
@@ -129,15 +171,21 @@ class PersonalDataController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let data = userData[indexPath.row]
+        let indexSection = indexPath.section
 
-        if indexPath.section == 0 {
-            
+        switch indexSection {
+        case 0:
             let personalCell = tableView.dequeueReusableCell(withIdentifier: "PersonalDataCell", for: indexPath) as! PersonalDataCell
             
             personalCell.fullNameUser.text = data.fullName
             personalCell.emailUser.text = data.email
-            personalCell.ageAndCityUser.text = data.birth//TODO
-
+            
+            if data.ageAndCity.isEmpty == true {
+                personalCell.ageAndCityUser.text = data.birth
+            } else {
+                personalCell.ageAndCityUser.text = data.ageAndCity
+            }
+           
             let dateRegister = data.dateRegister!
 
             personalCell.dateRegister.text = "На сайте с: \(dateRegister.dateRegister())"
@@ -154,44 +202,41 @@ class PersonalDataController: UITableViewController {
             }
             
             personalCell.accessoryType = .disclosureIndicator
-            
             return personalCell
-            
-        } else if indexPath.section == 1 {
-            
+        case 1:
             let profPersonalCell = tableView.dequeueReusableCell(withIdentifier: "ProfPersonalDataCell", for: indexPath) as! ProfPersonalDataCell
             profPersonalCell.accessoryType = .disclosureIndicator
             return profPersonalCell
-        } else {
-            
+        case 2:
             let employerCell = tableView.dequeueReusableCell(withIdentifier: "EmployerCell", for: indexPath) as! EmployerTableCell
             employerCell.accessoryType = .disclosureIndicator
             return employerCell
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Персональные данные"
-        } else if section == 1 {
-            return "Профессиональные данные и навыки"
-        } else {
-            return "Сервисы для работодателя"
+        default:
+            break
         }
         
-//        switch section {
-//        case 0:
-//            return "Персональные данные"
-//        case 1:
-//            return "Обо мне"
-//        case 2:
-//            return "Для работодателя"
-//        default:
-//            break
-//        }
-    
+        return UITableViewCell()
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        switch section {
+        case 0:
+            return view.changeHeaderCell(title: "ПЕРСОНАЛЬНЫЕ ДАННЫЕ")
+        case 1:
+            return view.changeHeaderCell(title: "ПРОФЕССИОНАЛЬНЫЕ ДАННЫЕ И НАВЫКИ")
+        case 2:
+            return headerView
+        default:
+            break
+        }
+        return nil
+    }
+    
+   
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat(40)
+    }
       
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

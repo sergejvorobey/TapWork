@@ -44,4 +44,22 @@ extension UIView {
         }
         self.isUserInteractionEnabled = true
     }
+    
+    func changeHeaderCell(title: String) -> UIView {
+        
+        let tableView = UITableView()
+        
+        let frame: CGRect = tableView.frame
+
+        var label = UILabel()
+        label = UILabel(frame: CGRect(x: 10, y: 10, width: 400, height: 20))
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.light)
+        
+        let headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+        headerView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+        
+        headerView.addSubview(label)
+        return headerView
+    }
 }
