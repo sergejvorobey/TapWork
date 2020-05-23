@@ -12,7 +12,7 @@ import Firebase
 struct CurrentUser: Decodable {
     
     var dateRegister: Date?
-    var email: String?
+//    var email: String?
     var city: String?
     var firstName: String?
     var lastName: String?
@@ -22,7 +22,11 @@ struct CurrentUser: Decodable {
 //    var specialization: String?
     var uid: String?
     var fullName: String {
-        return firstName! + " " + lastName!
+//        return firstName! + " " + lastName!
+        return """
+        \(firstName!)
+        \(lastName!)
+        """
     }
     var ageAndCity: String {
         return birth! + ", " + city!
@@ -31,7 +35,7 @@ struct CurrentUser: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case dateRegister = "dateRegister"
-        case email = "email"
+//        case email = "email"
         case city = "city"
         case firstName = "firstName"
         case lastName = "lastName"

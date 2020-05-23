@@ -19,7 +19,7 @@ class RegisterAccountController: UIViewController {
     @IBOutlet weak var passwordUserTextField: UITextField!
     @IBOutlet weak var confirmPassUserTextField: UITextField!
     @IBOutlet weak var registerButtonLabel: UIButton!
-    var statusUser = "Ищу работу"
+    var roleUser = "Ищу работу"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class RegisterAccountController: UIViewController {
         changeStyleButton()
         setupBirthPicker()
         navigationItem.title = "Регистрация"
-
+        
     }
     
     private func setupBirthPicker() {
@@ -52,7 +52,7 @@ class RegisterAccountController: UIViewController {
     }
     
     private func checkStatus() {
-        if statusUser == "Работодатель" {
+        if roleUser == "Работодатель" {
             dateBirthUserTextField.isHidden = true
         } else {
             dateBirthUserTextField.isHidden = false
@@ -74,8 +74,8 @@ class RegisterAccountController: UIViewController {
     }
     
     private func register(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
-
-        if statusUser == "Работодатель" {
+        
+        if roleUser == "Работодатель" {
             guard Validators.isFilledRegisterEmployer(firstname: firstNameUserTextField.text,
                                                       lastName: lastNameUserTextField.text,
                                                       email: email,
@@ -85,14 +85,14 @@ class RegisterAccountController: UIViewController {
                     return
             }
         } else {
-        guard Validators.isFilledRegister(firstname: firstNameUserTextField.text,
-                                          lastName: lastNameUserTextField.text,
-                                          birth: dateBirthUserTextField.text,
-                                          email: email,
-                                          password: password)
-            else {
-                completion(.failure(AuthError.notFilled))
-                return
+            guard Validators.isFilledRegister(firstname: firstNameUserTextField.text,
+                                              lastName: lastNameUserTextField.text,
+                                              birth: dateBirthUserTextField.text,
+                                              email: email,
+                                              password: password)
+                else {
+                    completion(.failure(AuthError.notFilled))
+                    return
             }
         }
         guard let email = email, let password = password else {
@@ -110,7 +110,7 @@ class RegisterAccountController: UIViewController {
                 completion(.failure(error!))
                 return
             }
-//            db.collection("users").document((result?.user.uid)!).setData([
+            //            db.collection("users").document((result?.user.uid)!).setData([
             //                    "firstName": self!.firstNameUserTextField.text!,
             //                    "lastName": self!.lastNameUserTextField.text!,
             //                    "city": "не указан",
@@ -123,44 +123,41 @@ class RegisterAccountController: UIViewController {
             //                    "profileImageUrl": "",
             //                    "uid": result?.user.uid as Any])
             
-            let db = Firestore.firestore()
-            if self?.statusUser == "Ищу работу" {
-                db.collection("users")
-                    .document((result?.user.uid)!)
-                    .collection("userData")
-                    .document("personalData").setData([
-                        "firstName": self!.firstNameUserTextField.text!,
-                        "lastName": self!.lastNameUserTextField.text!,
-                        "city": "не указан",
-                        "email": email,
-                        "dateRegister": Timestamp(),
-                        "birth": self!.dateBirthUserTextField.text!,
-                        "password": password,
-                        "roleUser": self!.statusUser,
-                        "profileImageUrl": "",
-                        "uid": result?.user.uid as Any ])
-            } else {
-                db.collection("users")
-                .document((result?.user.uid)!)
-                .collection("userData")
-                .document("personalData").setData([
-                    "firstName": self!.firstNameUserTextField.text!,
-                    "lastName": self!.lastNameUserTextField.text!,
-                    "city": "не указан",
-                    "email": email,
-                    "dateRegister": Timestamp(),
-                    "birth": "Не указано",
-                    "password": password,
-                    "roleUser": self!.statusUser,
-                    "profileImageUrl": "",
-                    "uid": result?.user.uid as Any ])
-            }
-//            { (error) in
-//                if error != nil {
-//                    completion(.failure(AuthError.serverError))
-//                }
+            if error == nil {
+                let db = Firestore.firestore()
+                if self?.roleUser == "Ищу работу" {
+                    db.collection("users")
+                        .document((result?.user.uid)!)
+                        .collection("userData")
+                        .document("personalData").setData([
+                            "firstName": self!.firstNameUserTextField.text!,
+                            "lastName": self!.lastNameUserTextField.text!,
+                            "city": "не указан",
+                            "email": email,
+                            "dateRegister": Timestamp(),
+                            "birth": self!.dateBirthUserTextField.text!,
+                            "password": password,
+                            "roleUser": self!.roleUser,
+                            "profileImageUrl": "",
+                            "uid": result?.user.uid as Any ])
+                } else {
+                    db.collection("users")
+                        .document((result?.user.uid)!)
+                        .collection("userData")
+                        .document("personalData").setData([
+                            "firstName": self!.firstNameUserTextField.text!,
+                            "lastName": self!.lastNameUserTextField.text!,
+                            "city": "не указан", //TODO
+                            "email": email,
+                            "dateRegister": Timestamp(),
+                            "birth": "Не указано",
+                            "password": password,
+                            "roleUser": self!.roleUser,
+                            "profileImageUrl": "",
+                            "uid": result?.user.uid as Any ])
+                }
                 completion(.success)
-//            }
+            }
         }
     }
     
@@ -168,18 +165,14 @@ class RegisterAccountController: UIViewController {
         register(email: emailTextField.text, password: passwordUserTextField.text) {[weak self] (result) in
             switch result {
             case .success:
-//                self.showAlert(title: "Успешно", message: "Вы зарегистрированны!")
+                //                self.showAlert(title: "Успешно", message: "Вы зарегистрированны!")
                 self?.view.activityStartAnimating(activityColor: .red,
-                                                 backgroundColor: UIColor.black.withAlphaComponent(0.1))
+                                                  backgroundColor: UIColor.black.withAlphaComponent(0.1))
                 self?.performSegue(withIdentifier: "MainScreenController", sender: nil)
             case .failure(let error):
                 self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
-    }
-    
-    @IBAction func cancelButton (_ sender: UIBarButtonItem) {
-        dismiss(animated: true)
     }
 }
 

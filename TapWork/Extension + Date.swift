@@ -25,20 +25,20 @@ extension Date {
         let seconds = components.second!
         
         if years > 0 {
-            return years == 1 ? "1 год назад": "\(years) лет назад"
+            return years == 1 ? "1 год": "\(years) лет"
         } else if months > 0 {
-            return months == 1 ? "1 месяц назад": "\(months) месяцев назад"
+            return months == 1 ? "1 месяц": "\(months) месяцев"
         } else if days >= 7 {
             let weeks = days / 7
-            return weeks == 1 ? "1 неделя назад": "\(weeks) недель назад"
+            return weeks == 1 ? "1 неделя": "\(weeks) недель"
         } else if days > 0 {
-            return days == 1 ? "1 день назад": "\(days) дней назад"
+            return days == 1 ? "1 день": "\(days) дней"
         } else if hours > 0 {
-            return hours == 1 ? "1 час назад": "\(hours) часов назад"
+            return hours == 1 ? "1 час": "\(hours) часов"
         } else if minutes > 0 {
-            return minutes == 1 ? "1 минута назад": "\(minutes) минут назад"
+            return minutes == 1 ? "1 минута": "\(minutes) минут"
         } else {
-            return seconds == 1 ? "1 секунда назад": "\(seconds) секунд назад"
+            return seconds == 1 ? "1 секунда": "\(seconds) секунд"
         }
     }
     

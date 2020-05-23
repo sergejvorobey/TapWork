@@ -12,7 +12,7 @@ import Firebase
 class PersonalDataController: UITableViewController {
     
     private var userData = [CurrentUser]()
-    private var userStatus: String?
+    private var roleUser: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,7 +151,7 @@ class PersonalDataController: UITableViewController {
                 self.userData = _user as! [CurrentUser]
 //                print(self.userData)
                 for status in self.userData {
-                    self.userStatus = status.roleUser
+                    self.roleUser = status.roleUser
                 }
                 self.tableView.reloadData()
             }
@@ -162,7 +162,7 @@ class PersonalDataController: UITableViewController {
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
 
-        if userStatus == "Ищу работу" {
+        if roleUser == "Ищу работу" {
             return 2
         } else {
             return 3
@@ -184,19 +184,23 @@ class PersonalDataController: UITableViewController {
             let personalCell = tableView.dequeueReusableCell(withIdentifier: "PersonalDataCell", for: indexPath) as! PersonalDataCell
             
             personalCell.fullNameUser.text = data.fullName
-            personalCell.emailUser.text = data.email
+            personalCell.roleUser.text = data.roleUser
             
-            if data.ageAndCity.isEmpty == true {
+            // TODO
+            if data.birth == "Не указано" {
                 personalCell.ageAndCityUser.text = data.city
             } else {
                 personalCell.ageAndCityUser.text = data.ageAndCity
             }
            
             let dateRegister = data.dateRegister!
-           
-            personalCell.dateRegister.text = "На сайте с: \(dateRegister.dateRegister())"
+            let date = dateRegister.timeIntervalSince1970 * 1000
+            let newDate = Date(timeIntervalSince1970: date / 1000)
 
+//            personalCell.dateRegister.text = "На сайте с: \(dateRegister.dateRegister())"
             
+            personalCell.dateRegister.text = "\(newDate.calenderTimeSinceNow()) на TapWork"
+
             personalCell.imageUser.changeStyleImage()
             
             if data.profileImageUrl == "" {
@@ -221,7 +225,6 @@ class PersonalDataController: UITableViewController {
         default:
             break
         }
-        
         return UITableViewCell()
     }
     
@@ -251,7 +254,6 @@ class PersonalDataController: UITableViewController {
             let user = userData[indexPath.row]
             let editProfileVC = segue.destination as! EditAccountViewController
             editProfileVC.user = user
-            
         }
     }
     

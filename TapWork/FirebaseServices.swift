@@ -57,7 +57,7 @@ class LoaderDataFirebase {
                     
                 let dateRegister = timestamp.dateValue()
                 let userDataDict = [CurrentUser(dateRegister: dateRegister,
-                                                    email: data["email"] as? String,
+//                                                    email: data["email"] as? String,
                                                     city: data["city"] as? String,
                                                     firstName: data["firstName"] as? String,
                                                     lastName: data["lastName"] as? String,

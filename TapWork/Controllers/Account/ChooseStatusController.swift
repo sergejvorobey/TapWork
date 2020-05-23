@@ -33,7 +33,7 @@ class ChooseStatusController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "RegisterEmployer" {
             if let registerAccountVC = segue.destination as? RegisterAccountController {
-                registerAccountVC.statusUser = "Работодатель"
+                registerAccountVC.roleUser = "Работодатель"
             }
         }
     }
