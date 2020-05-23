@@ -14,22 +14,38 @@ import BonsaiController
 class MainScreenController: UITableViewController {
     
     private var vacancies = [Vacancy]()
+    var userStatus: String?
     private let spinner = UIActivityIndicatorView()
     var nvActivityIndicator: NVActivityIndicatorView?
-//    var vacancies = LoaderUserData().vacancies
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "TAP WORK"
-        
-        tableView.tableFooterView = UIView()
-        tableView.addSubview(refreshControll)
-        
-        view.changeColorView()
-        
+       setupItems()
     }
     
+    private func setupItems() {
+        navigationItem.title = "TAP WORK"
+        tableView.tableFooterView = UIView()
+        tableView.addSubview(refreshControll)
+        view.changeColorView()
+    }
+    
+    //MARK: parse user status
+    private func getStatusUser() {
+        
+        let dataLoader = LoaderDataFirebase()
+        dataLoader.getUserStatus()
+        dataLoader.completionHandler {[weak self](userStatus, status, message) in
+            if status {
+
+                guard let self = self else {return}
+                guard let _userStatus = userStatus else {return}
+                self.userStatus = _userStatus as? String
+            }
+        }
+    }
+
     // refresh spinner
     private lazy var refreshControll: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
@@ -57,12 +73,12 @@ class MainScreenController: UITableViewController {
         let dataLoader = LoaderDataFirebase()
         dataLoader.getDataVacancies()
         
-        dataLoader.completionHandlerVacansy{[weak self] (vacansy, status, message) in
+        dataLoader.completionHandler{[weak self] (vacansy, status, message) in
             
             if status {
                 guard let self = self else {return}
                 guard let _vacansy = vacansy else {return}
-                self.vacancies = _vacansy
+                self.vacancies = _vacansy as! [Vacancy]
             }
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
@@ -70,38 +86,14 @@ class MainScreenController: UITableViewController {
         }
         completion(.success)
     }
-    
-    //reference database
-//    private func refDatebase()  {
-//
-//        let ref = Database.database().reference(withPath: "vacancies")
-//
-//        ref.observe(.value) { [weak self] (snapshot) in
-//
-//            var _vacancies = Array<Vacancy>()
-//
-//            for item in snapshot.children {
-//                let vacansy = Vacancy(snapshot: item as! DataSnapshot)
-//
-//                _vacancies.append(vacansy)
-//            }
-//            self?.vacancies = _vacancies
-//            self?.vacancies.sort(by: {$0.timestamp > $1.timestamp})
-//
-//            DispatchQueue.main.async {
-//                self?.tableView.reloadData()
-//            }
-//        }
-//    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        spinnerStart()
 
+        spinnerStart()
+        getStatusUser()
         getVacancies { (result) in
             switch result {
-                
             case .success:
                 break
             case .failure(let error):
@@ -121,8 +113,14 @@ class MainScreenController: UITableViewController {
         
         let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacansyTableViewCell
         
-        let vacansy = vacancies[indexPath.row]
+        if userStatus == "Работодатель" {
+            vacanciesCell.isUserInteractionEnabled = false
+        } else {
+            vacanciesCell.isUserInteractionEnabled = true
+        }
         
+        let vacansy = vacancies[indexPath.row]
+
         vacanciesCell.headingLabel.text = vacansy.heading
         vacanciesCell.cityVacansyLabel.text = vacansy.city
         vacanciesCell.categoryVacansyLabel.styleLabel(with: " Категория ") //TODO
@@ -156,7 +154,6 @@ class MainScreenController: UITableViewController {
             let vacansy = vacancies[indexPath.row]
             let showInfoVacansyVC = segue.destination as! DetailVacansyViewController
             showInfoVacansyVC.detailVacansy = vacansy
-            
         }
     }
     
@@ -214,19 +211,17 @@ extension MainScreenController {
     
     // activity indicator
     private func spinnerStart() {
-        
-        //        self.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.1))
+
         spinner.startAnimating()
         spinner.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        //                  spinner.hidesWhenStopped = true
         tableView.backgroundView = spinner
-        //        tableView.backgroundView = nvActivityIndicator
+
     }
     
     private func spinnerStop() {
         spinner.stopAnimating()
         spinner.hidesWhenStopped = true
-        //        self.view.activityStopAnimating()
+//        self.view.activityStopAnimating()
     }
 }
 

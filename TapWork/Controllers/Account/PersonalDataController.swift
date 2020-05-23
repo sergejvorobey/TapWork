@@ -13,7 +13,7 @@ class PersonalDataController: UITableViewController {
     
     private var userData = [CurrentUser]()
     private var userStatus: String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,7 +65,13 @@ class PersonalDataController: UITableViewController {
     
     @objc func buttonTapped(sender: UIButton) {
         
-        self.showAlert(title: "Сервисы для работодателей", message: "В этом меню вы можете: создавать, редактировать и удалять свои публикации")
+        self.showAlert(title: "Сервисы для работодателей",
+                       message: """
+                                В этом меню вы можете:
+                                - Cоздавать
+                                - Редактировать
+                                - Удалять свои публикации
+                                """)
     }
     
     private func exitAccount() {
@@ -142,7 +148,7 @@ class PersonalDataController: UITableViewController {
             if status {
                 guard let self = self else {return}
                 guard let _user = user else {return}
-                self.userData = _user
+                self.userData = _user as! [CurrentUser]
 //                print(self.userData)
                 for status in self.userData {
                     self.userStatus = status.roleUser
@@ -181,14 +187,15 @@ class PersonalDataController: UITableViewController {
             personalCell.emailUser.text = data.email
             
             if data.ageAndCity.isEmpty == true {
-                personalCell.ageAndCityUser.text = data.birth
+                personalCell.ageAndCityUser.text = data.city
             } else {
                 personalCell.ageAndCityUser.text = data.ageAndCity
             }
            
             let dateRegister = data.dateRegister!
-
+           
             personalCell.dateRegister.text = "На сайте с: \(dateRegister.dateRegister())"
+
             
             personalCell.imageUser.changeStyleImage()
             
@@ -233,7 +240,6 @@ class PersonalDataController: UITableViewController {
         return nil
     }
     
-   
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat(40)
     }
@@ -241,8 +247,6 @@ class PersonalDataController: UITableViewController {
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditProfileController" {
-            //                segue.destination.transitioningDelegate = self
-            //                segue.destination.modalPresentationStyle = .custom
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let user = userData[indexPath.row]
             let editProfileVC = segue.destination as! EditAccountViewController
@@ -255,3 +259,5 @@ class PersonalDataController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
+
+

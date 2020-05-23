@@ -31,15 +31,14 @@ class ChooseStatusController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-              if segue.identifier == "RegisterEmployer" {
-                  if let registerAccountVC = segue.destination as? RegisterAccountController {
-                    registerAccountVC.statusUser = "Работодатель"
-                  }
-              }
-          }
+        if segue.identifier == "RegisterEmployer" {
+            if let registerAccountVC = segue.destination as? RegisterAccountController {
+                registerAccountVC.statusUser = "Работодатель"
+            }
+        }
+    }
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-    
 }

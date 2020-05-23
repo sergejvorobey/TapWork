@@ -76,7 +76,7 @@ class EditAccountViewController: UIViewController {
     }
     
     private func changeStyleItems() {
-        
+
         delegateItems()
         photoUser.changeStyleImage()
         tappedImagePicker()
@@ -346,6 +346,7 @@ extension EditAccountViewController: UIImagePickerControllerDelegate, UINavigati
                 self.view.activityStopAnimating()
                 self.showAlert(title: "Успешно!", message: "Фотография обновлена!")
             case .failure(let error):
+                self.view.activityStopAnimating()
                 self.showAlert(title: "Ошибка", message: error.localizedDescription)
                 //                self?.showAlert(title: "Ошибка!", message: "Ошибка обновления данных!")
             }

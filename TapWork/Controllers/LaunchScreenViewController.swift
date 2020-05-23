@@ -12,33 +12,40 @@ import Firebase
 class LaunchScreenViewController: UIViewController {
     
     @IBOutlet weak var headingApp: UILabel!
+    private var userStatus: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        checkUser()
         
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        checkUser()
+
+    }
     
     private func checkUserAuth(completion: @escaping (AuthResult) -> Void) {
+
         guard Validators.isConnectedToNetwork()  else {
             completion(.failure(AuthError.serverError))
             return
         }
         
         Auth.auth().addStateDidChangeListener {[weak self](auth, user) in
-            
+
             let delay = 2
             self?.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.1))
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                
+
                 switch user {
                 case _ where user != nil:
                     completion(.success)
-                    //                print("Jump Main screen")
+                    
                     self?.performSegue(withIdentifier: "MainVC", sender: nil)
                 case _ where user == nil:
                     completion(.success)
@@ -51,7 +58,7 @@ class LaunchScreenViewController: UIViewController {
             }
         }
     }
-    
+
     private func checkUser() {
         checkUserAuth {[weak self] (result) in
             switch result {
