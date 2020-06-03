@@ -70,8 +70,6 @@ class LoaderDataFirebase {
         }
     }
     
-   
-    
     func getProfessionDataUser() {
         
         var profDataUser = [Professions]()

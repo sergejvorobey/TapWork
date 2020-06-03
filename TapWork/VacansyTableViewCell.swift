@@ -28,11 +28,6 @@ extension VacansyTableViewCell {
         self.layer.masksToBounds = true
         self.layer.borderColor = color.cgColor
         self.layer.borderWidth = 8
-//        self.layer.shadowColor = UIColor.black.cgColor
-//        self.layer.shadowRadius = 25
-//        self.layer.shadowOpacity = 0.5
-//        self.layer.shadowOffset = .zero
-//        self.layer.masksToBounds = false
     
     }
 }

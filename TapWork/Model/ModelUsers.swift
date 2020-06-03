@@ -20,14 +20,4 @@ struct Users {
     }
 }
 
-//struct CheckUser {
-//
-//    var userId: String
-//    var emailUser: String
-//
-//    init(user: User) {
-//        self.userId = user.uid
-//        self.emailUser = user.email!
-//    }
-//}
 

@@ -20,18 +20,11 @@ class ProfessionController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
-//        restyleItem()
-//        self.tableView.addCorner()
-//        self.tableView.addShadow()
+
 //        tableView.isScrollEnabled = false
         
     }
     
-    func restyleItem() {
-        tableView.layer.cornerRadius = 10
-        tableView.layer.masksToBounds = true
-        tableView.layer.borderColor = UIColor.gray.cgColor
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)

@@ -69,10 +69,8 @@
 		87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */; };
 		87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */; };
 		87F7A7CA246E03F10070B1FD /* ModelCurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7C9246E03F10070B1FD /* ModelCurrentUser.swift */; };
-		87F7A7CF246ECB2E0070B1FD /* EmployerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7CE246ECB2E0070B1FD /* EmployerCollectionCell.swift */; };
 		87F7A7D224701A950070B1FD /* PersonalDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7D124701A950070B1FD /* PersonalDataCell.swift */; };
 		87F7A7D624702B590070B1FD /* ProfPersonalDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7D524702B590070B1FD /* ProfPersonalDataCell.swift */; };
-		87F7A7D8247065D50070B1FD /* EmployerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7D7247065D50070B1FD /* EmployerTableCell.swift */; };
 		87F84F5B246B2226002AC050 /* DetailVacansyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F84F5A246B2226002AC050 /* DetailVacansyViewController.swift */; };
 		87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */; };
 		FAB96E1FEE3EDF12559C97E1 /* Pods_TapWork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */; };
@@ -144,10 +142,8 @@
 		87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelVacancies.swift; sourceTree = "<group>"; };
 		87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacansyTableViewCell.swift; sourceTree = "<group>"; };
 		87F7A7C9246E03F10070B1FD /* ModelCurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCurrentUser.swift; sourceTree = "<group>"; };
-		87F7A7CE246ECB2E0070B1FD /* EmployerCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerCollectionCell.swift; sourceTree = "<group>"; };
 		87F7A7D124701A950070B1FD /* PersonalDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDataCell.swift; sourceTree = "<group>"; };
 		87F7A7D524702B590070B1FD /* ProfPersonalDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfPersonalDataCell.swift; sourceTree = "<group>"; };
-		87F7A7D7247065D50070B1FD /* EmployerTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerTableCell.swift; sourceTree = "<group>"; };
 		87F84F5A246B2226002AC050 /* DetailVacansyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacansyViewController.swift; sourceTree = "<group>"; };
 		87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
 		96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapWork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -344,9 +340,7 @@
 		87B865CF24780C04001CBCEE /* EmployerDataCell */ = {
 			isa = PBXGroup;
 			children = (
-				87F7A7D7247065D50070B1FD /* EmployerTableCell.swift */,
 				872615A02486DEF300BFC88D /* EmployerMenuCell.swift */,
-				87F7A7CE246ECB2E0070B1FD /* EmployerCollectionCell.swift */,
 				87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */,
 			);
 			path = EmployerDataCell;
@@ -577,7 +571,6 @@
 				872615A12486DEF300BFC88D /* EmployerMenuCell.swift in Sources */,
 				875F6A41243602F1002C652D /* MessageViewController.swift in Sources */,
 				87F4978524675721009B25A0 /* ImageService.swift in Sources */,
-				87F7A7D8247065D50070B1FD /* EmployerTableCell.swift in Sources */,
 				87B865CB247429B5001CBCEE /* Extension + UIViewController.swift in Sources */,
 				879B80D924843D0100CBF67B /* ProfileController.swift in Sources */,
 				871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */,
@@ -595,7 +588,6 @@
 				879F599223F99A6900D4D124 /* NavigationController.swift in Sources */,
 				87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */,
 				87F7A7D624702B590070B1FD /* ProfPersonalDataCell.swift in Sources */,
-				87F7A7CF246ECB2E0070B1FD /* EmployerCollectionCell.swift in Sources */,
 				879F599723F9A0A400D4D124 /* RegisterAccountController.swift in Sources */,
 				879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */,
 				871D175223C8F6350095C765 /* AppDelegate.swift in Sources */,
