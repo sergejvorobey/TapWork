@@ -18,7 +18,6 @@ class LoaderDataFirebase {
     typealias callBack = (_ data: Any?, _ status: Bool, _ message: String) -> Void
     private var callBack: callBack?
     
-    
     func getUserStatus() {
         guard let currentUsers = Auth.auth().currentUser else { return }
         infoUser = Users(user: currentUsers)
@@ -27,7 +26,7 @@ class LoaderDataFirebase {
         db.collection("users")
             .document(infoUser.userId)
             .collection("userData")
-            .document("personalData")
+            .document("basic")
             .addSnapshotListener { (snapshot, _)  in
                 
                 guard let snapshot = snapshot, snapshot.exists else {return}
@@ -37,7 +36,9 @@ class LoaderDataFirebase {
         }
     }
     
-    func getDatabaseUser()  {
+    func getDatabaseUserBasic()  {
+        
+        var dataUser = [CurrentUser]()
         
         guard let currentUsers = Auth.auth().currentUser else { return }
         infoUser = Users(user: currentUsers)
@@ -46,27 +47,54 @@ class LoaderDataFirebase {
         db.collection("users")
             .document(infoUser.userId)
             .collection("userData")
-            .document("personalData")
-            .addSnapshotListener { (snapshot, _)  in
+            .document("basic")
+            .addSnapshotListener { (snapshot, _) in
                 
-            guard let snapshot = snapshot, snapshot.exists else {return}
+                guard let snapshot = snapshot, snapshot.exists else {return}
                 
-            guard let data = snapshot.data() else {return}
-                
-            if let timestamp = data["dateRegister"] as? Timestamp {
+                guard let data = snapshot.data() else {return}
+                if let timestamp = data["dateRegister"] as? Timestamp {
                     
-                let dateRegister = timestamp.dateValue()
-                let userDataDict = [CurrentUser(dateRegister: dateRegister,
-//                                                    email: data["email"] as? String,
-                                                    city: data["city"] as? String,
-                                                    firstName: data["firstName"] as? String,
-                                                    lastName: data["lastName"] as? String,
-                                                    birth: data["birth"] as? String,
-                                                    profileImageUrl: data["profileImageUrl"] as? String,
-                                                    roleUser: data["roleUser"] as? String,
-                                                    uid: data["uid"] as? String)]
-                self.callBack?(userDataDict , true,"")
+                    let dateRegister = timestamp.dateValue()
+                    dataUser = [CurrentUser(dateRegister: dateRegister,
+                                            city: data["city"] as? String,
+                                            firstName: data["firstName"] as? String,
+                                            lastName: data["lastName"] as? String,
+                                            birth: data["birth"] as? String,
+                                            profileImageUrl: data["profileImageUrl"] as? String,
+                                            roleUser: data["roleUser"] as? String,
+                                            uid: data["uid"] as? String)]
+
+                    self.callBack?(dataUser , true,"")
             }
+        }
+    }
+    
+   
+    
+    func getProfessionDataUser() {
+        
+        var profDataUser = [Professions]()
+
+        guard let currentUsers = Auth.auth().currentUser else { return }
+        infoUser = Users(user: currentUsers)
+
+        let db = Firestore.firestore()
+
+        db.collection("users")
+            .document(infoUser.userId)
+            .collection("userData")
+            .document("profession")
+            .addSnapshotListener { (snapshot, _) in
+
+                guard let snapshot = snapshot, snapshot.exists else {return}
+
+                guard let data = snapshot.data() else {return}
+                profDataUser = [Professions(aboutMe: data["aboutMe"] as? String,
+                                            experience: data["experience"] as? String,
+                                            profession: data["profession"] as? String)]
+
+             self.callBack?(profDataUser , true,"")
         }
     }
     
@@ -87,6 +115,7 @@ class LoaderDataFirebase {
             self.callBack?(_vacancies, true,"")
         }
     }
+    
     
     func completionHandler(callBack: @escaping callBack) {
         self.callBack = callBack

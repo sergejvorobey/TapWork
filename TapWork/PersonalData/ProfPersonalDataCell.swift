@@ -10,5 +10,10 @@ import UIKit
 
 class ProfPersonalDataCell: UITableViewCell {
 
+    @IBOutlet weak var headerProfessionLabel: UILabel!
 
+    @IBOutlet weak var nameProfessionLabel: UILabel!
+    
+//    @IBOutlet weak var nameProfessionLabel: PaddingLabel!
+    
 }

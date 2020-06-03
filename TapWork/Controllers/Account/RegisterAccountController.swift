@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import iOSDropDown
 
 class RegisterAccountController: UIViewController {
     
@@ -16,9 +17,12 @@ class RegisterAccountController: UIViewController {
     @IBOutlet weak var firstNameUserTextField: UITextField!
     @IBOutlet weak var lastNameUserTextField: UITextField!
     @IBOutlet weak var dateBirthUserTextField: UITextField!
+    @IBOutlet weak var cityUserTextField: DropDown!
     @IBOutlet weak var passwordUserTextField: UITextField!
     @IBOutlet weak var confirmPassUserTextField: UITextField!
     @IBOutlet weak var registerButtonLabel: UIButton!
+    
+    private var citiesList = [Items]()
     var roleUser = "Ищу работу"
     
     override func viewDidLoad() {
@@ -27,8 +31,31 @@ class RegisterAccountController: UIViewController {
         delegates()
         changeStyleButton()
         setupBirthPicker()
-        navigationItem.title = "Регистрация"
         
+    }
+    
+    // load cities
+    private func loadCitiesData() {
+        
+        let dataLoader = CitiesLoaderAPI()
+        dataLoader.getAllCitiesName()
+        
+        dataLoader.completionHandler { [weak self] (cities, status, message) in
+            
+            if status {
+                guard let self = self else {return}
+                guard let _cities = cities else {return}
+                
+                self.citiesList = _cities
+                
+                var arrayCities = [String]()
+                
+                for city in self.citiesList {
+                    arrayCities.append(city.title!)
+                    self.cityUserTextField.optionArray = arrayCities
+                }
+            }
+        }
     }
     
     private func setupBirthPicker() {
@@ -48,7 +75,7 @@ class RegisterAccountController: UIViewController {
     private func changeStyleButton() {
         guard let registerButton = registerButtonLabel else {return}
         registerButton.changeStyleButton(with: "Зарегистрировать")
-        
+        navigationItem.title = "Регистарция"
     }
     
     private func checkStatus() {
@@ -69,8 +96,10 @@ class RegisterAccountController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
         checkStatus()
         self.view.activityStopAnimating()
+        loadCitiesData()
     }
     
     private func register(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
@@ -78,6 +107,7 @@ class RegisterAccountController: UIViewController {
         if roleUser == "Работодатель" {
             guard Validators.isFilledRegisterEmployer(firstname: firstNameUserTextField.text,
                                                       lastName: lastNameUserTextField.text,
+                                                      city: cityUserTextField.text,
                                                       email: email,
                                                       password: password)
                 else {
@@ -88,6 +118,7 @@ class RegisterAccountController: UIViewController {
             guard Validators.isFilledRegister(firstname: firstNameUserTextField.text,
                                               lastName: lastNameUserTextField.text,
                                               birth: dateBirthUserTextField.text,
+                                              city: cityUserTextField.text,
                                               email: email,
                                               password: password)
                 else {
@@ -110,56 +141,112 @@ class RegisterAccountController: UIViewController {
                 completion(.failure(error!))
                 return
             }
-            //            db.collection("users").document((result?.user.uid)!).setData([
-            //                    "firstName": self!.firstNameUserTextField.text!,
-            //                    "lastName": self!.lastNameUserTextField.text!,
-            //                    "city": "не указан",
-            //                    "email": email,
-            //                    "dateRegister": Timestamp(),
-            //                    "birth": self!.dateBirthUserTextField.text!,
-            //                    "password": password,
-            //                    "roleUser": "Соискатель",
-            //                    "spezialization": "не указана",
-            //                    "profileImageUrl": "",
-            //                    "uid": result?.user.uid as Any])
             
-            if error == nil {
-                let db = Firestore.firestore()
-                if self?.roleUser == "Ищу работу" {
+//            if error == nil {
+//                let db = Firestore.firestore()
+                //            db.collection("users")
+                //                .document((result?.user.uid)!)
+                //                .setData(["userData":
+                //                            ["firstName": self!.firstNameUserTextField.text!,
+                //                             "lastName": self!.lastNameUserTextField.text!,
+                //                             "birth": self!.dateBirthUserTextField.text ?? "Не указано",
+                //                             "city": self!.cityUserTextField.text!,
+                //                             "email": email,
+                //                             "dateRegister": Timestamp(),
+                //                             "password": password,
+                //                             "roleUser": self!.roleUser,
+                //                             "profileImageUrl": "",
+                //                             "uid": result?.user.uid as Any],
+                //                          "professionData":
+                //                            ["profession": "Не указано",
+                //                             "experience": "Не указано",
+                //                             "aboutMe": "Не указано"],
+                //                          "employerData":
+                //                            ["activeVacansy": 0,
+                //                             "draft": 0]
+                //                ])
+                //                 completion(.success)
+                //            } else {
+                //                completion(.failure(AuthError.unknownError))
+                //            }
+                if error == nil {
+                    let db = Firestore.firestore()
                     db.collection("users")
                         .document((result?.user.uid)!)
                         .collection("userData")
-                        .document("personalData").setData([
+                        .document("basic").setData([
                             "firstName": self!.firstNameUserTextField.text!,
                             "lastName": self!.lastNameUserTextField.text!,
-                            "city": "не указан",
+                            "city": self!.cityUserTextField.text!,
                             "email": email,
                             "dateRegister": Timestamp(),
-                            "birth": self!.dateBirthUserTextField.text!,
+                            "birth": self!.dateBirthUserTextField.text ?? "Не указано",
                             "password": password,
                             "roleUser": self!.roleUser,
                             "profileImageUrl": "",
                             "uid": result?.user.uid as Any ])
+                    
+                    db.collection("users")
+                        .document((result?.user.uid)!)
+                        .collection("userData")
+                        .document("profession").setData([
+                            "aboutMe": "Не указано",
+                            "experience": "Не указано",
+                            "profession": "Не указано"])
+                    
+                    db.collection("users")
+                        .document((result?.user.uid)!)
+                        .collection("userData")
+                        .document("employer").setData([
+                            "activeVacansy": 0,
+                            "draft": 0])
+                    
+                    completion(.success)
                 } else {
-                    db.collection("users")
-                        .document((result?.user.uid)!)
-                        .collection("userData")
-                        .document("personalData").setData([
-                            "firstName": self!.firstNameUserTextField.text!,
-                            "lastName": self!.lastNameUserTextField.text!,
-                            "city": "не указан", //TODO
-                            "email": email,
-                            "dateRegister": Timestamp(),
-                            "birth": "Не указано",
-                            "password": password,
-                            "roleUser": self!.roleUser,
-                            "profileImageUrl": "",
-                            "uid": result?.user.uid as Any ])
-                }
-                completion(.success)
+                    completion(.failure(AuthError.unknownError))
+//                }
             }
         }
     }
+    //            if error == nil {
+    //                let db = Firestore.firestore()
+    //                if self?.roleUser == "Ищу работу" {
+    //                    db.collection("users")
+    //                        .document((result?.user.uid)!)
+    //                        .collection("userData")
+    //                        .document("personalData").setData([
+    //                            "firstName": self!.firstNameUserTextField.text!,
+    //                            "lastName": self!.lastNameUserTextField.text!,
+    //                            "city": self!.cityUserTextField.text!,
+    //                            "email": email,
+    //                            "dateRegister": Timestamp(),
+    //                            "birth": self!.dateBirthUserTextField.text!,
+    //                            "password": password,
+    //                            "roleUser": self!.roleUser,
+    //                            "profileImageUrl": "",
+    //                            "uid": result?.user.uid as Any ])
+    //                } else {
+    //                    db.collection("users")
+    //                        .document((result?.user.uid)!)
+    //                        .collection("userData")
+    //                        .document("personalData").setData([
+    //                            "firstName": self!.firstNameUserTextField.text!,
+    //                            "lastName": self!.lastNameUserTextField.text!,
+    //                            "city": self!.cityUserTextField.text!,
+    //                            "email": email,
+    //                            "dateRegister": Timestamp(),
+    //                            "birth": "Не указано",
+    //                            "password": password,
+    //                            "roleUser": self!.roleUser,
+    //                            "profileImageUrl": "",
+    //                            "uid": result?.user.uid as Any ])
+    //                }
+    //                completion(.success)
+    //            } else {
+    //                completion(.failure(AuthError.unknownError))
+    //            }
+    //        }
+    //    }
     
     @IBAction func registerButton(_ sender: UIButton) {
         register(email: emailTextField.text, password: passwordUserTextField.text) {[weak self] (result) in

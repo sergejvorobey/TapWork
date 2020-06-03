@@ -19,9 +19,16 @@ class ChooseStatusController: UIViewController {
         chooseEmployerLabel.changeStyleButton(with: "Работодатель")
         chooseSearchJobLabel.changeStyleButton(with: "Ищу работу")
         navigationItem.title = "Выберите статус"
-        
+
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+ 
+    }
+    
+   
     @IBAction func searchJobButton(_ sender: UIButton) {
 
     }

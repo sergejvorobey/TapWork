@@ -21,8 +21,13 @@ class EditAccountViewController: UIViewController {
     @IBOutlet weak var cityUser: DropDown!
     @IBOutlet weak var birthUser: UITextField!
     @IBOutlet weak var photoUser: UIImageView!
+//    @IBOutlet weak var saveButtonLabel: UIButton!
     @IBOutlet weak var saveButtonLabel: UIButton!
+    
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var buttonView: UIView!
+    
     
     var user: CurrentUser?
     
@@ -34,6 +39,7 @@ class EditAccountViewController: UIViewController {
         super.viewDidLoad()
         
         changeStyleItems()
+        buttonView.addShadow()
         
     }
     
@@ -218,10 +224,12 @@ class EditAccountViewController: UIViewController {
                     self?.db.collection("users")
                         .document((self?.user!.uid!)!)
                         .collection("userData")
-                        .document("personalData")
+                        .document("basic")
                         .updateData([
                             "profileImageUrl": metaImageUrl
                         ])
+//                    self?.db.collection("users")
+//                        .document((self?.user!.uid)!)
                     
                     if error != nil {
                         completion(.failure(AuthError.serverError))
@@ -257,7 +265,7 @@ class EditAccountViewController: UIViewController {
         db.collection("users")
             .document(user!.uid!)
             .collection("userData")
-            .document("personalData")
+            .document("basic")
             .updateData([
                 "firstName": firstName,
                 "lastName": lastName,
@@ -265,11 +273,11 @@ class EditAccountViewController: UIViewController {
                 "birth": birth,
                 "roleUser": roleUser
                 ])
-            { (error) in
-                if error != nil {
-                    completion(.failure(AuthError.unknownError))
-                }
-                completion(.success)
+        { (error) in
+            if error != nil {
+                completion(.failure(AuthError.unknownError))
+            }
+            completion(.success)
         }
     }
     

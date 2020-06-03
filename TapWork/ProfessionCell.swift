@@ -9,6 +9,11 @@
 import UIKit
 
 class ProfessionCell: UITableViewCell {
-
+    
     @IBOutlet weak var professionLabel: UILabel!
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+        selectionStyle = .none
+    }
 }

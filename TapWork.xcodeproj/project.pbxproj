@@ -15,15 +15,26 @@
 		871D175923C8F6350095C765 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175723C8F6350095C765 /* Main.storyboard */; };
 		871D175B23C8F6360095C765 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 871D175A23C8F6360095C765 /* Assets.xcassets */; };
 		871D175E23C8F6360095C765 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175C23C8F6360095C765 /* LaunchScreen.storyboard */; };
+		8726159F2486CF1600BFC88D /* Extension + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726159E2486CF1600BFC88D /* Extension + UITableView.swift */; };
+		872615A12486DEF300BFC88D /* EmployerMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A02486DEF300BFC88D /* EmployerMenuCell.swift */; };
+		872615A32486DFC500BFC88D /* EmployerServicesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A22486DFC500BFC88D /* EmployerServicesController.swift */; };
+		872615A62487EB1300BFC88D /* TitleVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A52487EB1300BFC88D /* TitleVacansyController.swift */; };
+		872615A82487EB4C00BFC88D /* SelectCityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A72487EB4C00BFC88D /* SelectCityController.swift */; };
+		872615AA2487EB8E00BFC88D /* ContentVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A92487EB8E00BFC88D /* ContentVacansyController.swift */; };
+		872615AC2487EBB500BFC88D /* PaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615AB2487EBB500BFC88D /* PaymentController.swift */; };
 		87329D01240463EB0089E9EF /* ModelUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87329D00240463EB0089E9EF /* ModelUsers.swift */; };
 		875F6A41243602F1002C652D /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A40243602F1002C652D /* MessageViewController.swift */; };
 		875F6A432436037D002C652D /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A422436037D002C652D /* MessageCell.swift */; };
 		875F6A452436065D002C652D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A442436065D002C652D /* ChatViewController.swift */; };
 		8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768965B23F9F87400E17CC1 /* AddVacansyController.swift */; };
+		879B80D924843D0100CBF67B /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B80D824843D0100CBF67B /* ProfileController.swift */; };
+		879B80DB24843D2800CBF67B /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B80DA24843D2800CBF67B /* ProfileCell.swift */; };
+		879B80FD2486897000CBF67B /* ProfessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B80FC2486897000CBF67B /* ProfessionController.swift */; };
 		879F599023F9797A00D4D124 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F598F23F9797A00D4D124 /* TabBarController.swift */; };
 		879F599223F99A6900D4D124 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599123F99A6900D4D124 /* NavigationController.swift */; };
 		879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */; };
 		879F599723F9A0A400D4D124 /* RegisterAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599623F9A0A400D4D124 /* RegisterAccountController.swift */; };
+		87B3C935247DBD3100D8DCDA /* EditResumeUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B3C934247DBD3100D8DCDA /* EditResumeUserCell.swift */; };
 		87B865BB2474272C001CBCEE /* Extension + String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865BA2474272C001CBCEE /* Extension + String.swift */; };
 		87B865BD24742740001CBCEE /* Extension + Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865BC24742740001CBCEE /* Extension + Date.swift */; };
 		87B865BF24742752001CBCEE /* Extension + UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865BE24742752001CBCEE /* Extension + UILabel.swift */; };
@@ -36,6 +47,7 @@
 		87B865CE24780BE8001CBCEE /* ActiveVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865CD24780BE8001CBCEE /* ActiveVacansyController.swift */; };
 		87B865D124780C6A001CBCEE /* ActiveVacansyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */; };
 		87B865D324784817001CBCEE /* ChooseStatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D224784817001CBCEE /* ChooseStatusController.swift */; };
+		87B865D7247D5BB9001CBCEE /* Extension + NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D6247D5BB9001CBCEE /* Extension + NavigationBar.swift */; };
 		87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BB3BA123F9D691004F3C61 /* CategoriesController.swift */; };
 		87BD43DD2450C513000B6865 /* Categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 87BD43DC2450C513000B6865 /* Categories.json */; };
 		87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */; };
@@ -57,14 +69,11 @@
 		87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */; };
 		87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */; };
 		87F7A7CA246E03F10070B1FD /* ModelCurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7C9246E03F10070B1FD /* ModelCurrentUser.swift */; };
-		87F7A7CD246ECA5E0070B1FD /* EmployerCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7CC246ECA5E0070B1FD /* EmployerCollectionController.swift */; };
 		87F7A7CF246ECB2E0070B1FD /* EmployerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7CE246ECB2E0070B1FD /* EmployerCollectionCell.swift */; };
 		87F7A7D224701A950070B1FD /* PersonalDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7D124701A950070B1FD /* PersonalDataCell.swift */; };
-		87F7A7D424701CE50070B1FD /* PersonalDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7D324701CE50070B1FD /* PersonalDataController.swift */; };
 		87F7A7D624702B590070B1FD /* ProfPersonalDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7D524702B590070B1FD /* ProfPersonalDataCell.swift */; };
 		87F7A7D8247065D50070B1FD /* EmployerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7D7247065D50070B1FD /* EmployerTableCell.swift */; };
 		87F84F5B246B2226002AC050 /* DetailVacansyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F84F5A246B2226002AC050 /* DetailVacansyViewController.swift */; };
-		87F84F5D246C4B88002AC050 /* ProfDataUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F84F5C246C4B88002AC050 /* ProfDataUserController.swift */; };
 		87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */; };
 		FAB96E1FEE3EDF12559C97E1 /* Pods_TapWork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */; };
 /* End PBXBuildFile section */
@@ -81,15 +90,26 @@
 		871D175A23C8F6360095C765 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		871D175D23C8F6360095C765 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		871D175F23C8F6360095C765 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8726159E2486CF1600BFC88D /* Extension + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UITableView.swift"; sourceTree = "<group>"; };
+		872615A02486DEF300BFC88D /* EmployerMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerMenuCell.swift; sourceTree = "<group>"; };
+		872615A22486DFC500BFC88D /* EmployerServicesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerServicesController.swift; sourceTree = "<group>"; };
+		872615A52487EB1300BFC88D /* TitleVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleVacansyController.swift; sourceTree = "<group>"; };
+		872615A72487EB4C00BFC88D /* SelectCityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCityController.swift; sourceTree = "<group>"; };
+		872615A92487EB8E00BFC88D /* ContentVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVacansyController.swift; sourceTree = "<group>"; };
+		872615AB2487EBB500BFC88D /* PaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentController.swift; sourceTree = "<group>"; };
 		87329D00240463EB0089E9EF /* ModelUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelUsers.swift; sourceTree = "<group>"; };
 		875F6A40243602F1002C652D /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		875F6A422436037D002C652D /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		875F6A442436065D002C652D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8768965B23F9F87400E17CC1 /* AddVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVacansyController.swift; sourceTree = "<group>"; };
+		879B80D824843D0100CBF67B /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
+		879B80DA24843D2800CBF67B /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
+		879B80FC2486897000CBF67B /* ProfessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionController.swift; sourceTree = "<group>"; };
 		879F598F23F9797A00D4D124 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		879F599123F99A6900D4D124 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAccountViewController.swift; sourceTree = "<group>"; };
 		879F599623F9A0A400D4D124 /* RegisterAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAccountController.swift; sourceTree = "<group>"; };
+		87B3C934247DBD3100D8DCDA /* EditResumeUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditResumeUserCell.swift; sourceTree = "<group>"; };
 		87B865BA2474272C001CBCEE /* Extension + String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + String.swift"; sourceTree = "<group>"; };
 		87B865BC24742740001CBCEE /* Extension + Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Date.swift"; sourceTree = "<group>"; };
 		87B865BE24742752001CBCEE /* Extension + UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UILabel.swift"; sourceTree = "<group>"; };
@@ -102,6 +122,7 @@
 		87B865CD24780BE8001CBCEE /* ActiveVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveVacansyController.swift; sourceTree = "<group>"; };
 		87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveVacansyCell.swift; sourceTree = "<group>"; };
 		87B865D224784817001CBCEE /* ChooseStatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseStatusController.swift; sourceTree = "<group>"; };
+		87B865D6247D5BB9001CBCEE /* Extension + NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + NavigationBar.swift"; sourceTree = "<group>"; };
 		87BB3BA123F9D691004F3C61 /* CategoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesController.swift; sourceTree = "<group>"; };
 		87BD43DC2450C513000B6865 /* Categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Categories.json; sourceTree = "<group>"; };
 		87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryLoaderJSON.swift; sourceTree = "<group>"; };
@@ -123,14 +144,11 @@
 		87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelVacancies.swift; sourceTree = "<group>"; };
 		87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacansyTableViewCell.swift; sourceTree = "<group>"; };
 		87F7A7C9246E03F10070B1FD /* ModelCurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCurrentUser.swift; sourceTree = "<group>"; };
-		87F7A7CC246ECA5E0070B1FD /* EmployerCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerCollectionController.swift; sourceTree = "<group>"; };
 		87F7A7CE246ECB2E0070B1FD /* EmployerCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerCollectionCell.swift; sourceTree = "<group>"; };
 		87F7A7D124701A950070B1FD /* PersonalDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDataCell.swift; sourceTree = "<group>"; };
-		87F7A7D324701CE50070B1FD /* PersonalDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDataController.swift; sourceTree = "<group>"; };
 		87F7A7D524702B590070B1FD /* ProfPersonalDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfPersonalDataCell.swift; sourceTree = "<group>"; };
 		87F7A7D7247065D50070B1FD /* EmployerTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerTableCell.swift; sourceTree = "<group>"; };
 		87F84F5A246B2226002AC050 /* DetailVacansyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacansyViewController.swift; sourceTree = "<group>"; };
-		87F84F5C246C4B88002AC050 /* ProfDataUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfDataUserController.swift; sourceTree = "<group>"; };
 		87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
 		96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapWork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC08CC48E8067813AB071D7E /* Pods-TapWork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapWork.debug.xcconfig"; path = "Target Support Files/Pods-TapWork/Pods-TapWork.debug.xcconfig"; sourceTree = "<group>"; };
@@ -173,8 +191,8 @@
 				879F599623F9A0A400D4D124 /* RegisterAccountController.swift */,
 				87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */,
 				87B865D224784817001CBCEE /* ChooseStatusController.swift */,
-				87F84F5C246C4B88002AC050 /* ProfDataUserController.swift */,
-				87F7A7D324701CE50070B1FD /* PersonalDataController.swift */,
+				879B80D824843D0100CBF67B /* ProfileController.swift */,
+				879B80FC2486897000CBF67B /* ProfessionController.swift */,
 				87B865CC24780A50001CBCEE /* EmployerMenu */,
 			);
 			path = Account;
@@ -218,6 +236,17 @@
 				87D65A09240816A10093D75F /* GoogleService-Info.plist */,
 			);
 			path = TapWork;
+			sourceTree = "<group>";
+		};
+		872615A42487EAC900BFC88D /* CreateVacansy */ = {
+			isa = PBXGroup;
+			children = (
+				872615A52487EB1300BFC88D /* TitleVacansyController.swift */,
+				872615A72487EB4C00BFC88D /* SelectCityController.swift */,
+				872615A92487EB8E00BFC88D /* ContentVacansyController.swift */,
+				872615AB2487EBB500BFC88D /* PaymentController.swift */,
+			);
+			name = CreateVacansy;
 			sourceTree = "<group>";
 		};
 		87329CFF240365950089E9EF /* Category */ = {
@@ -304,7 +333,8 @@
 		87B865CC24780A50001CBCEE /* EmployerMenu */ = {
 			isa = PBXGroup;
 			children = (
-				87F7A7CC246ECA5E0070B1FD /* EmployerCollectionController.swift */,
+				872615A42487EAC900BFC88D /* CreateVacansy */,
+				872615A22486DFC500BFC88D /* EmployerServicesController.swift */,
 				87B865CD24780BE8001CBCEE /* ActiveVacansyController.swift */,
 				8768965B23F9F87400E17CC1 /* AddVacansyController.swift */,
 			);
@@ -315,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				87F7A7D7247065D50070B1FD /* EmployerTableCell.swift */,
+				872615A02486DEF300BFC88D /* EmployerMenuCell.swift */,
 				87F7A7CE246ECB2E0070B1FD /* EmployerCollectionCell.swift */,
 				87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */,
 			);
@@ -370,6 +401,8 @@
 				87B865BE24742752001CBCEE /* Extension + UILabel.swift */,
 				87B865C024742761001CBCEE /* Extension + UIButton.swift */,
 				87B865C224742771001CBCEE /* Extension + UITextField.swift */,
+				87B865D6247D5BB9001CBCEE /* Extension + NavigationBar.swift */,
+				8726159E2486CF1600BFC88D /* Extension + UITableView.swift */,
 			);
 			name = HelperExtensions;
 			sourceTree = "<group>";
@@ -396,6 +429,8 @@
 			children = (
 				87F7A7D124701A950070B1FD /* PersonalDataCell.swift */,
 				87F7A7D524702B590070B1FD /* ProfPersonalDataCell.swift */,
+				87B3C934247DBD3100D8DCDA /* EditResumeUserCell.swift */,
+				879B80DA24843D2800CBF67B /* ProfileCell.swift */,
 			);
 			path = PersonalData;
 			sourceTree = "<group>";
@@ -539,18 +574,23 @@
 				87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */,
 				8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */,
 				879F599023F9797A00D4D124 /* TabBarController.swift in Sources */,
+				872615A12486DEF300BFC88D /* EmployerMenuCell.swift in Sources */,
 				875F6A41243602F1002C652D /* MessageViewController.swift in Sources */,
 				87F4978524675721009B25A0 /* ImageService.swift in Sources */,
 				87F7A7D8247065D50070B1FD /* EmployerTableCell.swift in Sources */,
 				87B865CB247429B5001CBCEE /* Extension + UIViewController.swift in Sources */,
+				879B80D924843D0100CBF67B /* ProfileController.swift in Sources */,
 				871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */,
 				87F497552461A368009B25A0 /* ProfessionCell.swift in Sources */,
 				87F497802464A743009B25A0 /* Validators.swift in Sources */,
 				87D05257245D978E000B2F61 /* CitiesLoaderAPI.swift in Sources */,
+				872615AA2487EB8E00BFC88D /* ContentVacansyController.swift in Sources */,
 				87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */,
 				87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */,
 				87F68A6A23EF2B8500D4C454 /* MainScreenController.swift in Sources */,
+				879B80DB24843D2800CBF67B /* ProfileCell.swift in Sources */,
 				87B865C724742806001CBCEE /* Extension + UIView.swift in Sources */,
+				872615A32486DFC500BFC88D /* EmployerServicesController.swift in Sources */,
 				87B865C5247427D0001CBCEE /* Extension + UITextView.swift in Sources */,
 				879F599223F99A6900D4D124 /* NavigationController.swift in Sources */,
 				87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */,
@@ -563,6 +603,7 @@
 				87B865C324742771001CBCEE /* Extension + UITextField.swift in Sources */,
 				870B9D6B240DDDD0006EB3EC /* LaunchScreenViewController.swift in Sources */,
 				875F6A432436037D002C652D /* MessageCell.swift in Sources */,
+				87B865D7247D5BB9001CBCEE /* Extension + NavigationBar.swift in Sources */,
 				87F497532461A32E009B25A0 /* ProfessionsController.swift in Sources */,
 				87B865BD24742740001CBCEE /* Extension + Date.swift in Sources */,
 				87B865D324784817001CBCEE /* ChooseStatusController.swift in Sources */,
@@ -572,22 +613,25 @@
 				87F4975A24645EDC009B25A0 /* CheckNetworkConnectivity.swift in Sources */,
 				87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */,
 				871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */,
+				87B3C935247DBD3100D8DCDA /* EditResumeUserCell.swift in Sources */,
 				87F84F5B246B2226002AC050 /* DetailVacansyViewController.swift in Sources */,
 				87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */,
+				872615AC2487EBB500BFC88D /* PaymentController.swift in Sources */,
 				87F4975C246482A2009B25A0 /* ShowErrorMethod.swift in Sources */,
 				87B865BB2474272C001CBCEE /* Extension + String.swift in Sources */,
 				87B865C124742761001CBCEE /* Extension + UIButton.swift in Sources */,
-				87F7A7CD246ECA5E0070B1FD /* EmployerCollectionController.swift in Sources */,
+				872615A82487EB4C00BFC88D /* SelectCityController.swift in Sources */,
 				87F497822464A803009B25A0 /* AuthError.swift in Sources */,
 				87B865CE24780BE8001CBCEE /* ActiveVacansyController.swift in Sources */,
 				87F7A7CA246E03F10070B1FD /* ModelCurrentUser.swift in Sources */,
 				875F6A452436065D002C652D /* ChatViewController.swift in Sources */,
+				8726159F2486CF1600BFC88D /* Extension + UITableView.swift in Sources */,
 				87D05254245D9723000B2F61 /* ModelCities.swift in Sources */,
 				87B865C924742845001CBCEE /* Extension + UIImageView.swift in Sources */,
-				87F84F5D246C4B88002AC050 /* ProfDataUserController.swift in Sources */,
+				879B80FD2486897000CBF67B /* ProfessionController.swift in Sources */,
 				87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */,
+				872615A62487EB1300BFC88D /* TitleVacansyController.swift in Sources */,
 				87F4978724676725009B25A0 /* FirebaseServices.swift in Sources */,
-				87F7A7D424701CE50070B1FD /* PersonalDataController.swift in Sources */,
 				87B865BF24742752001CBCEE /* Extension + UILabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

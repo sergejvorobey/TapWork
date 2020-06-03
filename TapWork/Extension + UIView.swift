@@ -62,4 +62,12 @@ extension UIView {
         headerView.addSubview(label)
         return headerView
     }
+    
+    func addShadow(){
+        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowRadius = 5
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOffset = .zero
+        self.layer.masksToBounds = false
+    }
 }

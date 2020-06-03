@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
 class ProfessionsController: UITableViewController {
     
     var professions = [String]()
+    private var checkItem: String = ""
+    private var infoUser: Users!
+    private let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,12 +24,23 @@ class ProfessionsController: UITableViewController {
         
     }
     
-    // MARK: - Table view data source
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return professions.count
+    @IBAction func savePressed(_ sender: UIBarButtonItem) {
         
+        // TODO
+        guard let currentUsers = Auth.auth().currentUser else { return }
+        infoUser = Users(user: currentUsers)
+
+        db.collection("users")
+        .document(infoUser.userId)
+        .collection("userData")
+            .document("profession").updateData(["profession": checkItem])
+
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return professions.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -38,35 +53,42 @@ class ProfessionsController: UITableViewController {
         return professionCell
     }
     
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//        guard let indexPath = tableView.indexPathForSelectedRow,
+//            let selectedRow: UITableViewCell = tableView.cellForRow(at: indexPath) else { return }
+//
+//        let profName = professions[indexPath.row]
+////
+////        if selectedRow.accessoryType == .checkmark {
+////            checkItem.removeLast()
+////            selectedRow.accessoryType = .none
+////
+////        } else {
+////
+////            selectedRow.accessoryType = .checkmark
+////            //            print("Выбрано: \(String(describing: profName)) \(indexPath)")
+////            checkItem.append(profName)
+////            selectedRow.tintColor = UIColor.red
+////        }
+////        print("Выбрано: \(String(describing: profName)) \(indexPath)")
+//
+//
+//        tableView.deselectRow(at: indexPath, animated: true)
+//
+//    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        guard let indexPath = tableView.indexPathForSelectedRow else { return }
-        
-        //        var city: Items
-        //
-        //        if isFiltering {
-        //            city = filteredCitiesList[indexPath.row]
-        //            print("Выбрано: \(String(describing: city.title)) \(indexPath)")
-        //
-        //        } else {
-        //            city = citiesList[indexPath.row]
-        //            print("Выбрано: \(String(describing: city.title)) \(indexPath)")
-        //        }
-        
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-            
-        } else {
-            
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        
+        tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .checkmark
+        let profName = professions[indexPath.row]
+        checkItem = profName
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .none
+        checkItem = ""
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-           return 60
-       }
+        return 60
+    }
 }

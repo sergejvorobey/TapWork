@@ -11,12 +11,14 @@ import UIKit
 
 //MARK: change style label
 extension UILabel {
+    
     func styleLabel(with text: String)  {
-        self.text = text
+        self.text = " \(text) "
         let swiftColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
         self.backgroundColor = swiftColor
         self.layer.cornerRadius = 8
-        //        self.layer.borderWidth = 0.1
+//        self.layer.borderWidth = 0.1
         self.layer.masksToBounds = true
+       
     }
 }

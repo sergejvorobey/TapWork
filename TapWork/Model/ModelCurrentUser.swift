@@ -9,20 +9,18 @@
 import Foundation
 import Firebase
 
-struct CurrentUser: Decodable {
+struct CurrentUser {
     
     var dateRegister: Date?
-//    var email: String?
     var city: String?
     var firstName: String?
     var lastName: String?
     var birth: String?
     var profileImageUrl: String?
     var roleUser: String?
-//    var specialization: String?
     var uid: String?
+//    var profession: Professions?
     var fullName: String {
-//        return firstName! + " " + lastName!
         return """
         \(firstName!)
         \(lastName!)
@@ -31,51 +29,47 @@ struct CurrentUser: Decodable {
     var ageAndCity: String {
         return birth! + ", " + city!
     }
+}
 
+struct CheckCurrentUser {
+    var basic: [Basic]?
+    var profession: [Professions]?
+    var emloyer: [Employer]?
+}
+
+struct Basic {
+    var dateRegister: Date?
+    var city: String?
+    var firstName: String?
+    var lastName: String?
+    var birth: String?
+    var profileImageUrl: String?
+    var roleUser: String?
+    var uid: String?
+
+    var fullName: String {
+        return """
+        \(firstName!)
+        \(lastName!)
+        """
+    }
     
-    enum CodingKeys: String, CodingKey {
-        case dateRegister = "dateRegister"
-//        case email = "email"
-        case city = "city"
-        case firstName = "firstName"
-        case lastName = "lastName"
-        case birth = "birth"
-        case profileImageUrl = "profileImageUrl"
-        case roleUser = "roleUser"
-//        case specialization = "specialization"
-        case uid = "uid"
+    var ageAndCity: String {
+//        return birth! + ", " + city!
+        return """
+        \(birth!)
+        \(city!)
+        """
     }
 }
-//    init(email: String?,
-//         firstName: String?,
-//         lastName: String?,
-//         profileImageUrl: String?,
-//         roleUser: String?,
-//         specialization: String?,
-//         uid: String?) {
-//
-//        self.email = email
-//        self.firstName = firstName
-//        self.lastName = lastName
-//        self.profileImageUrl = profileImageUrl
-//        self.roleUser = roleUser
-//        self.uid = uid
-//        self.ref = nil
-//    }
-//
-//    init(snapshot: DataSnapshot) {
-//        let snapshotValue = snapshot.value as! [String: AnyObject]
-//        email = snapshotValue["email"] as? String
-//        firstName = snapshotValue["firstName"] as? String
-//        lastName = snapshotValue["lastName"] as? String
-//        profileImageUrl = snapshotValue["profileImageUrl"] as? String
-//        roleUser = snapshotValue["roleUser"] as? String
-//        uid = snapshotValue["uid"] as? String
-//        ref = snapshot.ref
-//    }
-    
-//    init() {
-//        <#statements#>
-//    }
-    
-//}
+
+struct Professions {
+    var aboutMe: String?
+    var experience: String?
+    var profession: String?
+}
+
+struct Employer {
+    var activeVacansy: Int?
+    var draft: Int?
+}

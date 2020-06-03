@@ -14,9 +14,9 @@ import BonsaiController
 class MainScreenController: UITableViewController {
     
     private var vacancies = [Vacancy]()
-    var userStatus: String?
     private let spinner = UIActivityIndicatorView()
-    var nvActivityIndicator: NVActivityIndicatorView?
+    private var nvActivityIndicator: NVActivityIndicatorView?
+    var userStatus: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +29,7 @@ class MainScreenController: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.addSubview(refreshControll)
         view.changeColorView()
+//        self.tableView.addShadow()
     }
     
     //MARK: parse user status
@@ -133,7 +134,7 @@ class MainScreenController: UITableViewController {
         
         let date = Date(timeIntervalSince1970: datePublic / 1000)
 
-        //        vacanciesCell.publicationDateLabel.text = date.calenderTimeSinceNow()
+//                vacanciesCell.publicationDateLabel.text = date.calenderTimeSinceNow()
         vacanciesCell.publicationDateLabel.text = date.publicationDate(withDate: date)
         
         spinnerStop()
