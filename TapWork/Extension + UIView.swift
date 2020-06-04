@@ -14,9 +14,13 @@ extension UIView {
     
     func changeColorView() {
         
-        let color = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+//        let color = UIColor(red: 66/255, green: 103/255, blue: 178/255, alpha: 1)
+        let color = UIColor.white
+        let gradient = CAGradientLayer()
+        gradient.colors = [UIColor.gray.cgColor, color.cgColor]
+        gradient.frame = self.bounds
+        self.layer.insertSublayer(gradient, at: 0)
         self.backgroundColor = color
-        
     }
     
     func activityStartAnimating(activityColor: UIColor, backgroundColor: UIColor) {
@@ -26,13 +30,13 @@ extension UIView {
         backgroundView.backgroundColor = backgroundColor
         backgroundView.tag = 475647
         
-        let actibityIndocatorView = NVActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50), type: .circleStrokeSpin, color: activityColor, padding: .none)
-        actibityIndocatorView.center = self.center
+        let actibityIndicatorView = NVActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30), type: .circleStrokeSpin, color: activityColor, padding: .none)
+        actibityIndicatorView.center = self.center
         
-        actibityIndocatorView.startAnimating()
+        actibityIndicatorView.startAnimating()
         self.isUserInteractionEnabled = false
         
-        backgroundView.addSubview(actibityIndocatorView)
+        backgroundView.addSubview(actibityIndicatorView)
         self.addSubview(backgroundView)
         //        self.addSubview(actibityIndocatorView)
     }

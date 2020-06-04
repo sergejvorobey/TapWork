@@ -22,13 +22,39 @@ class MainScreenController: UITableViewController {
         super.viewDidLoad()
         
        setupItems()
+        
+        
+//        tableView.backgroundColor = UIColor.clear
+//        view.backgroundColor = UIColor.clear
+        
+        
+        
     }
     
     private func setupItems() {
+        
         navigationItem.title = "TAP WORK"
         tableView.tableFooterView = UIView()
         tableView.addSubview(refreshControll)
-        view.changeColorView()
+        
+//        let color = UIColor.white
+//        let gradient = CAGradientLayer()
+//        gradient.colors = [UIColor.gray.cgColor, color.cgColor]
+//        gradient.frame = view.bounds
+//        view.layer.insertSublayer(gradient, at: 0)
+        //        navigationItem.title = "Личная информация"
+//                navigationItem.rightBarButtonItem?.tintColor = .black
+//        navigationController?.navigationBar.barTintColor = color
+//        self.view.backgroundColor = color
+//        view.backgroundColor = .darkGray
+        let color = UIColor.white
+        let gradient = CAGradientLayer()
+        gradient.colors = [UIColor.darkGray.cgColor, color.cgColor]
+        gradient.frame = self.view.bounds
+        self.view.layer.insertSublayer(gradient, at: 0)
+        self.view.backgroundColor = color
+        navigationController?.navigationBar.barTintColor = color
+//        view.changeColorView()
 //        self.tableView.addShadow()
     }
     
@@ -91,7 +117,7 @@ class MainScreenController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        spinnerStart()
+//        spinnerStart()
         getStatusUser()
         getVacancies { (result) in
             switch result {
@@ -112,7 +138,9 @@ class MainScreenController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacansyTableViewCell
+        let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacansyTableViewCell", for: indexPath) as! VacansyTableViewCell
+        
+        vacanciesCell.backgroundColor = UIColor.clear
         
         if userStatus == "Работодатель" {
             vacanciesCell.isUserInteractionEnabled = false
@@ -128,7 +156,7 @@ class MainScreenController: UITableViewController {
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "
         
-        vacanciesCell.changeCellColor()
+//        vacanciesCell.changeCellColor()
         
         let datePublic = vacansy.timestamp
         
@@ -137,7 +165,7 @@ class MainScreenController: UITableViewController {
 //                vacanciesCell.publicationDateLabel.text = date.calenderTimeSinceNow()
         vacanciesCell.publicationDateLabel.text = date.publicationDate(withDate: date)
         
-        spinnerStop()
+//        spinnerStop()
         
         return vacanciesCell
     }

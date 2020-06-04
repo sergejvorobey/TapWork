@@ -35,6 +35,8 @@
 		879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */; };
 		879F599723F9A0A400D4D124 /* RegisterAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599623F9A0A400D4D124 /* RegisterAccountController.swift */; };
 		87B3C935247DBD3100D8DCDA /* EditResumeUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B3C934247DBD3100D8DCDA /* EditResumeUserCell.swift */; };
+		87B63FF924896142001911DC /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B63FF824896142001911DC /* MainViewController.swift */; };
+		87B63FFB2489625C001911DC /* VacanciesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B63FFA2489625C001911DC /* VacanciesCell.swift */; };
 		87B865BB2474272C001CBCEE /* Extension + String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865BA2474272C001CBCEE /* Extension + String.swift */; };
 		87B865BD24742740001CBCEE /* Extension + Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865BC24742740001CBCEE /* Extension + Date.swift */; };
 		87B865BF24742752001CBCEE /* Extension + UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865BE24742752001CBCEE /* Extension + UILabel.swift */; };
@@ -108,6 +110,8 @@
 		879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAccountViewController.swift; sourceTree = "<group>"; };
 		879F599623F9A0A400D4D124 /* RegisterAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAccountController.swift; sourceTree = "<group>"; };
 		87B3C934247DBD3100D8DCDA /* EditResumeUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditResumeUserCell.swift; sourceTree = "<group>"; };
+		87B63FF824896142001911DC /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		87B63FFA2489625C001911DC /* VacanciesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacanciesCell.swift; sourceTree = "<group>"; };
 		87B865BA2474272C001CBCEE /* Extension + String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + String.swift"; sourceTree = "<group>"; };
 		87B865BC24742740001CBCEE /* Extension + Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Date.swift"; sourceTree = "<group>"; };
 		87B865BE24742752001CBCEE /* Extension + UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UILabel.swift"; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				87F68A6923EF2B8500D4C454 /* MainScreenController.swift */,
+				87B63FF824896142001911DC /* MainViewController.swift */,
 				870B9D6A240DDDD0006EB3EC /* LaunchScreenViewController.swift */,
 			);
 			name = MainScreen;
@@ -370,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				87F68A6D23EF2F4400D4C454 /* VacansyTableViewCell.swift */,
+				87B63FFA2489625C001911DC /* VacanciesCell.swift */,
 			);
 			name = VacansyCell;
 			sourceTree = "<group>";
@@ -567,6 +573,7 @@
 			files = (
 				87F68A6E23EF2F4400D4C454 /* VacansyTableViewCell.swift in Sources */,
 				8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */,
+				87B63FF924896142001911DC /* MainViewController.swift in Sources */,
 				879F599023F9797A00D4D124 /* TabBarController.swift in Sources */,
 				872615A12486DEF300BFC88D /* EmployerMenuCell.swift in Sources */,
 				875F6A41243602F1002C652D /* MessageViewController.swift in Sources */,
@@ -605,6 +612,7 @@
 				87F4975A24645EDC009B25A0 /* CheckNetworkConnectivity.swift in Sources */,
 				87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */,
 				871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */,
+				87B63FFB2489625C001911DC /* VacanciesCell.swift in Sources */,
 				87B3C935247DBD3100D8DCDA /* EditResumeUserCell.swift in Sources */,
 				87F84F5B246B2226002AC050 /* DetailVacansyViewController.swift in Sources */,
 				87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */,

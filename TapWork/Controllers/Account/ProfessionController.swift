@@ -22,9 +22,10 @@ class ProfessionController: UIViewController {
         tableView.dataSource = self
 
 //        tableView.isScrollEnabled = false
+        tableView.backgroundColor = UIColor.clear
+        view.backgroundColor = UIColor.clear
         
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -75,6 +76,7 @@ extension ProfessionController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath) as! ProfileCell
         let index = indexPath.row
+        cell.backgroundColor = UIColor.clear
         
         for item in profUserData {
             switch index {

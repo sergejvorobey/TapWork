@@ -28,7 +28,6 @@ class EditAccountViewController: UIViewController {
     
     @IBOutlet weak var buttonView: UIView!
     
-    
     var user: CurrentUser?
     
     private var citiesList = [Items]()
@@ -137,12 +136,10 @@ class EditAccountViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        getCities()
-        
         getDataUserProfile { (result) in
             switch result {
             case .success:
-                break
+                self.getCities()
             case .failure(let error):
                 self.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
@@ -196,17 +193,17 @@ class EditAccountViewController: UIViewController {
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         
-        let uploadTask = storageProfileRef.putData(imageData, metadata: metadata)
+//        let uploadTask = storageProfileRef.putData(imageData, metadata: metadata)
         
-        uploadTask.observe(.progress) { snapshot in
-            // Upload reported progress
-            let percentComplete = 100.0 * Double(snapshot.progress!.completedUnitCount)
-                / Double(snapshot.progress!.totalUnitCount)
-            
-            if percentComplete != 100.0 {
-                self.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.0))
-            }
-        }
+//        uploadTask.observe(.progress) { snapshot in
+//            // Upload reported progress
+//            let percentComplete = 100.0 * Double(snapshot.progress!.completedUnitCount)
+//                / Double(snapshot.progress!.totalUnitCount)
+//
+//            if percentComplete != 100.0 {
+                self.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.5))
+//            }
+//        }
         
         storageProfileRef.putData(imageData, metadata: metadata) { (storageMetaData, error) in
             guard let _ = storageMetaData else {
@@ -228,14 +225,10 @@ class EditAccountViewController: UIViewController {
                         .updateData([
                             "profileImageUrl": metaImageUrl
                         ])
-//                    self?.db.collection("users")
-//                        .document((self?.user!.uid)!)
-                    
                     if error != nil {
                         completion(.failure(AuthError.serverError))
                     } else {
                         completion(.success)
-                        self?.view.activityStopAnimating()
                     }
                 }
             }
@@ -354,7 +347,6 @@ extension EditAccountViewController: UIImagePickerControllerDelegate, UINavigati
                 self.view.activityStopAnimating()
                 self.showAlert(title: "Успешно!", message: "Фотография обновлена!")
             case .failure(let error):
-                self.view.activityStopAnimating()
                 self.showAlert(title: "Ошибка", message: error.localizedDescription)
                 //                self?.showAlert(title: "Ошибка!", message: "Ошибка обновления данных!")
             }

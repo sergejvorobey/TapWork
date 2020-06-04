@@ -19,6 +19,8 @@ class EmployerServicesController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
+        tableView.backgroundColor = UIColor.clear
+        view.backgroundColor = UIColor.clear
         
     }
 }
@@ -35,6 +37,7 @@ extension EmployerServicesController: UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "EmployerMenuCell", for: indexPath) as! EmployerMenuCell
         
         let index = indexPath.row
+        cell.backgroundColor = UIColor.clear
         
         switch index {
         case 0:

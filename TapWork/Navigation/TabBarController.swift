@@ -15,12 +15,12 @@ class TabBarController: UITabBarController {
 
         tabBar.tintColor = .red
         tabBar.unselectedItemTintColor = .black
-        tabBar.barTintColor = .white
         tabBar.items![0].title = "Лента"
         tabBar.items![1].title = "Сообщения"
         tabBar.items![2].title = "Избранное"
         tabBar.items![3].title = "Личный кабинет"
         navigationController?.navigationBar.isHidden = true
+//        tabBar.isTranslucent = true
         
     }
 }

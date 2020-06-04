@@ -10,7 +10,7 @@ import UIKit
 
 class TitleVacansyController: UIViewController {
     
-    @IBOutlet weak var titleVacansyLabel: UILabel!
+//    @IBOutlet weak var titleVacansyLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var summaryCountLbl: UILabel!
     
@@ -24,13 +24,15 @@ class TitleVacansyController: UIViewController {
         
         titleTextField.delegate = self
         updateCharacterCount()
+        navigationItem.title = "Название"
         
     }
     
     private func setStyleItem() {
         
         nextButtonLabel.addShadow()
-        titleVacansyLabel.text = "Название"
+//        titleVacansyLabel.text = "Название"
+//        titleVacansyLabel.isHidden = true
         nextButtonLabel.changeStyleButton(with: "Далее")
         
     }
