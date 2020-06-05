@@ -27,11 +27,11 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        appearanceItems()
+        setupItems()
     }
     
     //MARK: Setup appearance items
-    private func appearanceItems() {
+    private func setupItems() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.clear
@@ -61,7 +61,7 @@ class MainViewController: UIViewController {
     private lazy var refreshControll: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
         refreshControll.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
-        refreshControll.tintColor = UIColor.black
+        refreshControll.tintColor = UIColor.red
         return refreshControll
         
     }()
@@ -99,7 +99,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacanciesCell
-        
+        vacanciesCell.selectionStyle = .none
         if userStatus == "Работодатель" {
             vacanciesCell.isUserInteractionEnabled = false
         } else {
@@ -216,7 +216,6 @@ extension MainViewController: BonsaiControllerDelegate {
 }
 
 extension MainViewController {
-    
     func showActivityIndicator() {
         self.view.addSubview(spinner)
         spinner.startAnimating()

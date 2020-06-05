@@ -17,7 +17,7 @@ extension UIView {
 //        let color = UIColor(red: 66/255, green: 103/255, blue: 178/255, alpha: 1)
         let color = UIColor.white
         let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.gray.cgColor, color.cgColor]
+        gradient.colors = [UIColor.lightGray.cgColor, color.cgColor]
         gradient.frame = self.bounds
         self.layer.insertSublayer(gradient, at: 0)
         self.backgroundColor = color

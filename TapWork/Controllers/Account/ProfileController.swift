@@ -31,34 +31,25 @@ class ProfileController: UIViewController {
         professionContainerView.backgroundColor = UIColor.clear
         employerContainerView.backgroundColor = UIColor.clear
         
+        
     }
     
-    //MARK: choose style items in controller
+    //MARK: setup style items in controller
     private func setItemsStyle() {
         
 //        let color = UIColor(red: 66/255, green: 103/255, blue: 178/255, alpha: 1)
-//        let color = UIColor.white
-//        let gradient = CAGradientLayer()
-//        gradient.colors = [UIColor.gray.cgColor, color.cgColor]
-//        gradient.frame = view.bounds
-//        view.layer.insertSublayer(gradient, at: 0)
-        view.changeColorView()
+   
         navigationItem.title = "Личная информация"
         navigationItem.rightBarButtonItem?.tintColor = .black
-//        navigationController?.navigationBar.barTintColor = color
  
-        let borderAlpha : CGFloat = 0.7
+//        let borderAlpha : CGFloat = 0.7
         let cornerRadius : CGFloat = 5.0
-
-//        editBasicLabel.frame = CGRect(x: 100, y: 100, width: 200, height: 40)
         editBasicLabel.setTitle("Редактировать профиль", for: .normal)
         editBasicLabel.setTitleColor(UIColor.black, for: .normal)
         editBasicLabel.backgroundColor = UIColor.clear
         editBasicLabel.layer.borderWidth = 1.0
         editBasicLabel.layer.borderColor = UIColor.black.cgColor
         editBasicLabel.layer.cornerRadius = cornerRadius
-        
-//        self.view.backgroundColor = color
     }
     
     @IBAction func pressedEditBasic(_ sender: UIButton) {
