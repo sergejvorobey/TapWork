@@ -11,81 +11,18 @@ import iOSDropDown
 
 class TitleVacansyController: UIViewController {
     
-    
     @IBOutlet weak var headerSection: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var cityDropMenuTxtFld: DropDown!
-    
-    
     @IBOutlet weak var summaryCountLbl: UILabel!
     @IBOutlet weak var errorLabel: UILabel!
-    
     @IBOutlet weak var nextButtonLabel: UIButton!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     private var citiesList = [Items]()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-    }
-    
-    // When the keyboard appears, indent from the keyboard to the buttons
-    private func changeFrameKeyboard() {
-      
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateChangeFrame(notification:)),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateChangeFrame(notification:)),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-    }
-    
-    @objc func updateChangeFrame (notification: Notification) {
-        
-        guard let userInfo = notification.userInfo as? [String: AnyObject],
-            
-            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-            else { return }
-        
-        if notification.name == UIResponder.keyboardWillShowNotification {
-            
-            self.bottomConstraint.constant = keyboardFrame.height + 5
-            
-            UIView.animate(withDuration: 0.5) {
-                
-                self.view.layoutIfNeeded()
-            }
-            
-        } else {
-            
-            self.bottomConstraint.constant = 20
-            
-            UIView.animate(withDuration: 0.25) {
-                
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
-    
-    private func setupItems() {
-        
-        nextButtonLabel.addShadow()
-        nextButtonLabel.changeStyleButton(with: "Далее")
-        updateCharacterCount()
-        changeFrameKeyboard()
-        headerSection.text = "Укажите название и город"
-        errorLabel.isHidden = true
-        titleTextField.delegate = self
-        cityDropMenuTxtFld.delegate = self
-        titleTextField.placeholder = "Название"
-        cityDropMenuTxtFld.placeholder = "Город"
         
     }
     
@@ -97,14 +34,44 @@ class TitleVacansyController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+//        hideController()
+    }
+    
+    private func setupItems() {
+        delegates()
+//        nextButtonLabel.addShadow()
+        nextButtonLabel.changeStyleButton(with: "Далее")
+        updateCharacterCount()
+        changeFrameKeyboard()
+        headerSection.text = "Название и город"
+        errorLabel.isHidden = true
+        titleTextField.placeholder = "Название"
+        cityDropMenuTxtFld.placeholder = "Город"
+        
+    }
+    
+    private func delegates() {
+        titleTextField.delegate = self
+        cityDropMenuTxtFld.delegate = self
+    }
+    
     @IBAction func nextButtonPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "contentVacansyController", sender: nil)
+        checkTextFields(title: titleTextField.text, city: cityDropMenuTxtFld.text) { (result) in
+            switch result {
+            case .success:
+                self.performSegue(withIdentifier: "contentVacansyController", sender: nil)
+            case .failure(let error):
+                self.errorAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
     }
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        //MARK: hide controller
+        self.disMissController()
     }
-    
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -114,8 +81,24 @@ class TitleVacansyController: UIViewController {
             contentVC.city = cityDropMenuTxtFld.text!
         }
     }
+    
+    //MARK: checking texts fields for errors
+    private func checkTextFields(title: String? ,city: String?, completion: @escaping (AuthResult) -> Void) {
+        guard Validators.isFilledMultipleTextFields(firstText: title, secondText: city)
+            else {
+                completion(.failure(AuthError.notFilled))
+                return
+        }
+        guard Validators.checkLengthField(text: title, minCount: 5, maxCount: 30)
+            else {
+            completion(.failure(AuthError.lenghtTitle))
+            return
+        }
+        completion(.success)
+    }
 }
 
+//MARK: Text Field Delegate
 extension TitleVacansyController: UITextFieldDelegate {
     
     func updateCharacterCount() {
@@ -151,8 +134,16 @@ extension TitleVacansyController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == cityDropMenuTxtFld {
+             return false
+        }
+       return true
+    }
 }
 
+//MARK: Get data in Firebase
 extension TitleVacansyController {
     
     private func loadCitiesData() {
@@ -175,6 +166,52 @@ extension TitleVacansyController {
                     self.cityDropMenuTxtFld.optionArray = arrayCities
                     
                 }
+            }
+        }
+    }
+}
+
+//MARK: For keyboard show or hide
+extension TitleVacansyController {
+    
+    // When the keyboard appears, indent from the keyboard to the buttons
+    private func changeFrameKeyboard() {
+        
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateChangeFrame(notification:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateChangeFrame(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    @objc func updateChangeFrame (notification: Notification) {
+        
+        guard let userInfo = notification.userInfo as? [String: AnyObject],
+            
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            else { return }
+        
+        if notification.name == UIResponder.keyboardWillShowNotification {
+            
+            self.bottomConstraint.constant = keyboardFrame.height + 5
+            
+            UIView.animate(withDuration: 0.5) {
+                
+                self.view.layoutIfNeeded()
+            }
+            
+        } else {
+            
+            self.bottomConstraint.constant = 20
+            
+            UIView.animate(withDuration: 0.25) {
+                
+                self.view.layoutIfNeeded()
             }
         }
     }

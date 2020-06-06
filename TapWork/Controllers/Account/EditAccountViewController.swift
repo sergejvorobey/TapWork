@@ -141,7 +141,7 @@ class EditAccountViewController: UIViewController {
             case .success:
                 self.getCities()
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self.errorAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }
@@ -293,9 +293,9 @@ class EditAccountViewController: UIViewController {
         updateDataTextField { (result) in
             switch result {
             case .success:
-                self.showAlert(title: "Успешно!", message: "Данные обновлены!")
+                self.successAlert(title: "Успешно!", message: "Данные обновлены!")
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self.errorAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }
@@ -345,9 +345,9 @@ extension EditAccountViewController: UIImagePickerControllerDelegate, UINavigati
             switch result {
             case .success:
                 self.view.activityStopAnimating()
-                self.showAlert(title: "Успешно!", message: "Фотография обновлена!")
+                self.errorAlert(title: "Успешно!", message: "Фотография обновлена!")
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self.errorAlert(title: "Ошибка", message: error.localizedDescription)
                 //                self?.showAlert(title: "Ошибка!", message: "Ошибка обновления данных!")
             }
         }

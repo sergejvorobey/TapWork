@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class PaymentController: UIViewController {
     
@@ -21,23 +22,42 @@ class PaymentController: UIViewController {
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomConstraintSwitch: NSLayoutConstraint!
     
+    var headerVacansy: String?
+    var cityVacansy: String?
+    var contentVacansy: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupItems()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+        setupItems()
     }
     
     @IBAction func nextButtonPressed(_ sender: UIButton) {
         
+    //MARK: create new vacansy
+        addVacansy(heading: headerVacansy,
+                   city: cityVacansy,
+                   content: contentVacansy,
+                   payment: paymentTextField.text,
+                   phone: phoneTextField.text)
+        {(result) in
+            switch result {
+            case .success:
+                self.successAlert(title: "Успешно!", message: "Вакансия опубликована!")
+            case .failure(let error):
+                self.errorAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
     }
     
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+       //MARK: hide controller
+        self.disMissController()
     }
     
     
@@ -46,13 +66,18 @@ class PaymentController: UIViewController {
     }
     
     private func setupItems() {
+        delegates()
         changeFrameKeyboard()
+        addDoneButtonOnNumberKeyboard()
         headerSectionLabel.text = "Бюджет и телефон"
-        nextButtonLabel.changeStyleButton(with: "Далее")
+        nextButtonLabel.changeStyleButton(with: "Опубликовать")
         errorLabel.isHidden = true
+        messagePhoneLabel.text = "Указывать телефон"
+    }
+    
+    private func delegates() {
         paymentTextField.delegate = self
         phoneTextField.delegate = self
-        messagePhoneLabel.text = "Указывать телефон"
     }
     
     private func checkShowPhone() {
@@ -71,6 +96,7 @@ class PaymentController: UIViewController {
             messagePhoneLabel.text = "Не указывать телефон"
             
             self.bottomConstraintSwitch.constant = 10
+            self.phoneTextField.text = ""
             
             UIView.animate(withDuration: 0.5) {
                 self.phoneTextField.isHidden = true
@@ -79,7 +105,47 @@ class PaymentController: UIViewController {
         }
     }
     
-    // When the keyboard appears, indent from the keyboard to the buttons
+    //MARK: Phone formatter
+    func formattedNumber(number: String) -> String {
+        let cleanPhoneNumber = number.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        let mask = "+X (XXX) XXX-XXXX"
+
+        var result = ""
+        var index = cleanPhoneNumber.startIndex
+        for ch in mask where index < cleanPhoneNumber.endIndex {
+            if ch == "X" {
+                result.append(cleanPhoneNumber[index])
+                index = cleanPhoneNumber.index(after: index)
+            } else {
+                result.append(ch)
+            }
+        }
+        return result
+    }
+}
+
+extension PaymentController: UITextFieldDelegate {
+    // hide the keyboard when you click on Done text Field
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    //MARK:
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == phoneTextField {
+            guard let text = textField.text else { return false }
+            let newString = (text as NSString).replacingCharacters(in: range, with: string)
+            textField.text = formattedNumber(number: newString)
+            return false
+        }
+        return true
+    }
+}
+
+//MARK: Setup keyboard methods
+extension PaymentController {
+    
+    //MARK: When the keyboard appears, indent from the keyboard to the buttons
     private func changeFrameKeyboard() {
         
         NotificationCenter.default.addObserver(self,
@@ -120,22 +186,85 @@ class PaymentController: UIViewController {
         }
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    // MARK: Done button on numberKeyboard
+    private func addDoneButtonOnNumberKeyboard() {
+        
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace,
+                                        target: nil,
+                                        action: nil)
+        
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done",
+                                                    style: UIBarButtonItem.Style.done,
+                                                    target: self,
+                                                    action: #selector(doneButtonAction))
+        let items = NSMutableArray()
+        items.add(flexSpace)
+        items.add(done)
+        
+        doneToolbar.items = (items as! [UIBarButtonItem])
+        doneToolbar.sizeToFit()
+        
+        self.phoneTextField.inputAccessoryView = doneToolbar
+        self.paymentTextField.inputAccessoryView = doneToolbar
+    }
     
+    @objc func doneButtonAction() {
+        self.phoneTextField.resignFirstResponder()
+        self.paymentTextField.resignFirstResponder()
+    }
 }
 
-extension PaymentController: UITextFieldDelegate {
-    // hide the keyboard when you click on Done text Field
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+//MARK: Adding New Vacansy in Firebase
+extension PaymentController {
+    
+    // MARK: Add vacansy in database
+    private func addVacansy(heading: String?,
+                            city: String?,
+                            content: String?,
+                            payment: String?,
+                            phone: String?,
+                            completion: @escaping (AuthResult) -> Void) {
+        
+        guard Validators.isConnectedToNetwork()  else {
+            completion(.failure(AuthError.serverError))
+            return
+        }
+        //MARK: check field filled
+        guard Validators.isFilledTextField(text: payment) else {
+            completion(.failure(AuthError.notFilled))
+            return
+        }
+
+        guard let heading = heading,
+            let city = city,
+            let content = content,
+            let payment = payment,
+            let phone = phone
+            else {
+                completion(.failure(AuthError.unknownError))
+                return
+        }
+        
+        //MARK: check field lenght
+        guard Validators.checkLengthField(text: payment, minCount: 3, maxCount: 5) else {
+            completion(.failure(AuthError.lenghtPayment))
+            return
+        }
+
+        guard let currentUsers = Auth.auth().currentUser else { return }
+        let infoUser = Users(user: currentUsers)
+        let ref = Database.database().reference(withPath: "vacancies")
+        let vacansy = Vacancy(userId: infoUser.userId,
+                              city: city,
+                              heading: heading,
+                              content: content,
+                              phoneNumber: phone,
+                              payment: payment)
+        let vacansyRef = ref.child(vacansy.heading)
+        vacansyRef.setValue(vacansy.providerToDictionary())
+        
+        completion(.success)
     }
 }

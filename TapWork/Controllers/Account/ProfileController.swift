@@ -31,7 +31,6 @@ class ProfileController: UIViewController {
         professionContainerView.backgroundColor = UIColor.clear
         employerContainerView.backgroundColor = UIColor.clear
         
-        
     }
     
     //MARK: setup style items in controller
@@ -137,7 +136,7 @@ class ProfileController: UIViewController {
             case .success:
                 break
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self.errorAlert(title: "Ошибка", message: error.localizedDescription)
                 
             }
         }

@@ -706,14 +706,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="OBR-oD-z0q" customClass="CategoryCell" customModule="TapWork" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="41.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="41.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OBR-oD-z0q" id="4SW-BW-cjN">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.333332061767578"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CategoryLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pf7-B0-i2R">
-                                                    <rect key="frame" x="20" y="9.9999999999999982" width="374" height="21.333333333333329"/>
+                                                    <rect key="frame" x="20" y="10.000000000000002" width="374" height="21.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -764,14 +764,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecializationCell" id="W1l-9Z-plA" customClass="SpecializationCell" customModule="TapWork" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="41.666667938232422"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="40.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="W1l-9Z-plA" id="pVQ-aF-TEU">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="41.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="40.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SpecializationLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vrL-G9-fCL">
-                                            <rect key="frame" x="20" y="10.000000000000002" width="374" height="21.666666666666671"/>
+                                            <rect key="frame" x="20" y="10.000000000000002" width="374" height="20.666666666666671"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -812,14 +812,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfessionCell" id="cOY-kQ-b3r" customClass="ProfessionCell" customModule="TapWork" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="40.666667938232422"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cOY-kQ-b3r" id="dw0-WH-GsL">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="40.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profession" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUj-kA-hAa">
-                                            <rect key="frame" x="20" y="10.000000000000002" width="374" height="20.666666666666671"/>
+                                            <rect key="frame" x="20" y="10" width="374" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1391,7 +1391,7 @@
                                     <constraint firstAttribute="height" constant="50" id="96X-pI-Ta5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="OPQ-P9-rbj">
                                 <rect key="frame" x="20" y="172" width="374" height="20.333333333333343"/>
@@ -1416,7 +1416,7 @@
                                     <constraint firstAttribute="height" constant="50" id="wWJ-ta-N0k"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="aGG-BA-GqS">
                                 <rect key="frame" x="20" y="272.33333333333331" width="374" height="31"/>

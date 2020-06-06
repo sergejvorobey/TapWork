@@ -68,7 +68,7 @@ class LaunchScreenViewController: UIViewController {
                 print("Jump choice screen")
                //              self.performSegue(withIdentifier: "MainVC", sender: nil)
             case .failure(let error):
-                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self?.errorAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }

@@ -131,7 +131,7 @@ class LoginAccountViewController: UIViewController {
                 self?.view.activityStartAnimating(activityColor: .red,
                                                  backgroundColor: UIColor.black.withAlphaComponent(0.1))
             case .failure(let error):
-                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self?.errorAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
     }

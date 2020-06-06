@@ -197,10 +197,10 @@ class AddVacansyController: UIViewController {
             switch result {
                 
             case .success:
-                self.showAlert(title: "Успешно!", message: "Вакансия опубликована!")
+                self.errorAlert(title: "Успешно!", message: "Вакансия опубликована!")
             //                self?.dismiss(animated: true, completion: nil)
             case .failure(let error):
-                self.showAlert(title: "Ошибка", message: error.localizedDescription)
+                self.errorAlert(title: "Ошибка", message: error.localizedDescription)
                 
             }
         }

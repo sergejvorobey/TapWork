@@ -72,7 +72,7 @@ class DetailVacansyViewController: UIViewController {
         
         let delay = 5
         
-        self.showAlert(title: "Успешно",
+        self.errorAlert(title: "Успешно",
                        message: "Вы откликнулись на вакансию: Название вакансии, если работодателя заинтересует ваша кандидатура, с вами свяжуться!")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {

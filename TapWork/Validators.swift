@@ -11,6 +11,32 @@ import SystemConfiguration
 
 class Validators {
     
+    //MARK: check filled multiple texts fields
+    static func isFilledMultipleTextFields(firstText: String?, secondText: String?) -> Bool {
+        
+        guard !(firstText ?? "").isEmpty,
+            !(secondText ?? "").isEmpty else {return false}
+        
+        return true
+    }
+    
+    //MARK: check one text field
+    static func isFilledTextField(text: String?) -> Bool {
+        
+        guard !(text ?? "").isEmpty else {return false}
+        
+        return true
+    }
+    
+    //MARK: Max/min count element TextField
+    static func checkLengthField(text: String?, minCount: Int, maxCount: Int) -> Bool {
+     
+        guard !(text!.count > maxCount || text!.count < minCount) else {return false}
+        return true
+    }
+    
+    
+    
     //checking text fields for spaces
     static func isFilledRegister(firstname: String?,
                                  lastName: String?,
