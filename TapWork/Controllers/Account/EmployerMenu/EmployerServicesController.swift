@@ -38,7 +38,7 @@ extension EmployerServicesController: UITableViewDataSource, UITableViewDelegate
         
         let index = indexPath.row
         cell.backgroundColor = UIColor.clear
-        cell.selectionStyle = .none
+//        cell.selectionStyle = .none
         
         switch index {
         case 0:

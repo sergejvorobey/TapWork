@@ -15,11 +15,12 @@ extension UIView {
     func changeColorView() {
         
 //        let color = UIColor(red: 66/255, green: 103/255, blue: 178/255, alpha: 1)
-        let color = UIColor.white
-        let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.lightGray.cgColor, color.cgColor]
-        gradient.frame = self.bounds
-        self.layer.insertSublayer(gradient, at: 0)
+        let color = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
+//        let color = UIColor.white
+//        let gradient = CAGradientLayer()
+//        gradient.colors = [UIColor.lightGray.cgColor, color.cgColor]
+//        gradient.frame = self.bounds
+//        self.layer.insertSublayer(gradient, at: 0)
         self.backgroundColor = color
     }
     
@@ -67,11 +68,16 @@ extension UIView {
         return headerView
     }
     
-    func addShadow(){
+    func addShadow() {
         self.layer.shadowColor = UIColor.lightGray.cgColor
         self.layer.shadowRadius = 5
         self.layer.shadowOpacity = 0.5
         self.layer.shadowOffset = .zero
         self.layer.masksToBounds = false
+    }
+    
+    func addCorner() {
+        self.layer.borderWidth = 0.5
+        self.layer.cornerRadius = 10
     }
 }

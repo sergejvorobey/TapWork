@@ -19,7 +19,7 @@ class LaunchScreenViewController: UIViewController {
         
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        view.changeColorView()
+//        view.changeColorView()
         
     }
 
@@ -40,13 +40,12 @@ class LaunchScreenViewController: UIViewController {
         Auth.auth().addStateDidChangeListener {[weak self](auth, user) in
 
             let delay = 2
-            self?.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.1))
+            self?.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.0))
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
 
                 switch user {
                 case _ where user != nil:
                     completion(.success)
-                    
                     self?.performSegue(withIdentifier: "MainVC", sender: nil)
                 case _ where user == nil:
                     completion(.success)
@@ -65,7 +64,7 @@ class LaunchScreenViewController: UIViewController {
             switch result {
             case .success:
                 //             self.showAlert(title: "Успешно", message: "Вы авторизованы!")
-                print("Jump choice screen")
+            print("Jump choice screen")
                //              self.performSegue(withIdentifier: "MainVC", sender: nil)
             case .failure(let error):
                 self?.errorAlert(title: "Ошибка", message: error.localizedDescription)

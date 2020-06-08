@@ -28,8 +28,6 @@ class PaymentController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +71,9 @@ class PaymentController: UIViewController {
         nextButtonLabel.changeStyleButton(with: "Опубликовать")
         errorLabel.isHidden = true
         messagePhoneLabel.text = "Указывать телефон"
+        phoneTextField.placeholder = "+7 (XXX) XXXX-XXX"
+        paymentTextField.placeholder = "₽"
+        paymentTextField.becomeFirstResponder()
     }
     
     private func delegates() {
@@ -130,7 +131,7 @@ extension PaymentController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    //MARK:
+    //MARK: create phone with formatter
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == phoneTextField {
             guard let text = textField.text else { return false }

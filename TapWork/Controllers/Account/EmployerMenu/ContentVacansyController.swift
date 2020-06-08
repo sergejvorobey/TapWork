@@ -22,8 +22,6 @@ class ContentVacansyController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,9 +38,10 @@ class ContentVacansyController: UIViewController {
         nextButtonLabel.changeStyleButton(with: "Далее")
         headerSectionLabel.text = "Описание"
         errorLabel.isHidden = true
-        contentTextView.layer.borderWidth = 0.5
-        contentTextView.layer.cornerRadius = 10
+        contentTextView.addCorner()
+//        contentTextView.layer.cornerRadius = 10
         contentTextView.setPlaceholder(with: "Описание вакансии")
+        contentTextView.becomeFirstResponder()
     }
     
     private func delegates() {
@@ -50,7 +49,6 @@ class ContentVacansyController: UIViewController {
     }
     
     @IBAction func nextButtonPressed(_ sender: UIButton) {
-//        performSegue(withIdentifier: "paymentController", sender: nil)
         checkTextFields(text: contentTextView.text) { (result) in
             switch result {
             case .success:
@@ -95,7 +93,7 @@ class ContentVacansyController: UIViewController {
     }
 }
 
-//MARK: Text View Delegate, Text Field Delegate
+//MARK: Text View Delegate
 extension ContentVacansyController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {

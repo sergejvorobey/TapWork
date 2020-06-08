@@ -76,7 +76,7 @@ extension ProfessionController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath) as! ProfileCell
         let index = indexPath.row
         cell.backgroundColor = UIColor.clear
-        cell.selectionStyle = .none
+//        cell.selectionStyle = .none
         
         for item in profUserData {
             switch index {
@@ -102,10 +102,44 @@ extension ProfessionController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.row == 0 {
+        let index = indexPath.row
+        
+//        if index == 0 {
+//            let categoriesController = self.storyboard?.instantiateViewController(withIdentifier: "CategoriesController") as! CategoriesController
+//            let navController = UINavigationController(rootViewController: categoriesController)
+//            navigationController?.present(navController, animated: true, completion: nil)
+//        }
+        
+        switch index {
+        case 0:
             let categoriesController = self.storyboard?.instantiateViewController(withIdentifier: "CategoriesController") as! CategoriesController
             let navController = UINavigationController(rootViewController: categoriesController)
             navigationController?.present(navController, animated: true, completion: nil)
+        case 1:
+            performSegue(withIdentifier: "ExperienceUserController", sender: nil)
+        case 2:
+            performSegue(withIdentifier: "AdditionaInfolUserController", sender: nil)
+        default:
+            break
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+//        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+//        let professionData = profUserData[indexPath.row]
+//
+//        switch segue.identifier {
+//        case "AdditionaInfolUserController":
+//            let additionalInfoVC = segue.destination as! AdditionaInfolUserController
+//            additionalInfoVC.aboutMeText = professionData.aboutMe
+//        default:
+//            break
+        if segue.identifier == "AdditionaInfolUserController" {
+            let additionalInfoVC = segue.destination as! AdditionaInfolUserController
+            for index in profUserData {
+                additionalInfoVC.aboutMeText = index.aboutMe
+            }
         }
     }
 }

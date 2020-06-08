@@ -75,7 +75,7 @@ class RegisterAccountController: UIViewController {
     private func changeStyleButton() {
         guard let registerButton = registerButtonLabel else {return}
         registerButton.changeStyleButton(with: "Зарегистрировать")
-        navigationItem.title = "Регистарция"
+        navigationItem.title = "Регистрация"
     }
     
     private func checkStatus() {

@@ -17,24 +17,16 @@ class VacanciesCell: UITableViewCell {
     @IBOutlet weak var paymentLabel: UILabel!
     @IBOutlet weak var publicationDateLabel: UILabel!
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
-    }
-}
-
-extension VacanciesCell {
-
-    func changeCellColor() {
-
-//        let color = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
-
-        self.layer.cornerRadius = 25
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        let color = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
+        self.layer.borderWidth = 10
+        self.layer.cornerRadius = 20
+        self.layer.borderColor = color.cgColor
         self.layer.masksToBounds = true
-//        self.layer.borderColor = color.cgColor
-        self.layer.borderWidth = 8
-        self.layer.borderColor = UIColor.clear.cgColor
-
+        self.backgroundColor = UIColor.white
     }
 }
+
+

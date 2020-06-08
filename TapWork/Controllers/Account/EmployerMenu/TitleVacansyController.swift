@@ -49,6 +49,7 @@ class TitleVacansyController: UIViewController {
         errorLabel.isHidden = true
         titleTextField.placeholder = "Название"
         cityDropMenuTxtFld.placeholder = "Город"
+        titleTextField.becomeFirstResponder()
         
     }
     

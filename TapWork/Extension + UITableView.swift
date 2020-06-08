@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 extension UITableView {
-    func addCorner(){
-        self.layer.cornerRadius = 15
-        self.clipsToBounds = true
-    }
+//    func addCorner(){
+//        self.layer.cornerRadius = 15
+//        self.clipsToBounds = true
+//    }
 
 //    func addShadow(){
 //        self.layer.shadowColor = UIColor.lightGray.cgColor

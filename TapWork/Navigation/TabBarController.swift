@@ -21,6 +21,7 @@ class TabBarController: UITabBarController {
         tabBar.items![3].title = "Личный кабинет"
         navigationController?.navigationBar.isHidden = true
 //        tabBar.isTranslucent = true
+//        tabBar.frame.size.height = .greatestFiniteMagnitude
         
     }
 }
