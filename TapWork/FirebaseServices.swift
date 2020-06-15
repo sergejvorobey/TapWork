@@ -69,30 +69,66 @@ class LoaderDataFirebase {
             }
         }
     }
+//
+//    func getProfessionDataUser() {
+//
+//        var profDataUser = [Professions]()
+//
+//        guard let currentUsers = Auth.auth().currentUser else { return }
+//        infoUser = Users(user: currentUsers)
+//
+//        let db = Firestore.firestore()
+//
+//        db.collection("users")
+//            .document(infoUser.userId)
+//            .collection("userData")
+//            .document("profession")
+//            .addSnapshotListener { (snapshot, _) in
+//
+//                guard let snapshot = snapshot, snapshot.exists else {return}
+//
+//                guard let data = snapshot.data() else {return}
+//                profDataUser = [Professions(aboutMe: data["aboutMe"] as? String,
+//                                            experience: data["experience"] as? String,
+//                                            profession: data["profession"] as? String)]
+//
+////                print(profDataUser)
+//
+//             self.callBack?(profDataUser , true,"")
+//        }
+//    }
     
-    func getProfessionDataUser() {
+    func getProfessionUserData() {
         
-        var profDataUser = [Professions]()
-
+        var profDataUser = [ProfessionModel]()
+        
         guard let currentUsers = Auth.auth().currentUser else { return }
         infoUser = Users(user: currentUsers)
-
+        
         let db = Firestore.firestore()
-
+        
         db.collection("users")
             .document(infoUser.userId)
             .collection("userData")
             .document("profession")
             .addSnapshotListener { (snapshot, _) in
-
+                
                 guard let snapshot = snapshot, snapshot.exists else {return}
-
+                
                 guard let data = snapshot.data() else {return}
-                profDataUser = [Professions(aboutMe: data["aboutMe"] as? String,
-                                            experience: data["experience"] as? String,
-                                            profession: data["profession"] as? String)]
-
-             self.callBack?(profDataUser , true,"")
+                
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: data,   options: .prettyPrinted)
+                    let reqJSONStr = String(data: json , encoding: .utf8)
+                    let data = reqJSONStr?.data(using: .utf8)
+                    let decoder = JSONDecoder()
+                    let user = try decoder.decode(ProfessionModel.self, from: data!)
+                    profDataUser.append(user)
+                    self.callBack?(profDataUser , true,"")
+                    
+                } catch {
+                    print(error.localizedDescription)
+            }
         }
     }
     

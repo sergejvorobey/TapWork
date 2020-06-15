@@ -73,3 +73,41 @@ struct Employer {
     var activeVacansy: Int?
     var draft: Int?
 }
+
+//=========================================//
+
+struct ProfessionModel: Codable {
+    
+    var aboutMe: String?
+    var profession: String?
+    var experience: Experience?
+    
+    enum CodingKeys: String, CodingKey {
+        case aboutMe = "aboutMe"
+        case profession = "profession"
+        case experience = "experience"
+    }
+}
+
+struct Experience: Codable {
+    var places: [Places?]
+    
+    enum CodingKeys: String, CodingKey {
+        case places = "places"
+    }
+}
+
+struct Places: Codable {
+    var namePlace: String?
+    var duration: String?
+    var profession: String?
+    var responsibility: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case namePlace = "namePlace"
+        case duration = "duration"
+        case profession = "profession"
+        case responsibility = "responsibility"
+    }
+}
+

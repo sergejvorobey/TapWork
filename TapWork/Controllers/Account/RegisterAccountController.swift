@@ -190,9 +190,9 @@ class RegisterAccountController: UIViewController {
                         .document((result?.user.uid)!)
                         .collection("userData")
                         .document("profession").setData([
-                            "aboutMe": "Не указано",
-                            "experience": "Не указано",
-                            "profession": "Не указано"])
+                            "aboutMe": "",
+                            "experience": "",
+                            "profession": ""])
                     
                     db.collection("users")
                         .document((result?.user.uid)!)

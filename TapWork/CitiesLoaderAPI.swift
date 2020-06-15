@@ -35,14 +35,11 @@ class CitiesLoaderAPI {
         AF.request(self.baseURL, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil, interceptor: nil).responseData {(responseData) in
             
             guard let data = responseData.data else {return}
-//            print(data)
             self.callBack?(nil, false, "")
 
             do {
                 let cities = try JSONDecoder().decode(City.self, from: data)
-//                print(cities)
                 let citiesList = cities.response?.items
-//                print(citiesList)
                 self.callBack?(citiesList!, true,"")
                 
             }

@@ -37,10 +37,10 @@ class ProfileController: UIViewController {
     private func setItemsStyle() {
         
 //        let color = UIColor(red: 66/255, green: 103/255, blue: 178/255, alpha: 1)
-   
+//        let color = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
         navigationItem.title = "Личная информация"
         navigationItem.rightBarButtonItem?.tintColor = .black
- 
+//        view.backgroundColor = color
 //        let borderAlpha : CGFloat = 0.7
         let cornerRadius : CGFloat = 5.0
         editBasicLabel.setTitle("Редактировать профиль", for: .normal)

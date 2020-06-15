@@ -266,7 +266,7 @@ class EditAccountViewController: UIViewController {
                 "birth": birth,
                 "roleUser": roleUser
                 ])
-        { (error) in
+        {(error) in
             if error != nil {
                 completion(.failure(AuthError.unknownError))
             }

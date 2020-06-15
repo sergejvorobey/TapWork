@@ -15,6 +15,7 @@ class AdditionaInfolUserController: UIViewController {
     @IBOutlet weak var saveButtonLabel: UIButton!
     @IBOutlet weak var summaryCountLbl: UILabel!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var navBar: UINavigationBar!
     
     private let db = Firestore.firestore()
     private let aboutMeKey = "Не указано"
@@ -30,6 +31,10 @@ class AdditionaInfolUserController: UIViewController {
         super.viewWillAppear(true)
         
         checkText()
+    }
+    
+    @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
     private func checkText() {
@@ -57,7 +62,7 @@ class AdditionaInfolUserController: UIViewController {
     //MARK: setup items
     private func setupItems() {
         updateCharacterCount()
-        navigationItem.title = "О себе"
+        navBar.topItem?.title = "О себе"
         saveButtonLabel.changeStyleButton(with: "Сохранить")
         aboutMeTextView.addCorner()
         keyboardObserver()
@@ -116,7 +121,8 @@ extension AdditionaInfolUserController {
 extension AdditionaInfolUserController: UITextViewDelegate {
     
     func updateCharacterCount() {
-        self.summaryCountLbl.text = "\((0))/200"
+        guard let summaryCount = aboutMeText?.count else {return}
+        self.summaryCountLbl.text = "\(summaryCount)/200"
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -148,10 +154,10 @@ extension AdditionaInfolUserController {
             return
         }
         //MARK: check field filled
-        guard Validators.isFilledTextField(text: text) else {
-            completion(.failure(AuthError.notFilled))
-            return
-        }
+//        guard Validators.isFilledTextField(text: text) else {
+//            completion(.failure(AuthError.notFilled))
+//            return
+//        }
         guard let text = text
             else {
                 completion(.failure(AuthError.unknownError))

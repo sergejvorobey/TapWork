@@ -27,6 +27,10 @@
 		875F6A452436065D002C652D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F6A442436065D002C652D /* ChatViewController.swift */; };
 		8764F347248EBE610041E96B /* ExperienceUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F346248EBE610041E96B /* ExperienceUserController.swift */; };
 		8764F349248EBF170041E96B /* AdditionaInfolUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F348248EBF170041E96B /* AdditionaInfolUserController.swift */; };
+		8764F34C24913BE70041E96B /* CreateExperianceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F34B24913BE70041E96B /* CreateExperianceController.swift */; };
+		8764F34E249671DF0041E96B /* ExperienceUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F34D249671DF0041E96B /* ExperienceUserCell.swift */; };
+		8764F3502496902B0041E96B /* SelectProfessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F34F2496902B0041E96B /* SelectProfessionController.swift */; };
+		8764F352249696D90041E96B /* SelectProfessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F351249696D90041E96B /* SelectProfessionCell.swift */; };
 		8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768965B23F9F87400E17CC1 /* AddVacansyController.swift */; };
 		879B80D924843D0100CBF67B /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B80D824843D0100CBF67B /* ProfileController.swift */; };
 		879B80DB24843D2800CBF67B /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B80DA24843D2800CBF67B /* ProfileCell.swift */; };
@@ -98,6 +102,10 @@
 		875F6A442436065D002C652D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8764F346248EBE610041E96B /* ExperienceUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceUserController.swift; sourceTree = "<group>"; };
 		8764F348248EBF170041E96B /* AdditionaInfolUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionaInfolUserController.swift; sourceTree = "<group>"; };
+		8764F34B24913BE70041E96B /* CreateExperianceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExperianceController.swift; sourceTree = "<group>"; };
+		8764F34D249671DF0041E96B /* ExperienceUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceUserCell.swift; sourceTree = "<group>"; };
+		8764F34F2496902B0041E96B /* SelectProfessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfessionController.swift; sourceTree = "<group>"; };
+		8764F351249696D90041E96B /* SelectProfessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfessionCell.swift; sourceTree = "<group>"; };
 		8768965B23F9F87400E17CC1 /* AddVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVacansyController.swift; sourceTree = "<group>"; };
 		879B80D824843D0100CBF67B /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		879B80DA24843D2800CBF67B /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
@@ -184,9 +192,7 @@
 				87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */,
 				87B865D224784817001CBCEE /* ChooseStatusController.swift */,
 				879B80D824843D0100CBF67B /* ProfileController.swift */,
-				879B80FC2486897000CBF67B /* ProfessionController.swift */,
-				8764F346248EBE610041E96B /* ExperienceUserController.swift */,
-				8764F348248EBF170041E96B /* AdditionaInfolUserController.swift */,
+				8764F34A24913B730041E96B /* ProfessionData */,
 				87B865CC24780A50001CBCEE /* EmployerMenu */,
 			);
 			path = Account;
@@ -276,6 +282,18 @@
 				875F6A442436065D002C652D /* ChatViewController.swift */,
 			);
 			name = Messages;
+			sourceTree = "<group>";
+		};
+		8764F34A24913B730041E96B /* ProfessionData */ = {
+			isa = PBXGroup;
+			children = (
+				879B80FC2486897000CBF67B /* ProfessionController.swift */,
+				8764F34B24913BE70041E96B /* CreateExperianceController.swift */,
+				8764F348248EBF170041E96B /* AdditionaInfolUserController.swift */,
+				8764F346248EBE610041E96B /* ExperienceUserController.swift */,
+				8764F34F2496902B0041E96B /* SelectProfessionController.swift */,
+			);
+			path = ProfessionData;
 			sourceTree = "<group>";
 		};
 		879F596623F4D00900D4D124 /* Controllers */ = {
@@ -419,6 +437,8 @@
 			isa = PBXGroup;
 			children = (
 				879B80DA24843D2800CBF67B /* ProfileCell.swift */,
+				8764F34D249671DF0041E96B /* ExperienceUserCell.swift */,
+				8764F351249696D90041E96B /* SelectProfessionCell.swift */,
 			);
 			path = PersonalData;
 			sourceTree = "<group>";
@@ -565,6 +585,7 @@
 				872615A12486DEF300BFC88D /* EmployerMenuCell.swift in Sources */,
 				875F6A41243602F1002C652D /* MessageViewController.swift in Sources */,
 				8764F347248EBE610041E96B /* ExperienceUserController.swift in Sources */,
+				8764F34C24913BE70041E96B /* CreateExperianceController.swift in Sources */,
 				87F4978524675721009B25A0 /* ImageService.swift in Sources */,
 				8764F349248EBF170041E96B /* AdditionaInfolUserController.swift in Sources */,
 				87B865CB247429B5001CBCEE /* Extension + UIViewController.swift in Sources */,
@@ -572,10 +593,12 @@
 				871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */,
 				87F497552461A368009B25A0 /* ProfessionCell.swift in Sources */,
 				87F497802464A743009B25A0 /* Validators.swift in Sources */,
+				8764F34E249671DF0041E96B /* ExperienceUserCell.swift in Sources */,
 				87D05257245D978E000B2F61 /* CitiesLoaderAPI.swift in Sources */,
 				872615AA2487EB8E00BFC88D /* ContentVacansyController.swift in Sources */,
 				87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */,
 				87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */,
+				8764F352249696D90041E96B /* SelectProfessionCell.swift in Sources */,
 				879B80DB24843D2800CBF67B /* ProfileCell.swift in Sources */,
 				87B865C724742806001CBCEE /* Extension + UIView.swift in Sources */,
 				872615A32486DFC500BFC88D /* EmployerServicesController.swift in Sources */,
@@ -585,6 +608,7 @@
 				879F599723F9A0A400D4D124 /* RegisterAccountController.swift in Sources */,
 				879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */,
 				871D175223C8F6350095C765 /* AppDelegate.swift in Sources */,
+				8764F3502496902B0041E96B /* SelectProfessionController.swift in Sources */,
 				87B865D124780C6A001CBCEE /* ActiveVacansyCell.swift in Sources */,
 				87B865C324742771001CBCEE /* Extension + UITextField.swift in Sources */,
 				870B9D6B240DDDD0006EB3EC /* LaunchScreenViewController.swift in Sources */,

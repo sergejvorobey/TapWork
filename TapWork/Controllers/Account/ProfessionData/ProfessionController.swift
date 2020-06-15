@@ -12,7 +12,8 @@ class ProfessionController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private var profUserData = [Professions]()
+//    private var profUserData = [Professions]()
+    private var profData = [ProfessionModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,7 @@ class ProfessionController: UIViewController {
             }
         }
     }
-    
+
     //MARK: Get data
     private func getUserProfData(completion: @escaping (AuthResult) -> Void) {
         guard Validators.isConnectedToNetwork()  else {
@@ -48,14 +49,15 @@ class ProfessionController: UIViewController {
             return
         }
         let dataLoader = LoaderDataFirebase()
-        dataLoader.getProfessionDataUser()
+//        dataLoader.getProfessionDataUser()
+        dataLoader.getProfessionUserData()
         
         dataLoader.completionHandler { [weak self] (user, status, message) in
             
             if status {
                 guard let self = self else {return}
                 guard let _user = user else {return}
-                self.profUserData = _user as! [Professions]
+                self.profData = _user as! [ProfessionModel]
                 
                 self.tableView.reloadData()
             }
@@ -75,23 +77,35 @@ extension ProfessionController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath) as! ProfileCell
         let index = indexPath.row
-        cell.backgroundColor = UIColor.clear
-//        cell.selectionStyle = .none
-        
-        for item in profUserData {
+//        cell.backgroundColor = UIColor.clear
+        cell.backgroundColor = UIColor.white
+
+        for item in profData {
             switch index {
             case 0:
                 cell.professionLabel.text = "Профессия"
-                cell.descriptionLabel.text = item.profession
                 cell.iconCell.image = #imageLiteral(resourceName: "Specialization")
+                if item.profession!.isEmpty {
+                    cell.descriptionLabel.text = "Расскажите, кем вы хотите работать"
+                } else {
+                    cell.descriptionLabel.text = item.profession
+                }
             case 1:
                 cell.professionLabel.text = "Опыт работы"
-                cell.descriptionLabel.text = item.experience
                 cell.iconCell.image = #imageLiteral(resourceName: "timeWork")
+                if (item.experience?.places.isEmpty)! {
+                    cell.descriptionLabel.text = "Расскажите, про ваш опыт работы"
+                } else {
+                    cell.descriptionLabel.text = "Вы указали: \(item.experience?.places.count ?? 0) места"
+                }
             case 2:
                 cell.professionLabel.text = "О себе"
-                cell.descriptionLabel.text = item.aboutMe
                 cell.iconCell.image = #imageLiteral(resourceName: "info")
+                if item.aboutMe!.isEmpty {
+                    cell.descriptionLabel.text = "Есть еще что-нибудь, что стоит рассказать?"
+                } else {
+                    cell.descriptionLabel.text = item.aboutMe
+                }
             default:
                 break
             }
@@ -103,12 +117,6 @@ extension ProfessionController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let index = indexPath.row
-        
-//        if index == 0 {
-//            let categoriesController = self.storyboard?.instantiateViewController(withIdentifier: "CategoriesController") as! CategoriesController
-//            let navController = UINavigationController(rootViewController: categoriesController)
-//            navigationController?.present(navController, animated: true, completion: nil)
-//        }
         
         switch index {
         case 0:
@@ -129,17 +137,28 @@ extension ProfessionController: UITableViewDelegate, UITableViewDataSource {
 //        guard let indexPath = tableView.indexPathForSelectedRow else { return }
 //        let professionData = profUserData[indexPath.row]
 //
-//        switch segue.identifier {
-//        case "AdditionaInfolUserController":
-//            let additionalInfoVC = segue.destination as! AdditionaInfolUserController
-//            additionalInfoVC.aboutMeText = professionData.aboutMe
-//        default:
-//            break
-        if segue.identifier == "AdditionaInfolUserController" {
+        switch segue.identifier {
+            
+        case "AdditionaInfolUserController":
             let additionalInfoVC = segue.destination as! AdditionaInfolUserController
-            for index in profUserData {
+            for index in profData {
                 additionalInfoVC.aboutMeText = index.aboutMe
             }
+        case "ExperienceUserController":
+            let experienceVC = segue.destination as! ExperienceUserController
+            for data in profData {
+                guard let dataExp = data.experience else {
+                    return
+                }
+                experienceVC.experienceUser = dataExp.places as! [Places]
+            }
+        default:
+            break
+//        if segue.identifier == "AdditionaInfolUserController" {
+//            let additionalInfoVC = segue.destination as! AdditionaInfolUserController
+//            for index in profData {
+//                additionalInfoVC.aboutMeText = index.aboutMe
+//            }
         }
     }
 }

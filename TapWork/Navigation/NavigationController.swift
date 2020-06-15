@@ -9,9 +9,13 @@
 import UIKit
 
 class NavigationController: UINavigationController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
+        }
     }
 }
