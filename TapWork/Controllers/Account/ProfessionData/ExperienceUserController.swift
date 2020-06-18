@@ -13,6 +13,7 @@ class ExperienceUserController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var createExperianceButtonLbl: UIButton!
+    @IBOutlet weak var buttonView: UIView!
     
     var experienceUser = [Places]()
 
@@ -24,6 +25,7 @@ class ExperienceUserController: UIViewController {
         createExperianceButtonLbl.changeStyleButton(with: "Добавить опыт работы")
         tableView.delegate = self
         tableView.dataSource = self
+        buttonView.addShadow()
     }
     
     @IBAction func createExperiancePressed(_ sender: UIButton) {
@@ -43,6 +45,13 @@ class ExperienceUserController: UIViewController {
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
+    
+    
+     override func viewWillAppear(_ animated: Bool) {
+         super.viewWillAppear(true)
+         
+//        tableView.reloadData()
+     }
 }
 
 extension ExperienceUserController: UITableViewDelegate, UITableViewDataSource {
@@ -72,6 +81,22 @@ extension ExperienceUserController: UITableViewDelegate, UITableViewDataSource {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let place = experienceUser[indexPath.row]
             editExperience.expDataUser = place
+            editExperience.indexArray = indexPath.row
+        }
+        
+        switch segue.identifier {
+        case "EditExperience":
+            let editExperience = segue.destination as! CreateExperianceController
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            let place = experienceUser[indexPath.row]
+            editExperience.expDataUser = place
+            editExperience.indexArray = indexPath.row
+            editExperience.transitionStatus = "EDIT_EXPERIENCE"
+        case "CreateExperianceController":
+            let editExperience = segue.destination as! CreateExperianceController
+            editExperience.transitionStatus = "CREATE_EXPERIENCE"
+        default:
+            break
         }
     }
 }

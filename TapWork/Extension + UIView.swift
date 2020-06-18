@@ -80,4 +80,18 @@ extension UIView {
         self.layer.borderWidth = 0.3
         self.layer.cornerRadius = 10
     }
+    
+    func cellCurrentUser(color: UIColor) {
+//        let colorYellow = UIColor(red: 255, green: 255, blue: 204/255, alpha: 1) //yellow
+//        let colorGray = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1) //gray
+        self.layer.borderWidth = 10
+        self.layer.cornerRadius = 20
+        self.layer.borderColor = color.cgColor
+        self.layer.masksToBounds = true
+        self.backgroundColor = UIColor.white
+    }
+    
+//    func cellNotCurrentUser() {
+//
+//    }
 }

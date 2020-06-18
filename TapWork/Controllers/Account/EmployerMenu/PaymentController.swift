@@ -263,7 +263,7 @@ extension PaymentController {
                               content: content,
                               phoneNumber: phone,
                               payment: payment)
-        let vacansyRef = ref.child(vacansy.heading)
+        let vacansyRef = ref.child(vacansy.heading)//vacansy.heading
         vacansyRef.setValue(vacansy.providerToDictionary())
         
         completion(.success)

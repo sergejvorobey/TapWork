@@ -18,7 +18,7 @@ class LoaderDataFirebase {
     typealias callBack = (_ data: Any?, _ status: Bool, _ message: String) -> Void
     private var callBack: callBack?
     
-    func getUserStatus() {
+    func getProfileUserID() {
         guard let currentUsers = Auth.auth().currentUser else { return }
         infoUser = Users(user: currentUsers)
         
@@ -31,7 +31,7 @@ class LoaderDataFirebase {
                 
                 guard let snapshot = snapshot, snapshot.exists else {return}
                 
-                guard let data = snapshot.data()!["roleUser"] as? String  else {return}
+                guard let data = snapshot.data()!["uid"] as? String  else {return}
                 self.callBack?(data, true,"")
         }
     }
@@ -118,13 +118,13 @@ class LoaderDataFirebase {
                 guard let data = snapshot.data() else {return}
                 
                 do {
-                    let json = try JSONSerialization.data(withJSONObject: data,   options: .prettyPrinted)
-                    let reqJSONStr = String(data: json , encoding: .utf8)
+                    let json = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+                    let reqJSONStr = String(data: json, encoding: .utf8)
                     let data = reqJSONStr?.data(using: .utf8)
                     let decoder = JSONDecoder()
                     let user = try decoder.decode(ProfessionModel.self, from: data!)
                     profDataUser.append(user)
-                    self.callBack?(profDataUser , true,"")
+                    self.callBack?(profDataUser, true,"")
                     
                 } catch {
                     print(error.localizedDescription)

@@ -141,34 +141,6 @@ class RegisterAccountController: UIViewController {
                 completion(.failure(error!))
                 return
             }
-            
-//            if error == nil {
-//                let db = Firestore.firestore()
-                //            db.collection("users")
-                //                .document((result?.user.uid)!)
-                //                .setData(["userData":
-                //                            ["firstName": self!.firstNameUserTextField.text!,
-                //                             "lastName": self!.lastNameUserTextField.text!,
-                //                             "birth": self!.dateBirthUserTextField.text ?? "Не указано",
-                //                             "city": self!.cityUserTextField.text!,
-                //                             "email": email,
-                //                             "dateRegister": Timestamp(),
-                //                             "password": password,
-                //                             "roleUser": self!.roleUser,
-                //                             "profileImageUrl": "",
-                //                             "uid": result?.user.uid as Any],
-                //                          "professionData":
-                //                            ["profession": "Не указано",
-                //                             "experience": "Не указано",
-                //                             "aboutMe": "Не указано"],
-                //                          "employerData":
-                //                            ["activeVacansy": 0,
-                //                             "draft": 0]
-                //                ])
-                //                 completion(.success)
-                //            } else {
-                //                completion(.failure(AuthError.unknownError))
-                //            }
                 if error == nil {
                     let db = Firestore.firestore()
                     db.collection("users")
@@ -186,12 +158,18 @@ class RegisterAccountController: UIViewController {
                             "profileImageUrl": "",
                             "uid": result?.user.uid as Any ])
                     
+                    let place: [String: Any] = [
+                        "namePlace": "",
+                        "profession": "",
+                        "duration": "",
+                        "responsibility": ""]
+                    
                     db.collection("users")
                         .document((result?.user.uid)!)
                         .collection("userData")
                         .document("profession").setData([
                             "aboutMe": "",
-                            "experience": "",
+                            "experience": ["places": [place]],
                             "profession": ""])
                     
                     db.collection("users")
@@ -204,49 +182,9 @@ class RegisterAccountController: UIViewController {
                     completion(.success)
                 } else {
                     completion(.failure(AuthError.unknownError))
-//                }
             }
         }
     }
-    //            if error == nil {
-    //                let db = Firestore.firestore()
-    //                if self?.roleUser == "Ищу работу" {
-    //                    db.collection("users")
-    //                        .document((result?.user.uid)!)
-    //                        .collection("userData")
-    //                        .document("personalData").setData([
-    //                            "firstName": self!.firstNameUserTextField.text!,
-    //                            "lastName": self!.lastNameUserTextField.text!,
-    //                            "city": self!.cityUserTextField.text!,
-    //                            "email": email,
-    //                            "dateRegister": Timestamp(),
-    //                            "birth": self!.dateBirthUserTextField.text!,
-    //                            "password": password,
-    //                            "roleUser": self!.roleUser,
-    //                            "profileImageUrl": "",
-    //                            "uid": result?.user.uid as Any ])
-    //                } else {
-    //                    db.collection("users")
-    //                        .document((result?.user.uid)!)
-    //                        .collection("userData")
-    //                        .document("personalData").setData([
-    //                            "firstName": self!.firstNameUserTextField.text!,
-    //                            "lastName": self!.lastNameUserTextField.text!,
-    //                            "city": self!.cityUserTextField.text!,
-    //                            "email": email,
-    //                            "dateRegister": Timestamp(),
-    //                            "birth": "Не указано",
-    //                            "password": password,
-    //                            "roleUser": self!.roleUser,
-    //                            "profileImageUrl": "",
-    //                            "uid": result?.user.uid as Any ])
-    //                }
-    //                completion(.success)
-    //            } else {
-    //                completion(.failure(AuthError.unknownError))
-    //            }
-    //        }
-    //    }
     
     @IBAction func registerButton(_ sender: UIButton) {
         register(email: emailTextField.text, password: passwordUserTextField.text) {[weak self] (result) in

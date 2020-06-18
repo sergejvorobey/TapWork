@@ -12,7 +12,7 @@ import UIKit
 extension UIImageView {
 
     func changeStyleImage() {
-        let defColor = UIColor.white
+        let defColor = UIColor.black
         self.layer.borderWidth = 0.7
         self.layer.borderColor = defColor.cgColor
         self.layer.masksToBounds = false

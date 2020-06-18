@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import BonsaiController
+//import BonsaiController
 
 class CreateExperianceController: UIViewController {
     
@@ -25,14 +25,18 @@ class CreateExperianceController: UIViewController {
             durationSliderLabel.value = 1
         }
     }
+     @IBOutlet weak var buttonView: UIView!
     
     var expDataUser: Places?
+    var transitionStatus = ""
+    var indexArray: Int?
     private let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //TODO
+        buttonView.addShadow()
         navigationItem.title = "Место работы"
         saveButtonLabel.changeStyleButton(with: "Сохранить")
         namePlaceTextField.placeholder = "Название места"
@@ -60,7 +64,9 @@ class CreateExperianceController: UIViewController {
         professionTextField.becomeFirstResponder()
         //touch text field
         professionTextField.addTarget(self, action: #selector(selectProfession), for: .touchDown)
+    
     }
+ 
     
     @objc func selectProfession(textField: UITextField) {
        performSegue(withIdentifier: "SelectProfessionController", sender: nil)
@@ -97,49 +103,51 @@ class CreateExperianceController: UIViewController {
     
     @IBAction func savePressed(_ sender: UIButton) {
         
-//        guard let currentUsers = Auth.auth().currentUser else { return }
-//        let infoUser = Users(user: currentUsers)
-//        
-//        db.collection("users")
-//            .document(infoUser.userId)
-//            .collection("userData")
-//            .document("profession")
-//            .updateData([
-//                "experience" : [
-//                    namePlaceTextField.text : [
-//                        "profession": professionTextField.text,
-//                        "responsibility": responsibilityTextView.text
-//                    ]
-//                ]
-//            ])
-//            .document("profession").updateData([
-//                "experience": [
-//                    "namePlace": namePlaceTextField.text,
-//                    "profession": professionTextField.text,
-//                    "responsibility": responsibilityTextView.text]
-//                ])
+        guard let currentUsers = Auth.auth().currentUser else { return }
+        let infoUser = Users(user: currentUsers)
+        
+        let place: [String: Any] = [
+            "namePlace": namePlaceTextField.text!,
+            "profession":professionTextField.text!,
+            "duration": counterDurationLabel.text!,
+            "responsibility": responsibilityTextView.text!]
+        
+        if transitionStatus == "CREATE_EXPERIENCE" {
+            db.collection("users")
+                .document(infoUser.userId)
+                .collection("userData")
+                .document("profession")
+                .updateData([
+                    "experience": ["places": [place]]
+            ])
+        } else {
+            db.collection("users")
+                .document(infoUser.userId)
+                .collection("userData")
+                .document("profession")
+                .updateData([
+                    "experience": ["places": [place]]
+            ])
+        }
+//
 //            {(error) in
 //            print(error?.localizedDescription)
 //        }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SelectProfessionController" {
-            segue.destination.transitioningDelegate = self
-            segue.destination.modalPresentationStyle = .custom
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "SelectProfessionController" {
+//            segue.destination.transitioningDelegate = self
+//            segue.destination.modalPresentationStyle = .custom
+//        }
+//    }
     
     @IBAction func unwindToCreateExperiance(segue: UIStoryboardSegue) {
         if segue.identifier == "unwindToCreateExp" {
             let selectProfVC = segue.source as? SelectProfessionController
             self.professionTextField.text = selectProfVC?.checkProfession
-//            print(selectProfVC?.checkProfession)
         }
     }
-    
-    
-    
 }
 
 //MARK: Text View Delegate
@@ -169,34 +177,3 @@ extension CreateExperianceController: UITextViewDelegate, UITextFieldDelegate {
     }
 }
 
-
-extension CreateExperianceController: BonsaiControllerDelegate {
-    // return the frame of your Bonsai View Controller
-    func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
-
-        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 4 /*containerViewFrame.height / 2*/),
-                      size: CGSize(width: containerViewFrame.width,
-                                   height: containerViewFrame.height / (4/3)))
-    }
-
-    // return a Bonsai Controller with SlideIn or Bubble transition animator
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-
-        /// With Background Color ///
-
-        // Slide animation from .left, .right, .top, .bottom
-        return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
-
-        // or Bubble animation initiated from a view
-        //return BonsaiController(fromView: yourOriginView, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
-
-
-        /// With Blur Style ///
-
-        // Slide animation from .left, .right, .top, .bottom
-        //return BonsaiController(fromDirection: .bottom, blurEffectStyle: .light, presentedViewController: presented, delegate: self)
-
-        // or Bubble animation initiated from a view
-        //return BonsaiController(fromView: yourOriginView, blurEffectStyle: .dark,  presentedViewController: presented, delegate: self)
-    }
-}

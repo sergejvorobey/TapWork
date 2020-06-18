@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import Firebase
 import NVActivityIndicatorView
 import BonsaiController
 
 class MainViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var roleSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var choiceButtonLbl: UIBarButtonItem!
+    @IBOutlet weak var addedVacansyContainerView: UIView!
     
     private var vacancies = [Vacancy]()
-    var userStatus: String?
+    private var userProfileID: String?
     
     private let spinner = NVActivityIndicatorView(frame: CGRect.init(x: 0,
                                                                      y: 0,
@@ -32,14 +36,20 @@ class MainViewController: UIViewController {
     
     //MARK: Setup appearance items
     private func setupItems() {
+
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.clear
         tableView.addSubview(refreshControll)
         tableView.tableFooterView = UIView()
         view.changeColorView()
-        navigationItem.title = "TAP WORK"
-        navigationItem.rightBarButtonItem?.tintColor = .black
+//        navigationItem.title = "TAP WORK"
+        navigationItem.prompt = "TAP WORK"
+        roleSegmentedControl.setTitle("Я - Ищу работу", forSegmentAt: 0)
+        roleSegmentedControl.setTitle("Я - Работодатель", forSegmentAt: 1)
+        choiceButtonLbl.image = #imageLiteral(resourceName: "filter")
+        addedVacansyContainerView.isHidden = true
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +59,7 @@ class MainViewController: UIViewController {
             switch result {
             case .success:
                 self?.showActivityIndicator()
-                self?.getStatusUser()
+                self?.getProfileUserID()
             case .failure(let error):
                 self?.errorAlert(title: "Ошибка", message: error.localizedDescription)
                 
@@ -67,12 +77,38 @@ class MainViewController: UIViewController {
     }()
     
     @objc func handleRefresh(_ refreshControll: UIRefreshControl) {
-        
         self.tableView.reloadData()
         let deadline = DispatchTime.now() + .milliseconds(700)
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
             refreshControll.endRefreshing()
         })
+    }
+    
+    @IBAction func segmentRoleSelection(_ sender: UISegmentedControl) {
+        
+        switch roleSegmentedControl.selectedSegmentIndex {
+        case 0:
+            tableView.isHidden = false
+            addedVacansyContainerView.isHidden = true
+            choiceButtonLbl.image = #imageLiteral(resourceName: "filter")
+        case 1:
+            tableView.isHidden = true
+            choiceButtonLbl.image = #imageLiteral(resourceName: "menu")
+            addedVacansyContainerView.isHidden = false
+        default:
+            break
+        }
+    }
+    
+    @IBAction func choiceButton(_ sender: UIBarButtonItem) {
+        switch roleSegmentedControl.selectedSegmentIndex {
+        case 0:
+            print("go filter")//TODO
+        case 1:
+            addingNewVacansy()
+        default:
+            break
+        }
     }
 }
 
@@ -102,14 +138,18 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacanciesCell
  
-        if userStatus == "Работодатель" {
-            vacanciesCell.isUserInteractionEnabled = false
-        } else {
-            vacanciesCell.isUserInteractionEnabled = true
-        }
+        let colorYellow = UIColor(red: 255, green: 255, blue: 204/255, alpha: 1)
+        let colorGray = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
         
         let vacansy = vacancies[indexPath.row]
-        
+
+        if vacansy.userId == userProfileID {
+            vacanciesCell.cellCurrentUser(color: colorYellow)
+            vacanciesCell.isUserInteractionEnabled = false
+        } else {
+            vacanciesCell.cellCurrentUser(color: colorGray)
+            vacanciesCell.isUserInteractionEnabled = true
+        }
         vacanciesCell.headingLabel.text = vacansy.heading
         vacanciesCell.cityVacansyLabel.text = vacansy.city
         vacanciesCell.contentLabel.text = vacansy.content
@@ -170,16 +210,16 @@ extension MainViewController {
         completion(.success)
     }
     
-    //MARK: parse user status
-    private func getStatusUser() {
+    //MARK: parse user id
+    private func getProfileUserID() {
         let dataLoader = LoaderDataFirebase()
-        dataLoader.getUserStatus()
-        dataLoader.completionHandler {[weak self](userStatus, status, message) in
+        dataLoader.getProfileUserID()
+        dataLoader.completionHandler {[weak self](userProfileID, status, message) in
             if status {
                 
                 guard let self = self else {return}
-                guard let _userStatus = userStatus else {return}
-                self.userStatus = _userStatus as? String
+                guard let _userProfileID = userProfileID else {return}
+                self.userProfileID = _userProfileID as? String
             }
         }
     }
@@ -190,7 +230,7 @@ extension MainViewController: BonsaiControllerDelegate {
     // return the frame of your Bonsai View Controller
     func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
         
-        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 2 /*containerViewFrame.height / 2*/),
+        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 2),
                       size: CGSize(width: containerViewFrame.width,
                                    height: containerViewFrame.height / 2))
     }
@@ -202,18 +242,6 @@ extension MainViewController: BonsaiControllerDelegate {
         
         // Slide animation from .left, .right, .top, .bottom
         return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
-        
-        // or Bubble animation initiated from a view
-        //return BonsaiController(fromView: yourOriginView, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
-        
-        
-        /// With Blur Style ///
-        
-        // Slide animation from .left, .right, .top, .bottom
-        //return BonsaiController(fromDirection: .bottom, blurEffectStyle: .light, presentedViewController: presented, delegate: self)
-        
-        // or Bubble animation initiated from a view
-        //return BonsaiController(fromView: yourOriginView, blurEffectStyle: .dark,  presentedViewController: presented, delegate: self)
     }
 }
 
@@ -221,12 +249,33 @@ extension MainViewController {
     func showActivityIndicator() {
         self.view.addSubview(spinner)
         spinner.startAnimating()
+        self.roleSegmentedControl.setEnabled(false, forSegmentAt: 1)
         spinner.center = view.center
         view.isUserInteractionEnabled = false
     }
     
     func hideActivityIndicator(){
         spinner.stopAnimating()
+        self.roleSegmentedControl.setEnabled(true, forSegmentAt: 1)
         view.isUserInteractionEnabled = true
+    }
+}
+
+//MARK: exit user account
+extension MainViewController {
+    private func addingNewVacansy() {
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let cancel = UIAlertAction(title: "Назад", style: .default)
+        
+        let signOutAcc = UIAlertAction(title: "Создать новую вакансию", style: .default) { (actionSheet) in
+            
+            self.performSegue(withIdentifier: "AddingVacansy", sender: nil)
+
+        }
+        actionSheet.addAction(signOutAcc)
+        actionSheet.addAction(cancel)
+        present(actionSheet, animated: true)
     }
 }

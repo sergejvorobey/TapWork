@@ -15,9 +15,8 @@
 		871D175923C8F6350095C765 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175723C8F6350095C765 /* Main.storyboard */; };
 		871D175B23C8F6360095C765 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 871D175A23C8F6360095C765 /* Assets.xcassets */; };
 		871D175E23C8F6360095C765 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175C23C8F6360095C765 /* LaunchScreen.storyboard */; };
+		87200B26249B9D850008C6C4 /* ActiveVacanciesUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87200B25249B9D850008C6C4 /* ActiveVacanciesUserCell.swift */; };
 		8726159F2486CF1600BFC88D /* Extension + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726159E2486CF1600BFC88D /* Extension + UITableView.swift */; };
-		872615A12486DEF300BFC88D /* EmployerMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A02486DEF300BFC88D /* EmployerMenuCell.swift */; };
-		872615A32486DFC500BFC88D /* EmployerServicesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A22486DFC500BFC88D /* EmployerServicesController.swift */; };
 		872615A62487EB1300BFC88D /* TitleVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A52487EB1300BFC88D /* TitleVacansyController.swift */; };
 		872615AA2487EB8E00BFC88D /* ContentVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A92487EB8E00BFC88D /* ContentVacansyController.swift */; };
 		872615AC2487EBB500BFC88D /* PaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615AB2487EBB500BFC88D /* PaymentController.swift */; };
@@ -31,10 +30,10 @@
 		8764F34E249671DF0041E96B /* ExperienceUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F34D249671DF0041E96B /* ExperienceUserCell.swift */; };
 		8764F3502496902B0041E96B /* SelectProfessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F34F2496902B0041E96B /* SelectProfessionController.swift */; };
 		8764F352249696D90041E96B /* SelectProfessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F351249696D90041E96B /* SelectProfessionCell.swift */; };
-		8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768965B23F9F87400E17CC1 /* AddVacansyController.swift */; };
-		879B80D924843D0100CBF67B /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B80D824843D0100CBF67B /* ProfileController.swift */; };
-		879B80DB24843D2800CBF67B /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B80DA24843D2800CBF67B /* ProfileCell.swift */; };
-		879B80FD2486897000CBF67B /* ProfessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B80FC2486897000CBF67B /* ProfessionController.swift */; };
+		8780AC05249A393500496C61 /* ProfileUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC04249A393500496C61 /* ProfileUserController.swift */; };
+		8780AC07249A3A9900496C61 /* ProfileUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC06249A3A9900496C61 /* ProfileUserCell.swift */; };
+		8780AC09249A476300496C61 /* UserDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC08249A476300496C61 /* UserDescriptionCell.swift */; };
+		8780AC0B249A9C8400496C61 /* VacancyCreationCounterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC0A249A9C8400496C61 /* VacancyCreationCounterController.swift */; };
 		879F599023F9797A00D4D124 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F598F23F9797A00D4D124 /* TabBarController.swift */; };
 		879F599223F99A6900D4D124 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599123F99A6900D4D124 /* NavigationController.swift */; };
 		879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */; };
@@ -50,8 +49,6 @@
 		87B865C724742806001CBCEE /* Extension + UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865C624742806001CBCEE /* Extension + UIView.swift */; };
 		87B865C924742845001CBCEE /* Extension + UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865C824742845001CBCEE /* Extension + UIImageView.swift */; };
 		87B865CB247429B5001CBCEE /* Extension + UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865CA247429B5001CBCEE /* Extension + UIViewController.swift */; };
-		87B865CE24780BE8001CBCEE /* ActiveVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865CD24780BE8001CBCEE /* ActiveVacansyController.swift */; };
-		87B865D124780C6A001CBCEE /* ActiveVacansyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */; };
 		87B865D324784817001CBCEE /* ChooseStatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D224784817001CBCEE /* ChooseStatusController.swift */; };
 		87B865D7247D5BB9001CBCEE /* Extension + NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D6247D5BB9001CBCEE /* Extension + NavigationBar.swift */; };
 		87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BB3BA123F9D691004F3C61 /* CategoriesController.swift */; };
@@ -90,9 +87,8 @@
 		871D175A23C8F6360095C765 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		871D175D23C8F6360095C765 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		871D175F23C8F6360095C765 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87200B25249B9D850008C6C4 /* ActiveVacanciesUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveVacanciesUserCell.swift; sourceTree = "<group>"; };
 		8726159E2486CF1600BFC88D /* Extension + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UITableView.swift"; sourceTree = "<group>"; };
-		872615A02486DEF300BFC88D /* EmployerMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerMenuCell.swift; sourceTree = "<group>"; };
-		872615A22486DFC500BFC88D /* EmployerServicesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerServicesController.swift; sourceTree = "<group>"; };
 		872615A52487EB1300BFC88D /* TitleVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleVacansyController.swift; sourceTree = "<group>"; };
 		872615A92487EB8E00BFC88D /* ContentVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVacansyController.swift; sourceTree = "<group>"; };
 		872615AB2487EBB500BFC88D /* PaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentController.swift; sourceTree = "<group>"; };
@@ -106,10 +102,10 @@
 		8764F34D249671DF0041E96B /* ExperienceUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceUserCell.swift; sourceTree = "<group>"; };
 		8764F34F2496902B0041E96B /* SelectProfessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfessionController.swift; sourceTree = "<group>"; };
 		8764F351249696D90041E96B /* SelectProfessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfessionCell.swift; sourceTree = "<group>"; };
-		8768965B23F9F87400E17CC1 /* AddVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVacansyController.swift; sourceTree = "<group>"; };
-		879B80D824843D0100CBF67B /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
-		879B80DA24843D2800CBF67B /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
-		879B80FC2486897000CBF67B /* ProfessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionController.swift; sourceTree = "<group>"; };
+		8780AC04249A393500496C61 /* ProfileUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserController.swift; sourceTree = "<group>"; };
+		8780AC06249A3A9900496C61 /* ProfileUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserCell.swift; sourceTree = "<group>"; };
+		8780AC08249A476300496C61 /* UserDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDescriptionCell.swift; sourceTree = "<group>"; };
+		8780AC0A249A9C8400496C61 /* VacancyCreationCounterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyCreationCounterController.swift; sourceTree = "<group>"; };
 		879F598F23F9797A00D4D124 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		879F599123F99A6900D4D124 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAccountViewController.swift; sourceTree = "<group>"; };
@@ -125,8 +121,6 @@
 		87B865C624742806001CBCEE /* Extension + UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIView.swift"; sourceTree = "<group>"; };
 		87B865C824742845001CBCEE /* Extension + UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIImageView.swift"; sourceTree = "<group>"; };
 		87B865CA247429B5001CBCEE /* Extension + UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIViewController.swift"; sourceTree = "<group>"; };
-		87B865CD24780BE8001CBCEE /* ActiveVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveVacansyController.swift; sourceTree = "<group>"; };
-		87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveVacansyCell.swift; sourceTree = "<group>"; };
 		87B865D224784817001CBCEE /* ChooseStatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseStatusController.swift; sourceTree = "<group>"; };
 		87B865D6247D5BB9001CBCEE /* Extension + NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + NavigationBar.swift"; sourceTree = "<group>"; };
 		87BB3BA123F9D691004F3C61 /* CategoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesController.swift; sourceTree = "<group>"; };
@@ -179,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				87B63FF824896142001911DC /* MainViewController.swift */,
+				8780AC0A249A9C8400496C61 /* VacancyCreationCounterController.swift */,
 				870B9D6A240DDDD0006EB3EC /* LaunchScreenViewController.swift */,
 			);
 			name = MainScreen;
@@ -191,7 +186,7 @@
 				879F599623F9A0A400D4D124 /* RegisterAccountController.swift */,
 				87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */,
 				87B865D224784817001CBCEE /* ChooseStatusController.swift */,
-				879B80D824843D0100CBF67B /* ProfileController.swift */,
+				8780AC04249A393500496C61 /* ProfileUserController.swift */,
 				8764F34A24913B730041E96B /* ProfessionData */,
 				87B865CC24780A50001CBCEE /* EmployerMenu */,
 			);
@@ -287,7 +282,6 @@
 		8764F34A24913B730041E96B /* ProfessionData */ = {
 			isa = PBXGroup;
 			children = (
-				879B80FC2486897000CBF67B /* ProfessionController.swift */,
 				8764F34B24913BE70041E96B /* CreateExperianceController.swift */,
 				8764F348248EBF170041E96B /* AdditionaInfolUserController.swift */,
 				8764F346248EBE610041E96B /* ExperienceUserController.swift */,
@@ -311,7 +305,6 @@
 		879F596723F4D02F00D4D124 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				87B865CF24780C04001CBCEE /* EmployerDataCell */,
 				87F7A7D024701A620070B1FD /* PersonalData */,
 				87D05223245B5AA6000B2F61 /* VacansyCell */,
 				875F6A422436037D002C652D /* MessageCell.swift */,
@@ -345,20 +338,8 @@
 			isa = PBXGroup;
 			children = (
 				872615A42487EAC900BFC88D /* CreateVacansy */,
-				872615A22486DFC500BFC88D /* EmployerServicesController.swift */,
-				87B865CD24780BE8001CBCEE /* ActiveVacansyController.swift */,
-				8768965B23F9F87400E17CC1 /* AddVacansyController.swift */,
 			);
 			path = EmployerMenu;
-			sourceTree = "<group>";
-		};
-		87B865CF24780C04001CBCEE /* EmployerDataCell */ = {
-			isa = PBXGroup;
-			children = (
-				872615A02486DEF300BFC88D /* EmployerMenuCell.swift */,
-				87B865D024780C6A001CBCEE /* ActiveVacansyCell.swift */,
-			);
-			path = EmployerDataCell;
 			sourceTree = "<group>";
 		};
 		87BD43DB2450C4CF000B6865 /* JSON */ = {
@@ -385,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				87B63FFA2489625C001911DC /* VacanciesCell.swift */,
+				87200B25249B9D850008C6C4 /* ActiveVacanciesUserCell.swift */,
 			);
 			name = VacansyCell;
 			sourceTree = "<group>";
@@ -436,7 +418,8 @@
 		87F7A7D024701A620070B1FD /* PersonalData */ = {
 			isa = PBXGroup;
 			children = (
-				879B80DA24843D2800CBF67B /* ProfileCell.swift */,
+				8780AC08249A476300496C61 /* UserDescriptionCell.swift */,
+				8780AC06249A3A9900496C61 /* ProfileUserCell.swift */,
 				8764F34D249671DF0041E96B /* ExperienceUserCell.swift */,
 				8764F351249696D90041E96B /* SelectProfessionCell.swift */,
 			);
@@ -579,37 +562,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8768965C23F9F87400E17CC1 /* AddVacansyController.swift in Sources */,
 				87B63FF924896142001911DC /* MainViewController.swift in Sources */,
 				879F599023F9797A00D4D124 /* TabBarController.swift in Sources */,
-				872615A12486DEF300BFC88D /* EmployerMenuCell.swift in Sources */,
 				875F6A41243602F1002C652D /* MessageViewController.swift in Sources */,
 				8764F347248EBE610041E96B /* ExperienceUserController.swift in Sources */,
 				8764F34C24913BE70041E96B /* CreateExperianceController.swift in Sources */,
 				87F4978524675721009B25A0 /* ImageService.swift in Sources */,
 				8764F349248EBF170041E96B /* AdditionaInfolUserController.swift in Sources */,
 				87B865CB247429B5001CBCEE /* Extension + UIViewController.swift in Sources */,
-				879B80D924843D0100CBF67B /* ProfileController.swift in Sources */,
 				871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */,
 				87F497552461A368009B25A0 /* ProfessionCell.swift in Sources */,
 				87F497802464A743009B25A0 /* Validators.swift in Sources */,
+				87200B26249B9D850008C6C4 /* ActiveVacanciesUserCell.swift in Sources */,
 				8764F34E249671DF0041E96B /* ExperienceUserCell.swift in Sources */,
 				87D05257245D978E000B2F61 /* CitiesLoaderAPI.swift in Sources */,
 				872615AA2487EB8E00BFC88D /* ContentVacansyController.swift in Sources */,
 				87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */,
 				87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */,
 				8764F352249696D90041E96B /* SelectProfessionCell.swift in Sources */,
-				879B80DB24843D2800CBF67B /* ProfileCell.swift in Sources */,
 				87B865C724742806001CBCEE /* Extension + UIView.swift in Sources */,
-				872615A32486DFC500BFC88D /* EmployerServicesController.swift in Sources */,
+				8780AC05249A393500496C61 /* ProfileUserController.swift in Sources */,
 				87B865C5247427D0001CBCEE /* Extension + UITextView.swift in Sources */,
 				879F599223F99A6900D4D124 /* NavigationController.swift in Sources */,
 				87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */,
 				879F599723F9A0A400D4D124 /* RegisterAccountController.swift in Sources */,
+				8780AC09249A476300496C61 /* UserDescriptionCell.swift in Sources */,
 				879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */,
 				871D175223C8F6350095C765 /* AppDelegate.swift in Sources */,
 				8764F3502496902B0041E96B /* SelectProfessionController.swift in Sources */,
-				87B865D124780C6A001CBCEE /* ActiveVacansyCell.swift in Sources */,
+				8780AC07249A3A9900496C61 /* ProfileUserCell.swift in Sources */,
 				87B865C324742771001CBCEE /* Extension + UITextField.swift in Sources */,
 				870B9D6B240DDDD0006EB3EC /* LaunchScreenViewController.swift in Sources */,
 				875F6A432436037D002C652D /* MessageCell.swift in Sources */,
@@ -630,13 +611,12 @@
 				87B865BB2474272C001CBCEE /* Extension + String.swift in Sources */,
 				87B865C124742761001CBCEE /* Extension + UIButton.swift in Sources */,
 				87F497822464A803009B25A0 /* AuthError.swift in Sources */,
-				87B865CE24780BE8001CBCEE /* ActiveVacansyController.swift in Sources */,
 				87F7A7CA246E03F10070B1FD /* ModelCurrentUser.swift in Sources */,
 				875F6A452436065D002C652D /* ChatViewController.swift in Sources */,
 				8726159F2486CF1600BFC88D /* Extension + UITableView.swift in Sources */,
 				87D05254245D9723000B2F61 /* ModelCities.swift in Sources */,
+				8780AC0B249A9C8400496C61 /* VacancyCreationCounterController.swift in Sources */,
 				87B865C924742845001CBCEE /* Extension + UIImageView.swift in Sources */,
-				879B80FD2486897000CBF67B /* ProfessionController.swift in Sources */,
 				87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */,
 				872615A62487EB1300BFC88D /* TitleVacansyController.swift in Sources */,
 				87F4978724676725009B25A0 /* FirebaseServices.swift in Sources */,
