@@ -12,7 +12,7 @@ import Firebase
 class LaunchScreenViewController: UIViewController {
     
     @IBOutlet weak var headingApp: UILabel!
-    private var userStatus: String?
+    private var userID: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +26,17 @@ class LaunchScreenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        checkUser()
-
+//        checkUser()
+        checkUserAuth {[weak self] (result) in
+            switch result {
+            case .success:
+                //             self.showAlert(title: "Успешно", message: "Вы авторизованы!")
+            print("Jump choice screen")
+               //              self.performSegue(withIdentifier: "MainVC", sender: nil)
+            case .failure(let error):
+                self?.errorAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
     }
     
     private func checkUserAuth(completion: @escaping (AuthResult) -> Void) {
@@ -58,18 +67,26 @@ class LaunchScreenViewController: UIViewController {
             }
         }
     }
-
-    private func checkUser() {
-        checkUserAuth {[weak self] (result) in
-            switch result {
-            case .success:
-                //             self.showAlert(title: "Успешно", message: "Вы авторизованы!")
-            print("Jump choice screen")
-               //              self.performSegue(withIdentifier: "MainVC", sender: nil)
-            case .failure(let error):
-                self?.errorAlert(title: "Ошибка", message: error.localizedDescription)
+    //MARK: parse user id
+    private func getProfileUserID() {
+        let dataLoader = LoaderDataFirebase()
+        dataLoader.getProfileUserID()
+        dataLoader.completionHandler {[weak self](userProfileID, status, message) in
+            if status {
+                
+                guard let self = self else {return}
+                guard let _userProfileID = userProfileID else {return}
+                self.userID = _userProfileID as? String
             }
         }
     }
+    
+
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "MainVC" {
+//            let mainVC = segue.destination as! MainViewController
+//            mainVC.userProfileID = userID
+//        }
+//    }
 }
 

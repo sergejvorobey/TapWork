@@ -19,6 +19,12 @@ class ChatViewController: UICollectionViewController {
         setupInputComponents()
 
         tabBarController?.tabBar.isHidden = true
+        
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
+        }
     }
     
     private lazy var messageTextField : UITextField = {

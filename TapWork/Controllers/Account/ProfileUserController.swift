@@ -95,6 +95,7 @@ extension ProfileUserController: UITableViewDelegate, UITableViewDataSource {
                 profileUserCell.dateRegisterLbl.text = "\(newDate.calenderTimeSinceNow()) на TapWork"
                 
                 profileUserCell.profileImage.changeStyleImage()
+//                profileUserCell.profileImage.addShadow()
                 if profile.profileImageUrl == "" {
                     profileUserCell.profileImage.image = #imageLiteral(resourceName: "userImage")
                 } else {

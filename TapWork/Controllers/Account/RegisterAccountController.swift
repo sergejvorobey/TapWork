@@ -20,18 +20,36 @@ class RegisterAccountController: UIViewController {
     @IBOutlet weak var cityUserTextField: DropDown!
     @IBOutlet weak var passwordUserTextField: UITextField!
     @IBOutlet weak var confirmPassUserTextField: UITextField!
+    @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var registerButtonLabel: UIButton!
     
     private var citiesList = [Items]()
-    var roleUser = "Ищу работу"
+    var roleUser: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setupItems()
+        self.view.activityStopAnimating()
+        loadCitiesData()
+    }
+    
+    private func setupItems() {
         delegates()
-        changeStyleButton()
         setupBirthPicker()
-        
+        guard let registerButton = registerButtonLabel else {return}
+        registerButton.changeStyleButton(with: "Зарегистрировать")
+        buttonView.addShadow()
+        navigationItem.title = "Регистрация"
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
+        }
     }
     
     // load cities
@@ -72,20 +90,6 @@ class RegisterAccountController: UIViewController {
         self.dateBirthUserTextField.resignFirstResponder() // 2-5
     }
     
-    private func changeStyleButton() {
-        guard let registerButton = registerButtonLabel else {return}
-        registerButton.changeStyleButton(with: "Зарегистрировать")
-        navigationItem.title = "Регистрация"
-    }
-    
-    private func checkStatus() {
-        if roleUser == "Работодатель" {
-            dateBirthUserTextField.isHidden = true
-        } else {
-            dateBirthUserTextField.isHidden = false
-        }
-    }
-    
     private func delegates() {
         emailTextField.delegate = self
         firstNameUserTextField.delegate = self
@@ -94,37 +98,19 @@ class RegisterAccountController: UIViewController {
         confirmPassUserTextField.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-        checkStatus()
-        self.view.activityStopAnimating()
-        loadCitiesData()
-    }
     
-    private func register(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
+    
+    private func registerUser(email: String?, password: String?, completion: @escaping (AuthResult) -> Void) {
         
-        if roleUser == "Работодатель" {
-            guard Validators.isFilledRegisterEmployer(firstname: firstNameUserTextField.text,
-                                                      lastName: lastNameUserTextField.text,
-                                                      city: cityUserTextField.text,
-                                                      email: email,
-                                                      password: password)
-                else {
-                    completion(.failure(AuthError.notFilled))
-                    return
-            }
-        } else {
-            guard Validators.isFilledRegister(firstname: firstNameUserTextField.text,
-                                              lastName: lastNameUserTextField.text,
-                                              birth: dateBirthUserTextField.text,
-                                              city: cityUserTextField.text,
-                                              email: email,
-                                              password: password)
-                else {
-                    completion(.failure(AuthError.notFilled))
-                    return
-            }
+        guard Validators.isFilledRegister(firstname: firstNameUserTextField.text,
+                                          lastName: lastNameUserTextField.text,
+                                          birth: dateBirthUserTextField.text,
+                                          city: cityUserTextField.text,
+                                          email: email,
+                                          password: password)
+            else {
+                completion(.failure(AuthError.notFilled))
+                return
         }
         guard let email = email, let password = password else {
             completion(.failure(AuthError.unknownError))
@@ -141,53 +127,53 @@ class RegisterAccountController: UIViewController {
                 completion(.failure(error!))
                 return
             }
-                if error == nil {
-                    let db = Firestore.firestore()
-                    db.collection("users")
-                        .document((result?.user.uid)!)
-                        .collection("userData")
-                        .document("basic").setData([
-                            "firstName": self!.firstNameUserTextField.text!,
-                            "lastName": self!.lastNameUserTextField.text!,
-                            "city": self!.cityUserTextField.text!,
-                            "email": email,
-                            "dateRegister": Timestamp(),
-                            "birth": self!.dateBirthUserTextField.text ?? "Не указано",
-                            "password": password,
-                            "roleUser": self!.roleUser,
-                            "profileImageUrl": "",
-                            "uid": result?.user.uid as Any ])
-                    
-                    let place: [String: Any] = [
-                        "namePlace": "",
-                        "profession": "",
-                        "duration": "",
-                        "responsibility": ""]
-                    
-                    db.collection("users")
-                        .document((result?.user.uid)!)
-                        .collection("userData")
-                        .document("profession").setData([
-                            "aboutMe": "",
-                            "experience": ["places": [place]],
-                            "profession": ""])
-                    
-                    db.collection("users")
-                        .document((result?.user.uid)!)
-                        .collection("userData")
-                        .document("employer").setData([
-                            "activeVacansy": 0,
-                            "draft": 0])
-                    
-                    completion(.success)
-                } else {
-                    completion(.failure(AuthError.unknownError))
+            if error == nil {
+                let db = Firestore.firestore()
+                db.collection("users")
+                    .document((result?.user.uid)!)
+                    .collection("userData")
+                    .document("basic").setData([
+                        "firstName": self!.firstNameUserTextField.text!,
+                        "lastName": self!.lastNameUserTextField.text!,
+                        "city": self!.cityUserTextField.text!,
+                        "email": email,
+                        "dateRegister": Timestamp(),
+                        "birth": self!.dateBirthUserTextField.text ?? "Не указано",
+                        "password": password,
+                        "roleUser": self!.roleUser ?? "Ищу работу",
+                        "profileImageUrl": "",
+                        "uid": result?.user.uid as Any ])
+                
+                let place: [String: Any] = [
+                    "namePlace": "",
+                    "profession": "",
+                    "duration": "",
+                    "responsibility": ""]
+                
+                db.collection("users")
+                    .document((result?.user.uid)!)
+                    .collection("userData")
+                    .document("profession").setData([
+                        "aboutMe": "",
+                        "experience": ["places": [place]],
+                        "profession": ""])
+                
+                db.collection("users")
+                    .document((result?.user.uid)!)
+                    .collection("userData")
+                    .document("employer").setData([
+                        "activeVacansy": 0,
+                        "draft": 0])
+                
+                completion(.success)
+            } else {
+                completion(.failure(AuthError.unknownError))
             }
         }
     }
     
     @IBAction func registerButton(_ sender: UIButton) {
-        register(email: emailTextField.text, password: passwordUserTextField.text) {[weak self] (result) in
+        registerUser(email: emailTextField.text, password: passwordUserTextField.text) {[weak self] (result) in
             switch result {
             case .success:
                 //                self.showAlert(title: "Успешно", message: "Вы зарегистрированны!")

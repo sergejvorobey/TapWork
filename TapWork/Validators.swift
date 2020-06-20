@@ -54,20 +54,20 @@ class Validators {
         }
         return true
     }
-    static func isFilledRegisterEmployer(firstname: String?,
-                                         lastName: String?,
-                                         city: String?,
-                                         email: String?,
-                                         password: String?) -> Bool {
-        guard !(firstname ?? "").isEmpty,
-            !(lastName ?? "").isEmpty,
-            !(city ?? "").isEmpty,
-            !(email ?? "").isEmpty,
-            !(password ?? "").isEmpty else {
-                return false
-        }
-        return true
-    }
+//    static func isFilledRegisterEmployer(firstname: String?,
+//                                         lastName: String?,
+//                                         city: String?,
+//                                         email: String?,
+//                                         password: String?) -> Bool {
+//        guard !(firstname ?? "").isEmpty,
+//            !(lastName ?? "").isEmpty,
+//            !(city ?? "").isEmpty,
+//            !(email ?? "").isEmpty,
+//            !(password ?? "").isEmpty else {
+//                return false
+//        }
+//        return true
+//    }
     
     static func isFilledUser(firstname: String?,
                              lastName: String?,

@@ -35,6 +35,21 @@ class CreateExperianceController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
+    
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setupItems()
+    }
+    
+    private func setupItems() {
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
+        }
         //TODO
         buttonView.addShadow()
         navigationItem.title = "Место работы"
@@ -44,7 +59,7 @@ class CreateExperianceController: UIViewController {
         durationOfWorkLabel.text = "Как долго работали?"
         responsibilityTextView.addCorner()
         responsibilityTextView.text = ""
-//        counterDurationLabel.text = "1 месяц"
+        //        counterDurationLabel.text = "1 месяц"
         
         namePlaceTextField.delegate = self
         professionTextField.delegate = self
@@ -55,16 +70,15 @@ class CreateExperianceController: UIViewController {
             professionTextField.text = place.profession
             responsibilityTextView.text = place.responsibility
             counterDurationLabel.text = place.duration
-//            let numberFormatter = NumberFormatter()
-//            let number = numberFormatter.number(from: place.duration ?? "0")
-//            let numberFloatValue = number?.floatValue
-//            
-//            durationSliderLabel.value = numberFloatValue ?? 0
+            //            let numberFormatter = NumberFormatter()
+            //            let number = numberFormatter.number(from: place.duration ?? "0")
+            //            let numberFloatValue = number?.floatValue
+            //
+            //            durationSliderLabel.value = numberFloatValue ?? 0
         }
         professionTextField.becomeFirstResponder()
         //touch text field
         professionTextField.addTarget(self, action: #selector(selectProfession), for: .touchDown)
-    
     }
  
     

@@ -22,6 +22,11 @@ class ExperienceUserController: UIViewController {
         tableView.tableFooterView = UIView()
         checkData()
         navigationItem.title = "Опыт работы"
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
+        }
         createExperianceButtonLbl.changeStyleButton(with: "Добавить опыт работы")
         tableView.delegate = self
         tableView.dataSource = self

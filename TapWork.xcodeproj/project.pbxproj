@@ -16,6 +16,7 @@
 		871D175B23C8F6360095C765 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 871D175A23C8F6360095C765 /* Assets.xcassets */; };
 		871D175E23C8F6360095C765 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175C23C8F6360095C765 /* LaunchScreen.storyboard */; };
 		87200B26249B9D850008C6C4 /* ActiveVacanciesUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87200B25249B9D850008C6C4 /* ActiveVacanciesUserCell.swift */; };
+		87200B2A249D7F770008C6C4 /* FavoritesVacanciesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87200B29249D7F770008C6C4 /* FavoritesVacanciesController.swift */; };
 		8726159F2486CF1600BFC88D /* Extension + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726159E2486CF1600BFC88D /* Extension + UITableView.swift */; };
 		872615A62487EB1300BFC88D /* TitleVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A52487EB1300BFC88D /* TitleVacansyController.swift */; };
 		872615AA2487EB8E00BFC88D /* ContentVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A92487EB8E00BFC88D /* ContentVacansyController.swift */; };
@@ -33,7 +34,6 @@
 		8780AC05249A393500496C61 /* ProfileUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC04249A393500496C61 /* ProfileUserController.swift */; };
 		8780AC07249A3A9900496C61 /* ProfileUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC06249A3A9900496C61 /* ProfileUserCell.swift */; };
 		8780AC09249A476300496C61 /* UserDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC08249A476300496C61 /* UserDescriptionCell.swift */; };
-		8780AC0B249A9C8400496C61 /* VacancyCreationCounterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC0A249A9C8400496C61 /* VacancyCreationCounterController.swift */; };
 		879F599023F9797A00D4D124 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F598F23F9797A00D4D124 /* TabBarController.swift */; };
 		879F599223F99A6900D4D124 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599123F99A6900D4D124 /* NavigationController.swift */; };
 		879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */; };
@@ -88,6 +88,7 @@
 		871D175D23C8F6360095C765 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		871D175F23C8F6360095C765 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87200B25249B9D850008C6C4 /* ActiveVacanciesUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveVacanciesUserCell.swift; sourceTree = "<group>"; };
+		87200B29249D7F770008C6C4 /* FavoritesVacanciesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVacanciesController.swift; sourceTree = "<group>"; };
 		8726159E2486CF1600BFC88D /* Extension + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UITableView.swift"; sourceTree = "<group>"; };
 		872615A52487EB1300BFC88D /* TitleVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleVacansyController.swift; sourceTree = "<group>"; };
 		872615A92487EB8E00BFC88D /* ContentVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVacansyController.swift; sourceTree = "<group>"; };
@@ -105,7 +106,6 @@
 		8780AC04249A393500496C61 /* ProfileUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserController.swift; sourceTree = "<group>"; };
 		8780AC06249A3A9900496C61 /* ProfileUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserCell.swift; sourceTree = "<group>"; };
 		8780AC08249A476300496C61 /* UserDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDescriptionCell.swift; sourceTree = "<group>"; };
-		8780AC0A249A9C8400496C61 /* VacancyCreationCounterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyCreationCounterController.swift; sourceTree = "<group>"; };
 		879F598F23F9797A00D4D124 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		879F599123F99A6900D4D124 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		879F599323F99F0D00D4D124 /* LoginAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAccountViewController.swift; sourceTree = "<group>"; };
@@ -172,8 +172,8 @@
 		870B9D67240DD478006EB3EC /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				875F6A3C2435F298002C652D /* Vacancy */,
 				87B63FF824896142001911DC /* MainViewController.swift */,
-				8780AC0A249A9C8400496C61 /* VacancyCreationCounterController.swift */,
 				870B9D6A240DDDD0006EB3EC /* LaunchScreenViewController.swift */,
 			);
 			name = MainScreen;
@@ -233,6 +233,14 @@
 			path = TapWork;
 			sourceTree = "<group>";
 		};
+		87200B28249D7F480008C6C4 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				87200B29249D7F770008C6C4 /* FavoritesVacanciesController.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
 		872615A42487EAC900BFC88D /* CreateVacansy */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,12 +270,12 @@
 			name = HelperFile;
 			sourceTree = "<group>";
 		};
-		875F6A3C2435F298002C652D /* Vacansy */ = {
+		875F6A3C2435F298002C652D /* Vacancy */ = {
 			isa = PBXGroup;
 			children = (
 				87F84F5A246B2226002AC050 /* DetailVacansyViewController.swift */,
 			);
-			path = Vacansy;
+			path = Vacancy;
 			sourceTree = "<group>";
 		};
 		875F6A3F243602D4002C652D /* Messages */ = {
@@ -293,9 +301,9 @@
 		879F596623F4D00900D4D124 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				87200B28249D7F480008C6C4 /* Favorites */,
 				870B9D67240DD478006EB3EC /* MainScreen */,
 				875F6A3F243602D4002C652D /* Messages */,
-				875F6A3C2435F298002C652D /* Vacansy */,
 				871397C723FC5E1700FB7732 /* Account */,
 				87329CFF240365950089E9EF /* Category */,
 			);
@@ -578,6 +586,7 @@
 				87D05257245D978E000B2F61 /* CitiesLoaderAPI.swift in Sources */,
 				872615AA2487EB8E00BFC88D /* ContentVacansyController.swift in Sources */,
 				87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */,
+				87200B2A249D7F770008C6C4 /* FavoritesVacanciesController.swift in Sources */,
 				87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */,
 				8764F352249696D90041E96B /* SelectProfessionCell.swift in Sources */,
 				87B865C724742806001CBCEE /* Extension + UIView.swift in Sources */,
@@ -615,7 +624,6 @@
 				875F6A452436065D002C652D /* ChatViewController.swift in Sources */,
 				8726159F2486CF1600BFC88D /* Extension + UITableView.swift in Sources */,
 				87D05254245D9723000B2F61 /* ModelCities.swift in Sources */,
-				8780AC0B249A9C8400496C61 /* VacancyCreationCounterController.swift in Sources */,
 				87B865C924742845001CBCEE /* Extension + UIImageView.swift in Sources */,
 				87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */,
 				872615A62487EB1300BFC88D /* TitleVacansyController.swift in Sources */,

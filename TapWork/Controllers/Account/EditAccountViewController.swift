@@ -88,10 +88,13 @@ class EditAccountViewController: UIViewController {
         setupBirthPicker()
         saveButtonLabel.changeStyleButton(with: "Сохранить")
         navigationItem.title = "Редактировать"
-        
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
+        }
         roleSegmentedControl.setTitle("Ищу работу", forSegmentAt: 0)
         roleSegmentedControl.setTitle("Работодатель", forSegmentAt: 1)
-        
     }
     
     private func delegateItems() {

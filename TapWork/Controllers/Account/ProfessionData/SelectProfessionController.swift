@@ -132,7 +132,7 @@ extension SelectProfessionController: UISearchBarDelegate, UISearchResultsUpdati
         filterContentForSearchText(searchController.searchBar.text!)
     }
     
-    func searchBar () {
+    func searchBar() {
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false

@@ -16,10 +16,16 @@ class MainViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var roleSegmentedControl: UISegmentedControl!
     @IBOutlet weak var choiceButtonLbl: UIBarButtonItem!
-    @IBOutlet weak var addedVacansyContainerView: UIView!
+    @IBOutlet weak var noticeStackView: UIStackView!
+    @IBOutlet weak var headerCountVacancyLbl: UILabel!
+    @IBOutlet weak var descriptionMenuLbl: UILabel!
+    @IBOutlet weak var createVacancyButtonLbl: UIButton!
     
-    private var vacancies = [Vacancy]()
+    private var allVacancies = [Vacancy]()
+    private var filteredVacancies = [Vacancy]()
     private var userProfileID: String?
+    //master array
+    private var vacanciesToDisplay = [Vacancy]()
     
     private let spinner = NVActivityIndicatorView(frame: CGRect.init(x: 0,
                                                                      y: 0,
@@ -30,41 +36,56 @@ class MainViewController: UIViewController {
                                                   padding: .none)
     override func viewDidLoad() {
         super.viewDidLoad()
+
+         getProfileUserID()
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        
+        roleSegmentedControl.selectedSegmentIndex = 0
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        showActivityIndicator()
         setupItems()
+       
+        getVacancies {[weak self] (result) in
+            switch result {
+            case .success:
+                break
+            case .failure(let error):
+                self?.errorAlert(title: "Ошибка", message: error.localizedDescription)
+                
+            }
+        }
     }
     
     //MARK: Setup appearance items
     private func setupItems() {
-
+        
+        //        roleSegmentedControl.selectedSegmentIndex = 0
+        noticeStackView.isHidden = true
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.clear
         tableView.addSubview(refreshControll)
         tableView.tableFooterView = UIView()
         view.changeColorView()
-//        navigationItem.title = "TAP WORK"
         navigationItem.prompt = "TAP WORK"
         roleSegmentedControl.setTitle("Я - Ищу работу", forSegmentAt: 0)
         roleSegmentedControl.setTitle("Я - Работодатель", forSegmentAt: 1)
         choiceButtonLbl.image = #imageLiteral(resourceName: "filter")
-        addedVacansyContainerView.isHidden = true
-
+        createVacancyButtonLbl.changeStyleButton(with: "Создать вакансию")
+        headerCountVacancyLbl.text = "У вас пока нет активных вакасний"
+        descriptionMenuLbl.text = "Создайте вакансию и найдите исполнителя"
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        getVacancies {[weak self] (result) in
-            switch result {
-            case .success:
-                self?.showActivityIndicator()
-                self?.getProfileUserID()
-            case .failure(let error):
-                self?.errorAlert(title: "Ошибка", message: error.localizedDescription)
-                
-            }
-        }
+    @IBAction func createdVacancyButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "AddingVacansy", sender: nil)
     }
     
     //  refresh spinner
@@ -84,20 +105,26 @@ class MainViewController: UIViewController {
         })
     }
     
+    
+    //MARK: depending on the data hide/show notice stack view
+    private func checkCountActiveVacancy() {
+        if vacanciesToDisplay.isEmpty == true {
+            noticeStackView.isHidden = false
+        }
+    }
+    
     @IBAction func segmentRoleSelection(_ sender: UISegmentedControl) {
-        
         switch roleSegmentedControl.selectedSegmentIndex {
         case 0:
-            tableView.isHidden = false
-            addedVacansyContainerView.isHidden = true
             choiceButtonLbl.image = #imageLiteral(resourceName: "filter")
-        case 1:
-            tableView.isHidden = true
-            choiceButtonLbl.image = #imageLiteral(resourceName: "menu")
-            addedVacansyContainerView.isHidden = false
+            vacanciesToDisplay = allVacancies
+            noticeStackView.isHidden = true
         default:
-            break
+            vacanciesToDisplay = filteredVacancies
+            choiceButtonLbl.image = #imageLiteral(resourceName: "menu")
+            checkCountActiveVacancy()
         }
+        self.tableView.reloadData()
     }
     
     @IBAction func choiceButton(_ sender: UIBarButtonItem) {
@@ -132,7 +159,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 //    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return vacancies.count
+        return vacanciesToDisplay.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,7 +168,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let colorYellow = UIColor(red: 255, green: 255, blue: 204/255, alpha: 1)
         let colorGray = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
         
-        let vacansy = vacancies[indexPath.row]
+        let vacansy = vacanciesToDisplay[indexPath.row]
 
         if vacansy.userId == userProfileID {
             vacanciesCell.cellCurrentUser(color: colorYellow)
@@ -176,7 +203,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             segue.destination.transitioningDelegate = self
             segue.destination.modalPresentationStyle = .custom
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            let vacansy = vacancies[indexPath.row]
+            let vacansy = allVacancies[indexPath.row]
             let showInfoVacansyVC = segue.destination as! DetailVacansyViewController
             showInfoVacansyVC.detailVacansy = vacansy
         }
@@ -197,15 +224,22 @@ extension MainViewController {
         dataLoader.getDataVacancies()
         
         dataLoader.completionHandler{[weak self] (vacansy, status, message) in
-            
+            var array = [Vacancy]()
             if status {
                 guard let self = self else {return}
                 guard let _vacansy = vacansy else {return}
-                self.vacancies = _vacansy as! [Vacancy]
+                self.allVacancies = _vacansy as! [Vacancy]
+                self.vacanciesToDisplay = _vacansy as! [Vacancy]
+                for item in self.allVacancies {
+                    if item.userId == self.userProfileID {
+                        array.append(item)
+                    }
+                    self.filteredVacancies = array
+                }
             }
-            DispatchQueue.main.async {
+//            DispatchQueue.main.async {
                 self?.tableView.reloadData()
-            }
+//            }
         }
         completion(.success)
     }
@@ -216,7 +250,7 @@ extension MainViewController {
         dataLoader.getProfileUserID()
         dataLoader.completionHandler {[weak self](userProfileID, status, message) in
             if status {
-                
+
                 guard let self = self else {return}
                 guard let _userProfileID = userProfileID else {return}
                 self.userProfileID = _userProfileID as? String
@@ -246,7 +280,7 @@ extension MainViewController: BonsaiControllerDelegate {
 }
 
 extension MainViewController {
-    func showActivityIndicator() {
+    private func showActivityIndicator() {
         self.view.addSubview(spinner)
         spinner.startAnimating()
         self.roleSegmentedControl.setEnabled(false, forSegmentAt: 1)
@@ -254,7 +288,7 @@ extension MainViewController {
         view.isUserInteractionEnabled = false
     }
     
-    func hideActivityIndicator(){
+   private func hideActivityIndicator(){
         spinner.stopAnimating()
         self.roleSegmentedControl.setEnabled(true, forSegmentAt: 1)
         view.isUserInteractionEnabled = true

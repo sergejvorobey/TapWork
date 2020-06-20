@@ -9,22 +9,25 @@
 import UIKit
 
 class ChooseStatusController: UIViewController {
-
+    
+    @IBOutlet weak var descriptionLbl: UILabel!
+    
     @IBOutlet weak var chooseSearchJobLabel: UIButton!
     @IBOutlet weak var chooseEmployerLabel: UIButton!
  
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        chooseEmployerLabel.changeStyleButton(with: "Работодатель")
-        chooseSearchJobLabel.changeStyleButton(with: "Ищу работу")
-        navigationItem.title = "Выберите статус"
+        
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+        chooseEmployerLabel.changeStyleButton(with: "Работодатель")
+        chooseSearchJobLabel.changeStyleButton(with: "Ищу работу")
+        navigationItem.title = "Выберите статус"
+        descriptionLbl.text = "На TapWork каждый пользователь одновременно и работодатель, и соискатель. Переключить ваш статус можно в любое время"
  
     }
     
@@ -38,10 +41,12 @@ class ChooseStatusController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "RegisterEmployer" {
-            if let registerAccountVC = segue.destination as? RegisterAccountController {
-                registerAccountVC.roleUser = "Работодатель"
-            }
+        guard let registerAccountVC = segue.destination as? RegisterAccountController else {return}
+        switch segue.identifier {
+        case "RegisterUser":
+            registerAccountVC.roleUser = "Ищу работу"
+        default:
+            registerAccountVC.roleUser = "Работодатель"
         }
     }
     
