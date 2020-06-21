@@ -7,50 +7,71 @@
 //
 
 import UIKit
+import Firebase
 
 class DetailVacansyViewController: UIViewController {
     
-    @IBOutlet weak var headingVacansyLabel: UILabel!
-//    @IBOutlet weak var categotyVacansyLabel: UILabel!
-//    @IBOutlet weak var cityVacansyLabel: UILabel!
-//    @IBOutlet weak var contentVacansyLabel: UILabel!
-    @IBOutlet weak var paymentVacansyLabel: UILabel!
+    @IBOutlet weak var headingVacancyLbl: UILabel!
+    @IBOutlet weak var categotyVacancyLbl: UILabel!
+    @IBOutlet weak var cityVacancyLbl: UILabel!
+    @IBOutlet weak var contentVacancyLbl: UILabel!
+    @IBOutlet weak var paymentVacancyLbl: UILabel!
+    @IBOutlet weak var publicationDateVacancyLbl: UILabel!
     @IBOutlet weak var responseButtonLabel: UIButton!
     
-    @IBOutlet weak var complainButtonLabel: UIButton!
+    @IBOutlet weak var deleteVacancyButtonLbl: UIButton!
     @IBOutlet weak var navigationBar: UINavigationBar!
 
-    var detailVacansy: Vacancy?
+    var detailVacancy: Vacancy?
+    var checkVacancy: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        changeStyle()
+        setupItems()
         
     }
     
-    private func changeStyle() {
-
-        guard let detailVacansy = detailVacansy,
-            let heading = headingVacansyLabel,
-//            let category = categotyVacansyLabel,
-//            let city = cityVacansyLabel,
-//            let content = contentVacansyLabel,
-            let payment = paymentVacansyLabel,
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        
+    }
+    
+    private func checkStatusUser() {
+        if checkVacancy == nil {
+            responseButtonLabel.isHidden = false
+            deleteVacancyButtonLbl.isHidden = true
+        } else {
+            responseButtonLabel.isHidden = true
+            deleteVacancyButtonLbl.isHidden = false
+        }
+    }
+    
+    private func setupItems() {
+        
+        deleteVacancyButtonLbl.isHidden = true
+        checkStatusUser()
+        guard let detailVacancy = detailVacancy,
+            let heading = headingVacancyLbl,
+            let category = categotyVacancyLbl,
+            let city = cityVacancyLbl,
+            let content = contentVacancyLbl,
+            let payment = paymentVacancyLbl,
+            let publicationDate = publicationDateVacancyLbl,
             let response = responseButtonLabel,
-            let complain = complainButtonLabel else {return}
+            let complain = deleteVacancyButtonLbl else {return}
         
-        heading.text = detailVacansy.heading
-//        category.styleLabel(with: " Категория ") // TODO: dodelati
-//        city.text = "Город" //TODO
-//        content.text = detailVacansy.content
-        payment.text = detailVacansy.payment + " ₽ "
-        response.changeStyleButton(with: "Откликнуться")
-        complain.setTitle("Пожаловаться на вакансию", for: .normal)
-        
-        let datePublic = detailVacansy.timestamp
+        heading.text = detailVacancy.heading
+        city.text = detailVacancy.city
+        category.text = "not input"
+        content.text = detailVacancy.content
+        payment.text = detailVacancy.payment + " ₽ "
+        let datePublic = detailVacancy.timestamp
         let date = Date(timeIntervalSince1970: datePublic / 1000)
-        navigationBar.topItem?.title = "Москва, \(date.publicationDate(withDate: date))"
+        publicationDate.text = date.publicationDate(withDate: date)
+        response.changeStyleButton(with: "Откликнуться")
+        complain.changeStyleButton(with: "Удалить вакаснию")
     }
     
     @IBAction func favoriteVacansy(_ sender: UIBarButtonItem) {
@@ -63,8 +84,23 @@ class DetailVacansyViewController: UIViewController {
         
      }
     
-    @IBAction func complainButton(_ sender: UIButton) {
-        
+    @IBAction func deleteVacancyButton(_ sender: UIButton) {
+         
+        deleteVacancy(title: detailVacancy!.heading, userID: detailVacancy!.userId) { (result) in
+            switch result {
+                
+            case .success:
+                self.successAlert(title: "Удалено!", message: "Вакансия удалена успешно")
+//                self.view.activityStopAnimating()
+                break
+            case .failure(_):
+                self.errorAlert(title: "Ошибка!", message: "Ошибка удаления")
+            }
+        }
+    }
+    
+    @IBAction func cancelButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
     //TODO
@@ -77,6 +113,34 @@ class DetailVacansyViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
             self.presentingViewController?.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+//MARK: Firebase
+extension DetailVacansyViewController {
+    
+    private func deleteVacancy(title: String, userID: String, completion: @escaping (AuthResult) -> Void) {
+        
+       
+        //check empty
+        //check network
+        guard Validators.isConnectedToNetwork() else {
+            completion(.failure(AuthError.serverError))
+            return
+        }
+        
+        if title == detailVacancy?.heading && userID == detailVacancy?.userId {
+//            print("delete")
+            let db = Database.database()
+            guard let titleVacancy = detailVacancy?.heading else {return}
+            db.reference().child("vacancies").child(titleVacancy).removeValue()
+//            self.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.1))
+            completion(.success)
+        } else {
+            
+//            print("error")
+            completion(.failure(AuthError.unknownError))
         }
     }
 }

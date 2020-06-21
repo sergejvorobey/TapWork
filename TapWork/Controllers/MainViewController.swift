@@ -37,6 +37,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        tableView.reloadData()
          getProfileUserID()
         
     }
@@ -49,6 +50,10 @@ class MainViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+//        if roleSegmentedControl.selectedSegmentIndex == 1 {
+//            tableView.reloadData()
+//        }
         
         showActivityIndicator()
         setupItems()
@@ -165,18 +170,19 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacanciesCell
  
-        let colorYellow = UIColor(red: 255, green: 255, blue: 204/255, alpha: 1)
+//        let colorYellow = UIColor(red: 255, green: 255, blue: 204/255, alpha: 1)
         let colorGray = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
         
         let vacansy = vacanciesToDisplay[indexPath.row]
 
-        if vacansy.userId == userProfileID {
-            vacanciesCell.cellCurrentUser(color: colorYellow)
-            vacanciesCell.isUserInteractionEnabled = false
-        } else {
+//        if vacansy.userId == userProfileID {
+////            vacanciesCell.cellCurrentUser(color: colorYellow)
+//             vacanciesCell.cellCurrentUser(color: colorGray)
+//            vacanciesCell.isUserInteractionEnabled = false
+//        } else {
             vacanciesCell.cellCurrentUser(color: colorGray)
-            vacanciesCell.isUserInteractionEnabled = true
-        }
+//            vacanciesCell.isUserInteractionEnabled = true
+//        }
         vacanciesCell.headingLabel.text = vacansy.heading
         vacanciesCell.cityVacansyLabel.text = vacansy.city
         vacanciesCell.contentLabel.text = vacansy.content
@@ -203,9 +209,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             segue.destination.transitioningDelegate = self
             segue.destination.modalPresentationStyle = .custom
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            let vacansy = allVacancies[indexPath.row]
-            let showInfoVacansyVC = segue.destination as! DetailVacansyViewController
-            showInfoVacansyVC.detailVacansy = vacansy
+            let vacancy = allVacancies[indexPath.row]
+            let detailVacancyVC = segue.destination as! DetailVacansyViewController
+            detailVacancyVC.detailVacancy = vacancy
+            if vacancy.userId == userProfileID {
+                detailVacancyVC.checkVacancy = "EMPLOYER_KEY"
+            }
         }
     }
 }
@@ -264,9 +273,9 @@ extension MainViewController: BonsaiControllerDelegate {
     // return the frame of your Bonsai View Controller
     func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
         
-        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 2),
+        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 4),
                       size: CGSize(width: containerViewFrame.width,
-                                   height: containerViewFrame.height / 2))
+                                   height: containerViewFrame.height / (4/3)))
     }
     
     // return a Bonsai Controller with SlideIn or Bubble transition animator
