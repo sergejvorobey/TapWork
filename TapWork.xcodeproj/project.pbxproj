@@ -52,8 +52,8 @@
 		87B865D324784817001CBCEE /* ChooseStatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D224784817001CBCEE /* ChooseStatusController.swift */; };
 		87B865D7247D5BB9001CBCEE /* Extension + NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B865D6247D5BB9001CBCEE /* Extension + NavigationBar.swift */; };
 		87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BB3BA123F9D691004F3C61 /* CategoriesController.swift */; };
-		87BD43DD2450C513000B6865 /* Categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 87BD43DC2450C513000B6865 /* Categories.json */; };
-		87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */; };
+		87C13F0D24A11A9800F1E857 /* CategoriesLoaderAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C13F0C24A11A9800F1E857 /* CategoriesLoaderAPI.swift */; };
+		87C13F0F24A148A200F1E857 /* MenuCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C13F0E24A148A200F1E857 /* MenuCollectionCell.swift */; };
 		87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C9097123FB0B4E00C262FC /* ModelCategories.swift */; };
 		87C9097423FB1FA700C262FC /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C9097323FB1FA700C262FC /* CategoryCell.swift */; };
 		87D05227245C978F000B2F61 /* Cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 87D05226245C978F000B2F61 /* Cities.json */; };
@@ -124,8 +124,8 @@
 		87B865D224784817001CBCEE /* ChooseStatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseStatusController.swift; sourceTree = "<group>"; };
 		87B865D6247D5BB9001CBCEE /* Extension + NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + NavigationBar.swift"; sourceTree = "<group>"; };
 		87BB3BA123F9D691004F3C61 /* CategoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesController.swift; sourceTree = "<group>"; };
-		87BD43DC2450C513000B6865 /* Categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Categories.json; sourceTree = "<group>"; };
-		87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryLoaderJSON.swift; sourceTree = "<group>"; };
+		87C13F0C24A11A9800F1E857 /* CategoriesLoaderAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesLoaderAPI.swift; sourceTree = "<group>"; };
+		87C13F0E24A148A200F1E857 /* MenuCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCollectionCell.swift; sourceTree = "<group>"; };
 		87C9097123FB0B4E00C262FC /* ModelCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCategories.swift; sourceTree = "<group>"; };
 		87C9097323FB1FA700C262FC /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		87D05226245C978F000B2F61 /* Cities.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Cities.json; sourceTree = "<group>"; };
@@ -353,9 +353,7 @@
 		87BD43DB2450C4CF000B6865 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
-				87BD43DC2450C513000B6865 /* Categories.json */,
 				87D05226245C978F000B2F61 /* Cities.json */,
-				87BD43DE24523A7E000B6865 /* CategoryLoaderJSON.swift */,
 			);
 			name = JSON;
 			sourceTree = "<group>";
@@ -375,6 +373,7 @@
 			children = (
 				87B63FFA2489625C001911DC /* VacanciesCell.swift */,
 				87200B25249B9D850008C6C4 /* ActiveVacanciesUserCell.swift */,
+				87C13F0E24A148A200F1E857 /* MenuCollectionCell.swift */,
 			);
 			name = VacansyCell;
 			sourceTree = "<group>";
@@ -383,6 +382,7 @@
 			isa = PBXGroup;
 			children = (
 				87D05256245D978E000B2F61 /* CitiesLoaderAPI.swift */,
+				87C13F0C24A11A9800F1E857 /* CategoriesLoaderAPI.swift */,
 			);
 			name = LoaderAPI;
 			sourceTree = "<group>";
@@ -517,7 +517,6 @@
 				871D175E23C8F6360095C765 /* LaunchScreen.storyboard in Resources */,
 				871D175B23C8F6360095C765 /* Assets.xcassets in Resources */,
 				871D175923C8F6350095C765 /* Main.storyboard in Resources */,
-				87BD43DD2450C513000B6865 /* Categories.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,7 +586,6 @@
 				872615AA2487EB8E00BFC88D /* ContentVacansyController.swift in Sources */,
 				87BB3BA223F9D691004F3C61 /* CategoriesController.swift in Sources */,
 				87200B2A249D7F770008C6C4 /* FavoritesVacanciesController.swift in Sources */,
-				87BD43DF24523A7E000B6865 /* CategoryLoaderJSON.swift in Sources */,
 				8764F352249696D90041E96B /* SelectProfessionCell.swift in Sources */,
 				87B865C724742806001CBCEE /* Extension + UIView.swift in Sources */,
 				8780AC05249A393500496C61 /* ProfileUserController.swift in Sources */,
@@ -607,6 +605,7 @@
 				87F497532461A32E009B25A0 /* ProfessionsController.swift in Sources */,
 				87B865BD24742740001CBCEE /* Extension + Date.swift in Sources */,
 				87B865D324784817001CBCEE /* ChooseStatusController.swift in Sources */,
+				87C13F0F24A148A200F1E857 /* MenuCollectionCell.swift in Sources */,
 				87329D01240463EB0089E9EF /* ModelUsers.swift in Sources */,
 				871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */,
 				87F4975A24645EDC009B25A0 /* CheckNetworkConnectivity.swift in Sources */,
@@ -617,6 +616,7 @@
 				87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */,
 				872615AC2487EBB500BFC88D /* PaymentController.swift in Sources */,
 				87F4975C246482A2009B25A0 /* ShowErrorMethod.swift in Sources */,
+				87C13F0D24A11A9800F1E857 /* CategoriesLoaderAPI.swift in Sources */,
 				87B865BB2474272C001CBCEE /* Extension + String.swift in Sources */,
 				87B865C124742761001CBCEE /* Extension + UIButton.swift in Sources */,
 				87F497822464A803009B25A0 /* AuthError.swift in Sources */,

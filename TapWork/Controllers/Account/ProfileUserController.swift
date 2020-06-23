@@ -110,7 +110,7 @@ extension ProfileUserController: UITableViewDelegate, UITableViewDataSource {
             let professionUserCell = tableView.dequeueReusableCell(withIdentifier: "UserDescriptionCell", for: indexPath) as! UserDescriptionCell
             for item in profData {
                 professionUserCell.professionLabel.text = "Профессия"
-                professionUserCell.iconCell.image = #imageLiteral(resourceName: "Specialization")
+                professionUserCell.iconCell.image = UIImage(systemName: "person")
                 if item.profession!.isEmpty {
                     professionUserCell.descriptionLabel.text = "Расскажите, кем вы хотите работать"
                 } else {
@@ -122,7 +122,7 @@ extension ProfileUserController: UITableViewDelegate, UITableViewDataSource {
             let expUserCell = tableView.dequeueReusableCell(withIdentifier: "UserDescriptionCell", for: indexPath) as! UserDescriptionCell
             for item in profData {
                 expUserCell.professionLabel.text = "Опыт работы"
-                expUserCell.iconCell.image = #imageLiteral(resourceName: "timeWork")
+                expUserCell.iconCell.image = UIImage(systemName: "bolt")
                 if (item.experience?.places.isEmpty)! {
                     expUserCell.descriptionLabel.text = "Расскажите, про ваш опыт работы"
                 } else {
@@ -144,7 +144,7 @@ extension ProfileUserController: UITableViewDelegate, UITableViewDataSource {
             
             for item in profData {
                 aboutMeUserCell.professionLabel.text = "О себе"
-                aboutMeUserCell.iconCell.image = #imageLiteral(resourceName: "info")
+                aboutMeUserCell.iconCell.image = UIImage(systemName: "info.circle")
                 if item.aboutMe!.isEmpty {
                     aboutMeUserCell.descriptionLabel.text = "Есть еще что-нибудь, что стоит рассказать?"
                 } else {
@@ -215,7 +215,7 @@ extension ProfileUserController {
         
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let cancel = UIAlertAction(title: "Назад", style: .default)
+        let cancel = UIAlertAction(title: "Назад", style: .cancel)
         
         let signOutAcc = UIAlertAction(title: "Выйти из аккаунта", style: .destructive) { (actionSheet) in
             

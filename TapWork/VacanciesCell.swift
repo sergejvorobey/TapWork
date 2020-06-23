@@ -16,6 +16,11 @@ class VacanciesCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var paymentLabel: UILabel!
     @IBOutlet weak var publicationDateLabel: UILabel!
+    @IBOutlet weak var userPublicationLbl: UILabel!
+    @IBOutlet weak var countViewsLbl: UILabel!
+//    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var stackView: UIStackView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

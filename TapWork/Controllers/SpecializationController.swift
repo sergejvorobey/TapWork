@@ -59,7 +59,7 @@ class SpecializationController: UITableViewController {
                 let categoryInfoVC = segue.destination as! ProfessionsController
                 
                 for profession in [professions] {
-                 categoryInfoVC.professions = profession.professions as! [String]
+                    categoryInfoVC.professions = profession.professions as! [String]
                 }
             }
         }

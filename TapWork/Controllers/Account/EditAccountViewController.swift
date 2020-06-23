@@ -171,7 +171,7 @@ class EditAccountViewController: UIViewController {
         photo.setValue(photoIcon, forKey: "image")
         photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
         
-        let cancel = UIAlertAction(title: "Назад", style: .destructive) { _ in }
+        let cancel = UIAlertAction(title: "Назад", style: .cancel) { _ in }
         
         actionSheet.addAction(camera)
         actionSheet.addAction(photo)

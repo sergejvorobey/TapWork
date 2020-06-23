@@ -20,6 +20,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var headerCountVacancyLbl: UILabel!
     @IBOutlet weak var descriptionMenuLbl: UILabel!
     @IBOutlet weak var createVacancyButtonLbl: UIButton!
+
     
     private var allVacancies = [Vacancy]()
     private var filteredVacancies = [Vacancy]()
@@ -82,11 +83,12 @@ class MainViewController: UIViewController {
         view.changeColorView()
         navigationItem.prompt = "TAP WORK"
         roleSegmentedControl.setTitle("Я - Ищу работу", forSegmentAt: 0)
-        roleSegmentedControl.setTitle("Я - Работодатель", forSegmentAt: 1)
+        roleSegmentedControl.setTitle("Я - Предлагаю работу", forSegmentAt: 1)
         choiceButtonLbl.image = #imageLiteral(resourceName: "filter")
         createVacancyButtonLbl.changeStyleButton(with: "Создать вакансию")
         headerCountVacancyLbl.text = "У вас пока нет активных вакасний"
         descriptionMenuLbl.text = "Создайте вакансию и найдите исполнителя"
+
     }
     
     @IBAction func createdVacancyButton(_ sender: UIButton) {
@@ -147,6 +149,10 @@ class MainViewController: UIViewController {
 //MARK: Table view datasource, delegate
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
 //    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 //        let verticalPadding: CGFloat = 20
 
@@ -162,6 +168,28 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 //        cell.layer.mask = maskLayer
 
 //    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+
+        let label = UILabel()
+        label.frame = CGRect.init(x: 20, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+        if roleSegmentedControl.selectedSegmentIndex == 0 {
+            label.text = "Вакансии"
+        } else {
+            label.text = "Ваши публикации"
+        }
+        label.backgroundColor = .clear
+        label.font = .systemFont(ofSize: 35, weight: .bold) // my custom font
+        label.textColor = .black // my custom color
+
+        headerView.addSubview(label)
+
+        return headerView
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return vacanciesToDisplay.count
@@ -175,18 +203,23 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         let vacansy = vacanciesToDisplay[indexPath.row]
 
-//        if vacansy.userId == userProfileID {
-////            vacanciesCell.cellCurrentUser(color: colorYellow)
-//             vacanciesCell.cellCurrentUser(color: colorGray)
-//            vacanciesCell.isUserInteractionEnabled = false
-//        } else {
-            vacanciesCell.cellCurrentUser(color: colorGray)
-//            vacanciesCell.isUserInteractionEnabled = true
-//        }
+        if vacansy.userId == userProfileID {
+//            if roleSegmentedControl.selectedSegmentIndex == 0 {
+//               vacanciesCell.isUserInteractionEnabled = false
+//            } else {
+//                vacanciesCell.isUserInteractionEnabled = true
+//            }
+            vacanciesCell.stackView.isHidden = false
+            vacanciesCell.userPublicationLbl.text = "Ваша публикация"
+        } else {
+            vacanciesCell.stackView.isHidden = true
+        }
+        vacanciesCell.cellCurrentUser(color: colorGray)
         vacanciesCell.headingLabel.text = vacansy.heading
         vacanciesCell.cityVacansyLabel.text = vacansy.city
         vacanciesCell.contentLabel.text = vacansy.content
         vacanciesCell.paymentLabel.text = vacansy.payment + " ₽ "
+        vacanciesCell.countViewsLbl.text = "114"
         
         let datePublic = vacansy.timestamp
         
@@ -206,10 +239,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailVacansyVC" {
-            segue.destination.transitioningDelegate = self
-            segue.destination.modalPresentationStyle = .custom
+//            segue.destination.transitioningDelegate = self
+//            segue.destination.modalPresentationStyle = .custom
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            let vacancy = allVacancies[indexPath.row]
+            let vacancy = vacanciesToDisplay[indexPath.row]
             let detailVacancyVC = segue.destination as! DetailVacansyViewController
             detailVacancyVC.detailVacancy = vacancy
             if vacancy.userId == userProfileID {
@@ -269,25 +302,26 @@ extension MainViewController {
 }
 
 //MARK: Present modally response vacansy controller
-extension MainViewController: BonsaiControllerDelegate {
-    // return the frame of your Bonsai View Controller
-    func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
-        
-        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 4),
-                      size: CGSize(width: containerViewFrame.width,
-                                   height: containerViewFrame.height / (4/3)))
-    }
-    
-    // return a Bonsai Controller with SlideIn or Bubble transition animator
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        
-        /// With Background Color ///
-        
-        // Slide animation from .left, .right, .top, .bottom
-        return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
-    }
-}
+//extension MainViewController: BonsaiControllerDelegate {
+//    // return the frame of your Bonsai View Controller
+//    func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
+//
+//        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 4),
+//                      size: CGSize(width: containerViewFrame.width,
+//                                   height: containerViewFrame.height / (4/3)))
+//    }
+//
+//    // return a Bonsai Controller with SlideIn or Bubble transition animator
+//    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+//
+//        /// With Background Color ///
+//
+//        // Slide animation from .left, .right, .top, .bottom
+//        return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
+//    }
+//}
 
+//MARK: ActivityIndicator
 extension MainViewController {
     private func showActivityIndicator() {
         self.view.addSubview(spinner)
@@ -304,21 +338,27 @@ extension MainViewController {
     }
 }
 
-//MARK: exit user account
-extension MainViewController {
+//MARK: create new vacancy
+extension MainViewController: UIActionSheetDelegate {
     private func addingNewVacansy() {
         
+        let createIcon = UIImage(systemName: "square.and.pencil")
+        
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let cancel = UIAlertAction(title: "Назад", style: .default)
-        
-        let signOutAcc = UIAlertAction(title: "Создать новую вакансию", style: .default) { (actionSheet) in
-            
-            self.performSegue(withIdentifier: "AddingVacansy", sender: nil)
+//        actionSheet.view.tintColor = .black
 
+        let cancel = UIAlertAction(title: "Назад", style: .cancel)
+
+        let createNewVacancy = UIAlertAction(title: "Создать новую вакансию", style: .default) { (actionSheet) in
+            self.performSegue(withIdentifier: "AddingVacansy", sender: nil)
         }
-        actionSheet.addAction(signOutAcc)
+        
+        createNewVacancy.setValue(createIcon, forKey: "image")
+        createNewVacancy.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        
+        actionSheet.addAction(createNewVacancy)
         actionSheet.addAction(cancel)
         present(actionSheet, animated: true)
     }
 }
+

@@ -14,7 +14,7 @@ class SelectProfessionController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     private let searchController = UISearchController(searchResultsController: nil)
-    private let categories = DataLoader().categoryData
+    private var categories = [CategoriesList]()
     private var professions = [String]()
     private var filteredProfession = [String]()
     var checkProfession: String = ""
@@ -26,7 +26,6 @@ class SelectProfessionController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         navigationItem.title = "Специализации"
-        getDataProfession()
         tableView.tableFooterView = UIView()
         if let topItem = navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "",
@@ -36,18 +35,11 @@ class SelectProfessionController: UIViewController {
         tableView.isHidden = true
     }
     
-    private func getDataProfession() {
-        var array = [String]()
-        for specializations in categories {
-            guard let professionsList = specializations.specialization else {return}
-            for prof in professionsList {
-                _ = prof.professions.flatMap { (element) -> String in
-                    array.append(element!)
-                    return element!
-                }
-                professions = array.sorted()
-            }
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        getCategories()
+        
     }
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
@@ -153,3 +145,29 @@ extension SelectProfessionController: UISearchBarDelegate, UISearchResultsUpdati
     }
 }
 
+//MARK: get categories
+extension SelectProfessionController {
+    private func getCategories() {
+        let dataLoader = CategoriesLoaderAPI()
+        dataLoader.getCategoriesList()
+        dataLoader.completionHandler {[weak self](categories, status, message) in
+            if status {
+                guard let self = self else {return}
+                guard let _categories = categories else {return}
+                self.categories = _categories
+                var array = [String]()
+                for specializations in self.categories {
+                    guard let professionsList = specializations.specialization else {return}
+                    for prof in professionsList {
+                        _ = prof.professions.flatMap { (element) -> String in
+                            array.append(element!)
+                            return element!
+                        }
+                        self.professions = array.sorted()
+                    }
+                }
+            }
+            self?.tableView.reloadData()
+        }
+    }
+}
