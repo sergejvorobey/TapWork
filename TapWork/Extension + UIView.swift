@@ -77,7 +77,7 @@ extension UIView {
     }
     
     func addCorner() {
-        self.layer.borderWidth = 0.3
+//        self.layer.borderWidth = 0.1
         self.layer.cornerRadius = 10
     }
     
@@ -95,3 +95,4 @@ extension UIView {
 //
 //    }
 }
+

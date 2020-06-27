@@ -32,25 +32,3 @@ struct Specializations: Decodable {
     }
 }
 
-//struct CategoriesList: Decodable {
-//
-//    var category: String?
-//    var specializations: [Specializations]?
-//
-//    enum CodingKeys: String, CodingKey {
-//
-//        case category = "category"
-//        case specializations = "specializations"
-//    }
-//}
-//struct Specializations: Decodable {
-//
-//    var name: String?
-//    var specializations: [String?]
-//
-//    enum CodingKeys: String, CodingKey {
-//
-//        case name = "name"
-//        case specializations = "specializations"
-//    }
-//}

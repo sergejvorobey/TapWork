@@ -39,6 +39,7 @@ class ContentVacansyController: UIViewController {
         headerSectionLabel.text = "Описание"
         errorLabel.isHidden = true
         contentTextView.addCorner()
+        contentTextView.addShadow()
 //        contentTextView.layer.cornerRadius = 10
         contentTextView.setPlaceholder(with: "Описание вакансии")
         contentTextView.becomeFirstResponder()

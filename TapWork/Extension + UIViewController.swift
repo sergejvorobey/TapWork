@@ -22,6 +22,7 @@ extension UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Закрыть", style: .cancel) { _ in
             self.dismiss(animated: true, completion: nil)
+            
         }
         alertController.addAction(cancel)
         present(alertController, animated: true, completion: nil)
@@ -40,4 +41,6 @@ extension UIViewController {
         
         self.present(alert, animated: true)
     }
+    
+    
 }

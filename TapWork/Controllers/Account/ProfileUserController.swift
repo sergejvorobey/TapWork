@@ -28,6 +28,7 @@ class ProfileUserController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +72,6 @@ extension ProfileUserController: UITableViewDelegate, UITableViewDataSource {
         let index = indexPath.row
         
         switch index {
-            
         case 0:
             let profileUserCell = tableView.dequeueReusableCell(withIdentifier: "ProfileUserCell", for: indexPath) as! ProfileUserCell
             profileUserCell.selectionStyle = .none
@@ -108,9 +108,11 @@ extension ProfileUserController: UITableViewDelegate, UITableViewDataSource {
             return profileUserCell
         case 1:
             let professionUserCell = tableView.dequeueReusableCell(withIdentifier: "UserDescriptionCell", for: indexPath) as! UserDescriptionCell
+            professionUserCell.selectionStyle = .none
             for item in profData {
                 professionUserCell.professionLabel.text = "Профессия"
-                professionUserCell.iconCell.image = UIImage(systemName: "person")
+                professionUserCell.iconCell.image = UIImage(systemName: "person.fill")
+                professionUserCell.editProfessionLabel.addTarget(self, action: #selector(editProfession), for: .touchUpInside)
                 if item.profession!.isEmpty {
                     professionUserCell.descriptionLabel.text = "Расскажите, кем вы хотите работать"
                 } else {
@@ -120,9 +122,11 @@ extension ProfileUserController: UITableViewDelegate, UITableViewDataSource {
             return professionUserCell
         case 2:
             let expUserCell = tableView.dequeueReusableCell(withIdentifier: "UserDescriptionCell", for: indexPath) as! UserDescriptionCell
+            expUserCell.selectionStyle = .none
             for item in profData {
                 expUserCell.professionLabel.text = "Опыт работы"
-                expUserCell.iconCell.image = UIImage(systemName: "bolt")
+                expUserCell.iconCell.image = UIImage(systemName: "bolt.fill")
+                expUserCell.editProfessionLabel.addTarget(self, action: #selector(editExperience), for: .touchUpInside)
                 if (item.experience?.places.isEmpty)! {
                     expUserCell.descriptionLabel.text = "Расскажите, про ваш опыт работы"
                 } else {
@@ -141,10 +145,11 @@ extension ProfileUserController: UITableViewDelegate, UITableViewDataSource {
             return expUserCell
         case 3:
             let aboutMeUserCell = tableView.dequeueReusableCell(withIdentifier: "UserDescriptionCell", for: indexPath) as! UserDescriptionCell
-            
+            aboutMeUserCell.selectionStyle = .none
             for item in profData {
                 aboutMeUserCell.professionLabel.text = "О себе"
                 aboutMeUserCell.iconCell.image = UIImage(systemName: "info.circle")
+                aboutMeUserCell.editProfessionLabel.addTarget(self, action: #selector(editAboutUser), for: .touchUpInside)
                 if item.aboutMe!.isEmpty {
                     aboutMeUserCell.descriptionLabel.text = "Есть еще что-нибудь, что стоит рассказать?"
                 } else {
@@ -156,6 +161,20 @@ extension ProfileUserController: UITableViewDelegate, UITableViewDataSource {
             break
         }
         return UITableViewCell()
+    }
+    
+    @objc func editProfession() {
+        let categoriesController = self.storyboard?.instantiateViewController(withIdentifier: "CategoriesController") as! CategoriesController
+        let navController = UINavigationController(rootViewController: categoriesController)
+        navigationController?.present(navController, animated: true, completion: nil)
+    }
+    
+    @objc func editExperience() {
+        performSegue(withIdentifier: "ExperienceUserController", sender: nil)
+    }
+    
+    @objc func editAboutUser() {
+        performSegue(withIdentifier: "AdditionaInfolUserController", sender: nil)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

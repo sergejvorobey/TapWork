@@ -58,6 +58,9 @@ class CreateExperianceController: UIViewController {
         professionTextField.placeholder = "Ваша должность"
         durationOfWorkLabel.text = "Как долго работали?"
         responsibilityTextView.addCorner()
+//        responsibilityTextView.addShadow()
+        responsibilityTextView.layer.cornerRadius = 10
+        responsibilityTextView.layer.borderWidth = 0.3
         responsibilityTextView.text = ""
         //        counterDurationLabel.text = "1 месяц"
         

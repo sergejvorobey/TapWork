@@ -65,6 +65,7 @@ class AdditionaInfolUserController: UIViewController {
         navBar.topItem?.title = "О себе"
         saveButtonLabel.changeStyleButton(with: "Сохранить")
         aboutMeTextView.addCorner()
+        aboutMeTextView.addShadow()
         keyboardObserver()
         aboutMeTextView.delegate = self
 //        checkText()

@@ -20,17 +20,12 @@ class VacanciesCell: UITableViewCell {
     @IBOutlet weak var countViewsLbl: UILabel!
 //    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var stackView: UIStackView!
-    
-    
+    @IBOutlet weak var backView: UIView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
-//
-//        let color = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
-//        self.layer.borderWidth = 10
-//        self.layer.cornerRadius = 20
-//        self.layer.borderColor = color.cgColor
-//        self.layer.masksToBounds = true
-//        self.backgroundColor = UIColor.white
+        self.backView.addCorner()
+        self.backView.addShadow()
     }
 }
 

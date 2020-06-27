@@ -15,7 +15,7 @@
 		871D175923C8F6350095C765 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175723C8F6350095C765 /* Main.storyboard */; };
 		871D175B23C8F6360095C765 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 871D175A23C8F6360095C765 /* Assets.xcassets */; };
 		871D175E23C8F6360095C765 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871D175C23C8F6360095C765 /* LaunchScreen.storyboard */; };
-		87200B26249B9D850008C6C4 /* ActiveVacanciesUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87200B25249B9D850008C6C4 /* ActiveVacanciesUserCell.swift */; };
+		87200B26249B9D850008C6C4 /* EmployerVacancyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87200B25249B9D850008C6C4 /* EmployerVacancyCell.swift */; };
 		87200B2A249D7F770008C6C4 /* FavoritesVacanciesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87200B29249D7F770008C6C4 /* FavoritesVacanciesController.swift */; };
 		8726159F2486CF1600BFC88D /* Extension + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8726159E2486CF1600BFC88D /* Extension + UITableView.swift */; };
 		872615A62487EB1300BFC88D /* TitleVacansyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872615A52487EB1300BFC88D /* TitleVacansyController.swift */; };
@@ -31,6 +31,8 @@
 		8764F34E249671DF0041E96B /* ExperienceUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F34D249671DF0041E96B /* ExperienceUserCell.swift */; };
 		8764F3502496902B0041E96B /* SelectProfessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F34F2496902B0041E96B /* SelectProfessionController.swift */; };
 		8764F352249696D90041E96B /* SelectProfessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764F351249696D90041E96B /* SelectProfessionCell.swift */; };
+		876BA35424A636D8005655DF /* EmployerVacancyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876BA35324A636D8005655DF /* EmployerVacancyController.swift */; };
+		876BA35624A69692005655DF /* CustomNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876BA35524A69692005655DF /* CustomNoticeView.swift */; };
 		8780AC05249A393500496C61 /* ProfileUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC04249A393500496C61 /* ProfileUserController.swift */; };
 		8780AC07249A3A9900496C61 /* ProfileUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC06249A3A9900496C61 /* ProfileUserCell.swift */; };
 		8780AC09249A476300496C61 /* UserDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8780AC08249A476300496C61 /* UserDescriptionCell.swift */; };
@@ -87,7 +89,7 @@
 		871D175A23C8F6360095C765 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		871D175D23C8F6360095C765 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		871D175F23C8F6360095C765 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87200B25249B9D850008C6C4 /* ActiveVacanciesUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveVacanciesUserCell.swift; sourceTree = "<group>"; };
+		87200B25249B9D850008C6C4 /* EmployerVacancyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerVacancyCell.swift; sourceTree = "<group>"; };
 		87200B29249D7F770008C6C4 /* FavoritesVacanciesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVacanciesController.swift; sourceTree = "<group>"; };
 		8726159E2486CF1600BFC88D /* Extension + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UITableView.swift"; sourceTree = "<group>"; };
 		872615A52487EB1300BFC88D /* TitleVacansyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleVacansyController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,8 @@
 		8764F34D249671DF0041E96B /* ExperienceUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceUserCell.swift; sourceTree = "<group>"; };
 		8764F34F2496902B0041E96B /* SelectProfessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfessionController.swift; sourceTree = "<group>"; };
 		8764F351249696D90041E96B /* SelectProfessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfessionCell.swift; sourceTree = "<group>"; };
+		876BA35324A636D8005655DF /* EmployerVacancyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployerVacancyController.swift; sourceTree = "<group>"; };
+		876BA35524A69692005655DF /* CustomNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNoticeView.swift; sourceTree = "<group>"; };
 		8780AC04249A393500496C61 /* ProfileUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserController.swift; sourceTree = "<group>"; };
 		8780AC06249A3A9900496C61 /* ProfileUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserCell.swift; sourceTree = "<group>"; };
 		8780AC08249A476300496C61 /* UserDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDescriptionCell.swift; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 			children = (
 				875F6A3C2435F298002C652D /* Vacancy */,
 				87B63FF824896142001911DC /* MainViewController.swift */,
+				876BA35324A636D8005655DF /* EmployerVacancyController.swift */,
 				870B9D6A240DDDD0006EB3EC /* LaunchScreenViewController.swift */,
 			);
 			name = MainScreen;
@@ -372,7 +377,7 @@
 			isa = PBXGroup;
 			children = (
 				87B63FFA2489625C001911DC /* VacanciesCell.swift */,
-				87200B25249B9D850008C6C4 /* ActiveVacanciesUserCell.swift */,
+				87200B25249B9D850008C6C4 /* EmployerVacancyCell.swift */,
 				87C13F0E24A148A200F1E857 /* MenuCollectionCell.swift */,
 			);
 			name = VacansyCell;
@@ -402,6 +407,7 @@
 				87B865C224742771001CBCEE /* Extension + UITextField.swift */,
 				87B865D6247D5BB9001CBCEE /* Extension + NavigationBar.swift */,
 				8726159E2486CF1600BFC88D /* Extension + UITableView.swift */,
+				876BA35524A69692005655DF /* CustomNoticeView.swift */,
 			);
 			name = HelperExtensions;
 			sourceTree = "<group>";
@@ -570,6 +576,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87B63FF924896142001911DC /* MainViewController.swift in Sources */,
+				876BA35624A69692005655DF /* CustomNoticeView.swift in Sources */,
 				879F599023F9797A00D4D124 /* TabBarController.swift in Sources */,
 				875F6A41243602F1002C652D /* MessageViewController.swift in Sources */,
 				8764F347248EBE610041E96B /* ExperienceUserController.swift in Sources */,
@@ -580,7 +587,7 @@
 				871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */,
 				87F497552461A368009B25A0 /* ProfessionCell.swift in Sources */,
 				87F497802464A743009B25A0 /* Validators.swift in Sources */,
-				87200B26249B9D850008C6C4 /* ActiveVacanciesUserCell.swift in Sources */,
+				87200B26249B9D850008C6C4 /* EmployerVacancyCell.swift in Sources */,
 				8764F34E249671DF0041E96B /* ExperienceUserCell.swift in Sources */,
 				87D05257245D978E000B2F61 /* CitiesLoaderAPI.swift in Sources */,
 				872615AA2487EB8E00BFC88D /* ContentVacansyController.swift in Sources */,
@@ -618,6 +625,7 @@
 				87F4975C246482A2009B25A0 /* ShowErrorMethod.swift in Sources */,
 				87C13F0D24A11A9800F1E857 /* CategoriesLoaderAPI.swift in Sources */,
 				87B865BB2474272C001CBCEE /* Extension + String.swift in Sources */,
+				876BA35424A636D8005655DF /* EmployerVacancyController.swift in Sources */,
 				87B865C124742761001CBCEE /* Extension + UIButton.swift in Sources */,
 				87F497822464A803009B25A0 /* AuthError.swift in Sources */,
 				87F7A7CA246E03F10070B1FD /* ModelCurrentUser.swift in Sources */,
