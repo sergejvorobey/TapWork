@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import NVActivityIndicatorView
 
 extension UIViewController {
     
@@ -42,5 +43,16 @@ extension UIViewController {
         self.present(alert, animated: true)
     }
     
-    
+    //MARK: ActivityIndicator
+    func showActivityIndicator(spinner: NVActivityIndicatorView) {
+           self.view.addSubview(spinner)
+           spinner.startAnimating()
+           spinner.center = view.center
+           view.isUserInteractionEnabled = false
+       }
+       
+    func hideActivityIndicator(spinner: NVActivityIndicatorView){
+           spinner.stopAnimating()
+           view.isUserInteractionEnabled = true
+       }
 }

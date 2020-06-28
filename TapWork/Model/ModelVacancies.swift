@@ -17,7 +17,9 @@ struct Vacancy {
     var content: String
     var phoneNumber: String
     var payment: String
+    var countViews: Int
     var timestamp: Double
+    var favoritesVacancies: [String]
     let ref: DatabaseReference?
     
     init(userId: String, city: String, heading: String, content: String, phoneNumber: String, payment: String) {
@@ -28,7 +30,9 @@ struct Vacancy {
         self.content = content
         self.phoneNumber = phoneNumber
         self.payment = payment
+        self.countViews = 0
         self.timestamp = 00
+        self.favoritesVacancies = [""]
         self.ref = nil
     }
 
@@ -41,7 +45,9 @@ struct Vacancy {
         content = snapshotValue["content"] as! String
         phoneNumber = snapshotValue["phoneNumber"] as! String
         payment = snapshotValue["payment"] as! String
+        countViews = snapshotValue["countViews"] as! Int
         timestamp = snapshotValue["timestamp"] as! Double
+        favoritesVacancies = snapshotValue["favoritesVacancies"] as! [String]
         ref = snapshot.ref
 
     }
@@ -52,7 +58,9 @@ struct Vacancy {
                 "city": city,
                 "content": content,
                 "payment": payment,
+                "countViews": countViews,
                 "phoneNumber": phoneNumber,
+                "favoritesVacancies": favoritesVacancies,
                 "timestamp": [".sv": "timestamp"]]
     }
 }

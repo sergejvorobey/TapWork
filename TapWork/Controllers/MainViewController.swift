@@ -17,11 +17,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var choiceButtonLbl: UIBarButtonItem!
     
     private var vacancies = [Vacancy]()
-    //    private var filteredVacancies = [Vacancy]()
     private var userProfileID: String?
-    //master array
-    //    private var vacanciesToDisplay = [Vacancy]()
-    
     private let spinner = NVActivityIndicatorView(frame: CGRect.init(x: 0,
                                                                      y: 0,
                                                                      width: 30,
@@ -32,21 +28,14 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        tableView.reloadData()
         getProfileUserID()
-        
-        
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        showActivityIndicator()
+        showActivityIndicator(spinner: spinner)
         setupItems()
         
         getVacancies {[weak self] (result) in
@@ -68,13 +57,8 @@ class MainViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.addSubview(refreshControll)
         tableView.tableFooterView = UIView()
-
         navigationItem.title = "TAP WORK"
-
         choiceButtonLbl.image = #imageLiteral(resourceName: "filter")
-        //        createVacancyButtonLbl.changeStyleButton(with: "Создать вакансию")
-        //        headerCountVacancyLbl.text = "У вас пока нет активных вакасний"
-        //        descriptionMenuLbl.text = "Создайте вакансию и найдите исполнителя"
     }
     
     //  refresh spinner
@@ -123,12 +107,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         vacanciesCell.cityVacansyLabel.text = vacancy.city
         vacanciesCell.contentLabel.text = vacancy.content
         vacanciesCell.paymentLabel.text = vacancy.payment + " ₽ "
-        vacanciesCell.countViewsLbl.text = "114" //TODO
+        vacanciesCell.countViewsLbl.text = "\(vacancy.countViews)"
         let datePublic = vacancy.timestamp
         let date = Date(timeIntervalSince1970: datePublic / 1000)
         vacanciesCell.publicationDateLabel.text = date.publicationDate(withDate: date)
         
-        hideActivityIndicator()
+        hideActivityIndicator(spinner: spinner)
         return vacanciesCell
     }
     
@@ -145,6 +129,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             let vacancy = vacancies[indexPath.row]
             let detailVacancyVC = segue.destination as! DetailVacansyViewController
             detailVacancyVC.detailVacancy = vacancy
+            detailVacancyVC.countViewsVacancy = vacancy.countViews + 1
             if vacancy.userId == userProfileID {
                 detailVacancyVC.checkVacancy = "EMPLOYER_KEY"
             }
@@ -166,20 +151,16 @@ extension MainViewController {
         dataLoader.getDataVacancies()
         
         dataLoader.completionHandler{[weak self] (vacansy, status, message) in
-            var array = [Vacancy]()
+//            var array = [Vacancy]()
             if status {
                 guard let self = self else {return}
                 guard let _vacansy = vacansy else {return}
                 self.vacancies = _vacansy as! [Vacancy]
-                //                self.vacanciesToDisplay = _vacansy as! [Vacancy]
-                
-                for item in self.vacancies {
-                    if item.userId == self.userProfileID {
-                        array.append(item)
-                    }
-                    //                    self.filteredVacancies = array
-                    //                    self.checkCountElementsWithTabBar()
-                }
+//                for item in self.vacancies {
+//                    if item.userId == self.userProfileID {
+////                        array.append(item)
+//                    }
+//                }
             }
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
@@ -223,19 +204,5 @@ extension MainViewController {
 //    }
 //}
 
-//MARK: ActivityIndicator
-extension MainViewController {
-    private func showActivityIndicator() {
-        self.view.addSubview(spinner)
-        spinner.startAnimating()
-        spinner.center = view.center
-        view.isUserInteractionEnabled = false
-    }
-    
-    private func hideActivityIndicator(){
-        spinner.stopAnimating()
-        view.isUserInteractionEnabled = true
-    }
-}
 
 

@@ -17,6 +17,7 @@ class DetailVacansyViewController: UIViewController {
     @IBOutlet weak var contentVacancyLbl: UILabel!
     @IBOutlet weak var paymentVacancyLbl: UILabel!
     @IBOutlet weak var publicationDateVacancyLbl: UILabel!
+    @IBOutlet weak var countViewVacancyLbl: UILabel!
     @IBOutlet weak var responseButtonLabel: UIButton!
     
     @IBOutlet weak var navigationBar: UINavigationBar!
@@ -27,6 +28,7 @@ class DetailVacansyViewController: UIViewController {
 
     var detailVacancy: Vacancy?
     var checkVacancy: String?
+    var countViewsVacancy: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +39,24 @@ class DetailVacansyViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+        updateCountViewsVacancy(views: countViewsVacancy,
+                                userId: detailVacancy?.userId,
+                                city: detailVacancy?.city,
+                                heading: detailVacancy?.heading,
+                                content: detailVacancy?.content,
+                                phoneNumber: detailVacancy?.phoneNumber,
+                                payment: detailVacancy?.payment) { (result) in
+                                    
+                                    switch result {
+                                    case .success:
+                                        break
+                                    case .failure(let error):
+                                        print(error.localizedDescription)
+            }
+        }
     }
+    
+    
     
     private func checkStatusUser() {
         if checkVacancy == nil {
@@ -62,7 +80,9 @@ class DetailVacansyViewController: UIViewController {
             let content = contentVacancyLbl,
             let payment = paymentVacancyLbl,
             let publicationDate = publicationDateVacancyLbl,
-            let response = responseButtonLabel else {return}
+            let response = responseButtonLabel,
+            let countViews = countViewVacancyLbl,
+            let countViewsVacancy = countViewsVacancy else {return}
         
          
         heading.text = detailVacancy.heading
@@ -74,6 +94,9 @@ class DetailVacansyViewController: UIViewController {
         let date = Date(timeIntervalSince1970: datePublic / 1000)
         publicationDate.text = date.publicationDate(withDate: date)
         navigationBar.topItem?.title = "Вакансия от: \(date.publicationDate(withDate: date))"
+        
+        countViews.text = "\(countViewsVacancy)"
+        
         response.changeStyleButton(with: "Откликнуться")
         
         collectionView.delegate = self
@@ -119,24 +142,144 @@ extension DetailVacansyViewController: UICollectionViewDelegate, UICollectionVie
         
         switch index {
         case 0:
-            cell.imageMenu.image = UIImage(systemName: "star")
+//            cell.imageMenu.image = UIImage(systemName: "star")
+            cell.favoriteButtonLbl.setImage(UIImage(named: "FavoriteStar"), for: .normal)
+//            cell.favoriteButtonLbl.setImage(UIImage(named: "FavoriteStarFill"), for: .selected)
+            cell.favoriteButtonLbl.contentMode = .center
             cell.desriptionMenuLbl.text = "В избранное"
+            cell.favoriteButtonLbl.addTarget(self, action: #selector(handleFavoritePressed), for: .touchUpInside)
         default:
-            cell.imageMenu.image = UIImage(systemName: "arrowshape.turn.up.right")
+            cell.favoriteButtonLbl.setImage(UIImage(named: "Share"), for: .normal)
+//            cell.imageMenu.image = UIImage(systemName: "arrowshape.turn.up.right")
             cell.desriptionMenuLbl.text = "Поделиться"
+            cell.favoriteButtonLbl.addTarget(self, action: #selector(handleSharePressed), for: .touchUpInside)
         }
         
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    @objc func handleFavoritePressed() {
+        print("added")
+        addingFavoriteVacancy()
+    }
+    
+    @objc func handleSharePressed() {
+        let ac = UIActivityViewController(activityItems: [detailVacancy?.heading as Any], applicationActivities: nil)
+        ac.popoverPresentationController?.sourceView = self.view
+        ac.excludedActivityTypes = [.airDrop]
+        self.present(ac, animated: true)
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//
+//        let index = indexPath.row
+////        let arrayData = [detailVacancy?.heading, detailVacancy?.city, detailVacancy?.content, detailVacancy?.payment]
+//        switch index {
+//        case 0:
+//        default:
+//            let ac = UIActivityViewController(activityItems: [detailVacancy?.heading as Any], applicationActivities: nil)
+//            ac.popoverPresentationController?.sourceView = self.view
+//            ac.excludedActivityTypes = [.airDrop]
+//            self.present(ac, animated: true)
+//        }
+//    }
+}
+
+//MARK: Firebase
+extension DetailVacansyViewController {
+    //MARK: update count views in Firebase
+    private func updateCountViewsVacancy(views: Int?,
+                                         userId: String?,
+                                         city: String?,
+                                         heading: String?,
+                                         content: String?,
+                                         phoneNumber: String?,
+                                         payment: String?,
+                                         completion: @escaping (AuthResult) -> Void) {
         
-        let index = indexPath.row
-        switch index {
-        case 0:
-            print("favorite")
-        default:
-            print("share")
-        }
+        guard let views = views,
+            let userId = userId,
+            let city = city,
+            let heading = heading,
+            let content = content,
+            let phoneNumber = phoneNumber,
+            let payment = payment,
+            let timestamp = detailVacancy?.timestamp,
+            let favoritesVacancies = detailVacancy?.favoritesVacancies else {
+                completion(.failure(AuthError.unknownError))
+                return}
+
+        let ref = Database.database().reference(withPath: "vacancies")
+        let values = [heading: [
+            "userId": userId,
+            "city": city,
+            "heading": heading,
+            "content": content,
+            "phoneNumber": phoneNumber,
+            "payment": payment,
+            "timestamp": timestamp,
+            "countViews": views,
+            "favoritesVacancies": favoritesVacancies]
+        ]
+        ref.updateChildValues(values, withCompletionBlock: { (error, ref) in
+            if(error != nil){
+                print(error?.localizedDescription ?? "")
+                return
+            }
+        })
+        completion(.success)
+    }
+    
+    private func addingFavoriteVacancy() {
+//
+//        let vacancyRef = ref.child(detailVacancy!.heading)
+//        vacancyRef.setValue(["userId": detailVacancy!.userId,
+//                             "city": detailVacancy!.city,
+//                             "heading": detailVacancy!.heading,
+//                             "content": detailVacancy!.content,
+//                             "phoneNumber": detailVacancy!.phoneNumber,
+//                             "payment": detailVacancy!.payment,
+//                             "timestamp": detailVacancy!.timestamp,
+//                             "countViews": detailVacancy!.countViews])
+        
+        guard let views = detailVacancy?.countViews,
+            let userId = detailVacancy?.userId,
+            let city = detailVacancy?.city,
+            let heading = detailVacancy?.heading,
+            let content = detailVacancy?.content,
+            let phoneNumber = detailVacancy?.phoneNumber,
+            let payment = detailVacancy?.payment,
+            let timestamp = detailVacancy?.timestamp,
+            var favoritesVacancies = detailVacancy?.favoritesVacancies else {
+                //                       completion(.failure(AuthError.unknownError))
+                return}
+        
+        guard let currentUsers = Auth.auth().currentUser else { return }
+        let infoUser = Users(user: currentUsers)
+        let ref = Database.database().reference(withPath: "vacancies")
+        favoritesVacancies.append(infoUser.userId)
+        let values = [heading: [
+            "userId": userId,
+            "city": city,
+            "heading": heading,
+            "content": content,
+            "phoneNumber": phoneNumber,
+            "payment": payment,
+            "timestamp": timestamp,
+            "countViews": views + 1,
+            "favoritesVacancies": favoritesVacancies
+            ]
+        ]
+        ref.updateChildValues(values, withCompletionBlock: { (error, ref) in
+            if(error != nil){
+                print(error?.localizedDescription ?? "")
+                return
+            }
+        })
+    }
+    
+    private func deleteFavoriteVacancy() {
+        
     }
 }
+

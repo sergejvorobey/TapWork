@@ -10,7 +10,8 @@ import UIKit
 
 class MenuCollectionCell: UICollectionViewCell {
     
-    @IBOutlet weak var imageMenu: UIImageView!
+//    @IBOutlet weak var imageMenu: UIImageView!
+    @IBOutlet weak var favoriteButtonLbl: UIButton!
     @IBOutlet weak var desriptionMenuLbl: UILabel!
     
     override func awakeFromNib() {

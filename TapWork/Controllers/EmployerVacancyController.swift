@@ -33,13 +33,15 @@ class EmployerVacancyController: UIViewController {
     }
     
     private func checkNoticeView() {
-        hideActivityIndicator()
+        self.hideActivityIndicator(spinner: spinner)
         switch filteredVacancies.isEmpty {
         case true:
+            tableView.isHidden = true
             setupNoticeView(mainView: self.view,
                                        headerText: "У вас пока нет активных вакансий",
                                        descriptionText: "Создайте вакансию и найдите исполнителя")
         default:
+            tableView.isHidden = false
             guard let viewWithTag = self.view.viewWithTag(100) else {return}
             viewWithTag.removeFromSuperview()
         }
@@ -47,7 +49,7 @@ class EmployerVacancyController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        showActivityIndicator()
+        self.showActivityIndicator(spinner: spinner)
         setupItems()
         getVacancies {[weak self] (result) in
             switch result {
@@ -119,7 +121,7 @@ extension EmployerVacancyController: UITableViewDelegate, UITableViewDataSource 
         cell.cityVacancyLbl.text = vacancy.city
         cell.contentVacancyLbl.text = vacancy.content
         cell.paymenVacancyLbl.text = vacancy.payment + " ₽ "
-        cell.countViewsLbl.text = "114" //TODO
+        cell.countViewsLbl.text = "\(vacancy.countViews)"
         cell.countResponseLbl.text = "6 новых откликов" //TODO
         let datePublic = vacancy.timestamp
         let date = Date(timeIntervalSince1970: datePublic / 1000)
@@ -127,7 +129,7 @@ extension EmployerVacancyController: UITableViewDelegate, UITableViewDataSource 
 //        cell.menuCurrentVacancyBtn.tag = indexPath.row
         cell.menuCurrentVacancyBtn.addTarget(self, action: #selector(menuBtn(sender:)), for: .touchUpInside)
         
-        hideActivityIndicator()
+        self.hideActivityIndicator(spinner: spinner)
         return cell
     }
     
@@ -166,18 +168,9 @@ extension EmployerVacancyController {
                         array.append(item)
                     }
                     self.filteredVacancies = array
-                    //                    self.checkNoticeView()
-                    //                    self.checkCountElementsWithTabBar()
-                    //                    self.setupNavigationTitle()
                 }
-                //                self.checkCountElementsWithTabBar()
-                //                self.setupNavigationTitle()
-                //                self.checkNoticeView()
                 self.tableView.reloadData()
             }
-            //            DispatchQueue.main.async {
-            //                self?.tableView.reloadData()
-            //            }
             self?.checkCountElementsWithTabBar()
             self?.setupNavigationTitle()
             self?.checkNoticeView()
@@ -226,19 +219,6 @@ extension EmployerVacancyController {
         } else {
             tabBarItemMainScreen.badgeValue = "\(filteredVacancies.count)"
         }
-    }
-    
-    //MARK: ActivityIndicator
-    private func showActivityIndicator() {
-        self.view.addSubview(spinner)
-        spinner.startAnimating()
-        spinner.center = view.center
-        view.isUserInteractionEnabled = false
-    }
-    
-    private func hideActivityIndicator(){
-        spinner.stopAnimating()
-        view.isUserInteractionEnabled = true
     }
 }
 
