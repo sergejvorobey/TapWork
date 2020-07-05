@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		87065B0524B27E3D0024F860 /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87065B0424B27E3D0024F860 /* FilterController.swift */; };
+		87065B0824B2862E0024F860 /* FilterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87065B0724B2862E0024F860 /* FilterItemCell.swift */; };
 		870B9D6B240DDDD0006EB3EC /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870B9D6A240DDDD0006EB3EC /* LaunchScreenViewController.swift */; };
 		871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871397C923FCBC5900FB7732 /* SpecializationController.swift */; };
 		871397CF23FCBF3800FB7732 /* SpecializationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871397CD23FCBF3800FB7732 /* SpecializationCell.swift */; };
@@ -63,7 +65,6 @@
 		87D05254245D9723000B2F61 /* ModelCities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D05253245D9723000B2F61 /* ModelCities.swift */; };
 		87D05257245D978E000B2F61 /* CitiesLoaderAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D05256245D978E000B2F61 /* CitiesLoaderAPI.swift */; };
 		87D65A0A240816A20093D75F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87D65A09240816A10093D75F /* GoogleService-Info.plist */; };
-		87E9CAD624AB8AF90072C120 /* DetailVacancyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9CAD524AB8AF90072C120 /* DetailVacancyController.swift */; };
 		87E9CAD824AB94530072C120 /* DetailVacancyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9CAD724AB94530072C120 /* DetailVacancyCell.swift */; };
 		87E9CADA24ABA3CE0072C120 /* DetailVacancyContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9CAD924ABA3CE0072C120 /* DetailVacancyContentCell.swift */; };
 		87E9CADC24ABA3FF0072C120 /* DetailCountViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9CADB24ABA3FF0072C120 /* DetailCountViewCell.swift */; };
@@ -78,13 +79,15 @@
 		87F4978724676725009B25A0 /* FirebaseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F4978624676725009B25A0 /* FirebaseServices.swift */; };
 		87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */; };
 		87F7A7CA246E03F10070B1FD /* ModelCurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F7A7C9246E03F10070B1FD /* ModelCurrentUser.swift */; };
-		87F84F5B246B2226002AC050 /* DetailVacansyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F84F5A246B2226002AC050 /* DetailVacansyViewController.swift */; };
+		87F84F5B246B2226002AC050 /* DetailVacancyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F84F5A246B2226002AC050 /* DetailVacancyController.swift */; };
 		87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */; };
 		FAB96E1FEE3EDF12559C97E1 /* Pods_TapWork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		350CE8BA8C3B942105F6513A /* Pods-TapWork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapWork.release.xcconfig"; path = "Target Support Files/Pods-TapWork/Pods-TapWork.release.xcconfig"; sourceTree = "<group>"; };
+		87065B0424B27E3D0024F860 /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
+		87065B0724B2862E0024F860 /* FilterItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItemCell.swift; sourceTree = "<group>"; };
 		870B9D6A240DDDD0006EB3EC /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		871397C923FCBC5900FB7732 /* SpecializationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationController.swift; sourceTree = "<group>"; };
 		871397CD23FCBF3800FB7732 /* SpecializationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationCell.swift; sourceTree = "<group>"; };
@@ -143,7 +146,6 @@
 		87D05253245D9723000B2F61 /* ModelCities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCities.swift; sourceTree = "<group>"; };
 		87D05256245D978E000B2F61 /* CitiesLoaderAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesLoaderAPI.swift; sourceTree = "<group>"; };
 		87D65A09240816A10093D75F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		87E9CAD524AB8AF90072C120 /* DetailVacancyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacancyController.swift; sourceTree = "<group>"; };
 		87E9CAD724AB94530072C120 /* DetailVacancyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacancyCell.swift; sourceTree = "<group>"; };
 		87E9CAD924ABA3CE0072C120 /* DetailVacancyContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacancyContentCell.swift; sourceTree = "<group>"; };
 		87E9CADB24ABA3FF0072C120 /* DetailCountViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCountViewCell.swift; sourceTree = "<group>"; };
@@ -158,7 +160,7 @@
 		87F4978624676725009B25A0 /* FirebaseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseServices.swift; sourceTree = "<group>"; };
 		87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelVacancies.swift; sourceTree = "<group>"; };
 		87F7A7C9246E03F10070B1FD /* ModelCurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCurrentUser.swift; sourceTree = "<group>"; };
-		87F84F5A246B2226002AC050 /* DetailVacansyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacansyViewController.swift; sourceTree = "<group>"; };
+		87F84F5A246B2226002AC050 /* DetailVacancyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacancyController.swift; sourceTree = "<group>"; };
 		87FFD9AE24257A2E00A8ECE7 /* EditAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
 		96DE5FD1B171A263ADB1953C /* Pods_TapWork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapWork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC08CC48E8067813AB071D7E /* Pods-TapWork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapWork.debug.xcconfig"; path = "Target Support Files/Pods-TapWork/Pods-TapWork.debug.xcconfig"; sourceTree = "<group>"; };
@@ -183,6 +185,22 @@
 				350CE8BA8C3B942105F6513A /* Pods-TapWork.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		87065B0324B27DE80024F860 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				87065B0424B27E3D0024F860 /* FilterController.swift */,
+			);
+			name = Filter;
+			sourceTree = "<group>";
+		};
+		87065B0624B283B80024F860 /* FilterVacancyCell */ = {
+			isa = PBXGroup;
+			children = (
+				87065B0724B2862E0024F860 /* FilterItemCell.swift */,
+			);
+			name = FilterVacancyCell;
 			sourceTree = "<group>";
 		};
 		870B9D67240DD478006EB3EC /* MainScreen */ = {
@@ -290,8 +308,7 @@
 		875F6A3C2435F298002C652D /* Vacancy */ = {
 			isa = PBXGroup;
 			children = (
-				87F84F5A246B2226002AC050 /* DetailVacansyViewController.swift */,
-				87E9CAD524AB8AF90072C120 /* DetailVacancyController.swift */,
+				87F84F5A246B2226002AC050 /* DetailVacancyController.swift */,
 			);
 			path = Vacancy;
 			sourceTree = "<group>";
@@ -319,6 +336,7 @@
 		879F596623F4D00900D4D124 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				87065B0324B27DE80024F860 /* Filter */,
 				87200B28249D7F480008C6C4 /* Favorites */,
 				870B9D67240DD478006EB3EC /* MainScreen */,
 				875F6A3F243602D4002C652D /* Messages */,
@@ -331,6 +349,7 @@
 		879F596723F4D02F00D4D124 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				87065B0624B283B80024F860 /* FilterVacancyCell */,
 				87F7A7D024701A620070B1FD /* PersonalData */,
 				87D05223245B5AA6000B2F61 /* VacansyCell */,
 				875F6A422436037D002C652D /* MessageCell.swift */,
@@ -622,6 +641,7 @@
 				87200B2A249D7F770008C6C4 /* FavoritesVacanciesController.swift in Sources */,
 				8764F352249696D90041E96B /* SelectProfessionCell.swift in Sources */,
 				87B865C724742806001CBCEE /* Extension + UIView.swift in Sources */,
+				87065B0824B2862E0024F860 /* FilterItemCell.swift in Sources */,
 				8780AC05249A393500496C61 /* ProfileUserController.swift in Sources */,
 				87B865C5247427D0001CBCEE /* Extension + UITextView.swift in Sources */,
 				879F599223F99A6900D4D124 /* NavigationController.swift in Sources */,
@@ -648,15 +668,15 @@
 				87E9CADA24ABA3CE0072C120 /* DetailVacancyContentCell.swift in Sources */,
 				87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */,
 				871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */,
+				87065B0524B27E3D0024F860 /* FilterController.swift in Sources */,
 				87B63FFB2489625C001911DC /* VacanciesCell.swift in Sources */,
-				87F84F5B246B2226002AC050 /* DetailVacansyViewController.swift in Sources */,
+				87F84F5B246B2226002AC050 /* DetailVacancyController.swift in Sources */,
 				87C9097223FB0B4E00C262FC /* ModelCategories.swift in Sources */,
 				872615AC2487EBB500BFC88D /* PaymentController.swift in Sources */,
 				87F4975C246482A2009B25A0 /* ShowErrorMethod.swift in Sources */,
 				87C13F0D24A11A9800F1E857 /* CategoriesLoaderAPI.swift in Sources */,
 				87B865BB2474272C001CBCEE /* Extension + String.swift in Sources */,
 				876BA35424A636D8005655DF /* EmployerVacancyController.swift in Sources */,
-				87E9CAD624AB8AF90072C120 /* DetailVacancyController.swift in Sources */,
 				87B865C124742761001CBCEE /* Extension + UIButton.swift in Sources */,
 				87F497822464A803009B25A0 /* AuthError.swift in Sources */,
 				87F7A7CA246E03F10070B1FD /* ModelCurrentUser.swift in Sources */,

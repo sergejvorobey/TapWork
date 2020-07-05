@@ -55,8 +55,6 @@ class MainViewController: UIViewController {
         tableView.addSubview(refreshControll)
         tableView.tableFooterView = UIView()
         navigationItem.title = "TAP WORK"
-        choiceButtonLbl.image = #imageLiteral(resourceName: "filter")
-        
     }
     
     //  refresh spinner
@@ -74,10 +72,6 @@ class MainViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
             refreshControll.endRefreshing()
         })
-    }
-    
-    @IBAction func choiceButton(_ sender: UIBarButtonItem) {
-        print("go filter controller")
     }
 }
 
@@ -147,7 +141,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 //                        segue.destination.modalPresentationStyle = .custom
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let vacancy = vacancies[indexPath.row]
-            let detailVacancyVC = segue.destination as! DetailVacansyViewController
+            let detailVacancyVC = segue.destination as! DetailVacancyController
             detailVacancyVC.detailVacancy = vacancy
             detailVacancyVC.countViewsVacancy = vacancy.countViews + 1
             if vacancy.userId == userProfileID {
