@@ -141,12 +141,29 @@ class LoaderDataFirebase {
             var _vacancies = Array<Vacancy>()
             for item in snapshot.children {
                 let vacansy = Vacancy(snapshot: item as! DataSnapshot)
-                
+//                print(item)
                 _vacancies.append(vacansy)
             }
             _vacancies.sort(by: {$0.timestamp > $1.timestamp})
             //            self.vacansyCallBack?(_vacancies, true,"")
-            self.callBack?(_vacancies, true,"")
+            self.callBack?(_vacancies, true, "")
+        }
+    }
+    
+    func getFavoritesVacancies() {
+        guard let currentUsers = Auth.auth().currentUser else { return }
+        infoUser = Users(user: currentUsers)
+        ref = Database.database().reference(withPath: "favorites_vacancies").child(infoUser.userId)
+        
+        ref.observe(.value) {(snapshot) in
+
+            var _vacancies = Array<Favorite>()
+
+            for item in snapshot.children {
+                let vacancy = Favorite(snapshot: item as! DataSnapshot)
+                _vacancies.append(vacancy)
+            }
+            self.callBack?(_vacancies, true, "")
         }
     }
     

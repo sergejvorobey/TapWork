@@ -63,6 +63,11 @@
 		87D05254245D9723000B2F61 /* ModelCities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D05253245D9723000B2F61 /* ModelCities.swift */; };
 		87D05257245D978E000B2F61 /* CitiesLoaderAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D05256245D978E000B2F61 /* CitiesLoaderAPI.swift */; };
 		87D65A0A240816A20093D75F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87D65A09240816A10093D75F /* GoogleService-Info.plist */; };
+		87E9CAD624AB8AF90072C120 /* DetailVacancyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9CAD524AB8AF90072C120 /* DetailVacancyController.swift */; };
+		87E9CAD824AB94530072C120 /* DetailVacancyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9CAD724AB94530072C120 /* DetailVacancyCell.swift */; };
+		87E9CADA24ABA3CE0072C120 /* DetailVacancyContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9CAD924ABA3CE0072C120 /* DetailVacancyContentCell.swift */; };
+		87E9CADC24ABA3FF0072C120 /* DetailCountViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9CADB24ABA3FF0072C120 /* DetailCountViewCell.swift */; };
+		87E9CADF24ABF82F0072C120 /* FavoriteVacancy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9CADE24ABF82F0072C120 /* FavoriteVacancy.swift */; };
 		87F497532461A32E009B25A0 /* ProfessionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F497522461A32E009B25A0 /* ProfessionsController.swift */; };
 		87F497552461A368009B25A0 /* ProfessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F497542461A368009B25A0 /* ProfessionCell.swift */; };
 		87F4975A24645EDC009B25A0 /* CheckNetworkConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F4975924645EDC009B25A0 /* CheckNetworkConnectivity.swift */; };
@@ -138,6 +143,11 @@
 		87D05253245D9723000B2F61 /* ModelCities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCities.swift; sourceTree = "<group>"; };
 		87D05256245D978E000B2F61 /* CitiesLoaderAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesLoaderAPI.swift; sourceTree = "<group>"; };
 		87D65A09240816A10093D75F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		87E9CAD524AB8AF90072C120 /* DetailVacancyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacancyController.swift; sourceTree = "<group>"; };
+		87E9CAD724AB94530072C120 /* DetailVacancyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacancyCell.swift; sourceTree = "<group>"; };
+		87E9CAD924ABA3CE0072C120 /* DetailVacancyContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVacancyContentCell.swift; sourceTree = "<group>"; };
+		87E9CADB24ABA3FF0072C120 /* DetailCountViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCountViewCell.swift; sourceTree = "<group>"; };
+		87E9CADE24ABF82F0072C120 /* FavoriteVacancy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteVacancy.swift; sourceTree = "<group>"; };
 		87F497522461A32E009B25A0 /* ProfessionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionsController.swift; sourceTree = "<group>"; };
 		87F497542461A368009B25A0 /* ProfessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionCell.swift; sourceTree = "<group>"; };
 		87F4975924645EDC009B25A0 /* CheckNetworkConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNetworkConnectivity.swift; sourceTree = "<group>"; };
@@ -281,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				87F84F5A246B2226002AC050 /* DetailVacansyViewController.swift */,
+				87E9CAD524AB8AF90072C120 /* DetailVacancyController.swift */,
 			);
 			path = Vacancy;
 			sourceTree = "<group>";
@@ -332,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				87F68A6B23EF2C8C00D4C454 /* ModelVacancies.swift */,
+				87E9CADE24ABF82F0072C120 /* FavoriteVacancy.swift */,
 				87329D00240463EB0089E9EF /* ModelUsers.swift */,
 				87F7A7C9246E03F10070B1FD /* ModelCurrentUser.swift */,
 				87C9097123FB0B4E00C262FC /* ModelCategories.swift */,
@@ -379,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				87B63FFA2489625C001911DC /* VacanciesCell.swift */,
+				87E9CADD24ABA40D0072C120 /* DetailVacancy */,
 				87200B25249B9D850008C6C4 /* EmployerVacancyCell.swift */,
 				87C13F0E24A148A200F1E857 /* MenuCollectionCell.swift */,
 				8748AA1024A8D9010006C40E /* FavoriteVacancyCell.swift */,
@@ -413,6 +426,16 @@
 				876BA35524A69692005655DF /* CustomNoticeView.swift */,
 			);
 			name = HelperExtensions;
+			sourceTree = "<group>";
+		};
+		87E9CADD24ABA40D0072C120 /* DetailVacancy */ = {
+			isa = PBXGroup;
+			children = (
+				87E9CAD724AB94530072C120 /* DetailVacancyCell.swift */,
+				87E9CAD924ABA3CE0072C120 /* DetailVacancyContentCell.swift */,
+				87E9CADB24ABA3FF0072C120 /* DetailCountViewCell.swift */,
+			);
+			name = DetailVacancy;
 			sourceTree = "<group>";
 		};
 		87F4975824645E56009B25A0 /* CheckNetwork */ = {
@@ -603,9 +626,11 @@
 				87B865C5247427D0001CBCEE /* Extension + UITextView.swift in Sources */,
 				879F599223F99A6900D4D124 /* NavigationController.swift in Sources */,
 				87F68A6C23EF2C8C00D4C454 /* ModelVacancies.swift in Sources */,
+				87E9CADF24ABF82F0072C120 /* FavoriteVacancy.swift in Sources */,
 				879F599723F9A0A400D4D124 /* RegisterAccountController.swift in Sources */,
 				8780AC09249A476300496C61 /* UserDescriptionCell.swift in Sources */,
 				879F599423F99F0D00D4D124 /* LoginAccountViewController.swift in Sources */,
+				87E9CADC24ABA3FF0072C120 /* DetailCountViewCell.swift in Sources */,
 				871D175223C8F6350095C765 /* AppDelegate.swift in Sources */,
 				8764F3502496902B0041E96B /* SelectProfessionController.swift in Sources */,
 				8780AC07249A3A9900496C61 /* ProfileUserCell.swift in Sources */,
@@ -620,6 +645,7 @@
 				87329D01240463EB0089E9EF /* ModelUsers.swift in Sources */,
 				871397CB23FCBC5900FB7732 /* SpecializationController.swift in Sources */,
 				87F4975A24645EDC009B25A0 /* CheckNetworkConnectivity.swift in Sources */,
+				87E9CADA24ABA3CE0072C120 /* DetailVacancyContentCell.swift in Sources */,
 				87FFD9AF24257A2E00A8ECE7 /* EditAccountViewController.swift in Sources */,
 				871D175423C8F6350095C765 /* SceneDelegate.swift in Sources */,
 				87B63FFB2489625C001911DC /* VacanciesCell.swift in Sources */,
@@ -630,9 +656,11 @@
 				87C13F0D24A11A9800F1E857 /* CategoriesLoaderAPI.swift in Sources */,
 				87B865BB2474272C001CBCEE /* Extension + String.swift in Sources */,
 				876BA35424A636D8005655DF /* EmployerVacancyController.swift in Sources */,
+				87E9CAD624AB8AF90072C120 /* DetailVacancyController.swift in Sources */,
 				87B865C124742761001CBCEE /* Extension + UIButton.swift in Sources */,
 				87F497822464A803009B25A0 /* AuthError.swift in Sources */,
 				87F7A7CA246E03F10070B1FD /* ModelCurrentUser.swift in Sources */,
+				87E9CAD824AB94530072C120 /* DetailVacancyCell.swift in Sources */,
 				875F6A452436065D002C652D /* ChatViewController.swift in Sources */,
 				8726159F2486CF1600BFC88D /* Extension + UITableView.swift in Sources */,
 				87D05254245D9723000B2F61 /* ModelCities.swift in Sources */,
@@ -789,7 +817,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W9Z3YC6W2U;
 				INFOPLIST_FILE = TapWork/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -798,7 +826,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -811,7 +839,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W9Z3YC6W2U;
 				INFOPLIST_FILE = TapWork/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -820,7 +848,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -18,6 +18,7 @@ class MainViewController: UIViewController {
     
     private var vacancies = [Vacancy]()
     private var userProfileID: String?
+    
     private let spinner = NVActivityIndicatorView(frame: CGRect.init(x: 0,
                                                                      y: 0,
                                                                      width: 30,
@@ -27,17 +28,14 @@ class MainViewController: UIViewController {
                                                   padding: .none)
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         getProfileUserID()
-        
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         showActivityIndicator(spinner: spinner)
         setupItems()
-        
         getVacancies {[weak self] (result) in
             switch result {
             case .success:
@@ -51,7 +49,6 @@ class MainViewController: UIViewController {
     
     //MARK: Setup appearance items
     private func setupItems() {
-        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -59,6 +56,7 @@ class MainViewController: UIViewController {
         tableView.tableFooterView = UIView()
         navigationItem.title = "TAP WORK"
         choiceButtonLbl.image = #imageLiteral(resourceName: "filter")
+        
     }
     
     //  refresh spinner
@@ -90,10 +88,33 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return vacancies.count
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 30))
+
+        let label = UILabel()
+        label.frame = CGRect.init(x: 20, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+        label.text = "Найдено (\(self.vacancies.count)) вакансий"
+        label.font = UIFont.boldSystemFont(ofSize: 12) // my custom font
+        label.textColor = .black // my custom colour
+
+        headerView.addSubview(label)
+
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        30
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vacanciesCell = tableView.dequeueReusableCell(withIdentifier: "VacanciesCell", for: indexPath) as! VacanciesCell
         
         let vacancy = vacancies[indexPath.row]
+        vacanciesCell.selectionStyle = .none
         
         if vacancy.userId == userProfileID {
             //               vacanciesCell.isUserInteractionEnabled = false
@@ -107,7 +128,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         vacanciesCell.cityVacansyLabel.text = vacancy.city
         vacanciesCell.contentLabel.text = vacancy.content
         vacanciesCell.paymentLabel.text = vacancy.payment + " ₽ "
-        vacanciesCell.countViewsLbl.text = "\(vacancy.countViews)"
         let datePublic = vacancy.timestamp
         let date = Date(timeIntervalSince1970: datePublic / 1000)
         vacanciesCell.publicationDateLabel.text = date.publicationDate(withDate: date)
@@ -151,16 +171,10 @@ extension MainViewController {
         dataLoader.getDataVacancies()
         
         dataLoader.completionHandler{[weak self] (vacansy, status, message) in
-//            var array = [Vacancy]()
             if status {
                 guard let self = self else {return}
                 guard let _vacansy = vacansy else {return}
                 self.vacancies = _vacansy as! [Vacancy]
-//                for item in self.vacancies {
-//                    if item.userId == self.userProfileID {
-////                        array.append(item)
-//                    }
-//                }
             }
             DispatchQueue.main.async {
                 self?.tableView.reloadData()

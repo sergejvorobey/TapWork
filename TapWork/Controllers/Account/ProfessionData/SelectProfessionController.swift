@@ -19,6 +19,7 @@ class SelectProfessionController: UIViewController {
     private var filteredProfession = [String]()
     var checkProfession: String = ""
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,7 +84,11 @@ extension SelectProfessionController: UITableViewDelegate, UITableViewDataSource
         } else {
             checkProfession = professions[indexPath.row]
         }
-        performSegue(withIdentifier: "unwindToCreateExp", sender: nil)
+//        if markerForSelectProfession == "" {
+            performSegue(withIdentifier: "unwindToCreateExp", sender: nil)
+//        } else {
+            
+//        }
     }
 //
 //    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

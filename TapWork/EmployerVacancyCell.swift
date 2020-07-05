@@ -37,8 +37,8 @@ class EmployerVacancyCell: UITableViewCell {
 //    @objc func menuBtn(sender: UIButton){
 //        let buttonTag = sender.tag
 //        print(buttonTag)
-//       
-//        
+//
+//
 //    }
 }
 

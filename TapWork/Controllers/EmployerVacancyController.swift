@@ -17,7 +17,8 @@ class EmployerVacancyController: UIViewController {
 //    private let noticeView = CustomNoticeView()
     private var filteredVacancies = [Vacancy]()
     private var userProfileID: String?
-    private var headingVacancy: String?
+//    private var keyCurrentVacancy: String?
+//    private var titleCurrentVacancy: String?
     private let spinner = NVActivityIndicatorView(frame: CGRect.init(x: 0, y: 0,
                                                                      width: 30,
                                                                      height: 30),
@@ -29,7 +30,8 @@ class EmployerVacancyController: UIViewController {
         super.viewDidLoad()
         //        hideActivityIndicator() //todo
         tableView.separatorStyle = .none
-        getProfileUserID()
+       
+    
     }
     
     private func checkNoticeView() {
@@ -59,12 +61,15 @@ class EmployerVacancyController: UIViewController {
                 self?.errorAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
+         
     }
     
     private func setupItems() {
 //        noticeView.isHidden = true
         tableView.delegate = self
         tableView.dataSource = self
+        getProfileUserID()
+        
         tableView.addSubview(refreshControll)
     }
     
@@ -119,6 +124,7 @@ extension EmployerVacancyController: UITableViewDelegate, UITableViewDataSource 
         cell.employerPublicationHeadingLbl.text = "Ваша публикация"
         cell.headingVacancyLbl.text = vacancy.heading
         cell.cityVacancyLbl.text = vacancy.city
+        cell.categoryVacancyLbl.styleLabel(with: vacancy.category)
         cell.contentVacancyLbl.text = vacancy.content
         cell.paymenVacancyLbl.text = vacancy.payment + " ₽ "
         cell.countViewsLbl.text = "\(vacancy.countViews)"
@@ -126,21 +132,21 @@ extension EmployerVacancyController: UITableViewDelegate, UITableViewDataSource 
         let datePublic = vacancy.timestamp
         let date = Date(timeIntervalSince1970: datePublic / 1000)
         cell.publicationDateLbl.text = date.publicationDate(withDate: date)
-//        cell.menuCurrentVacancyBtn.tag = indexPath.row
         cell.menuCurrentVacancyBtn.addTarget(self, action: #selector(menuBtn(sender:)), for: .touchUpInside)
+        cell.menuCurrentVacancyBtn.tag = indexPath.row
         
         self.hideActivityIndicator(spinner: spinner)
         return cell
     }
     
     @objc func menuBtn(sender: UIButton){
-//        let buttonTag = sender.tag
-        menuVacacyBtn()
+        let currentVacancy = filteredVacancies[sender.tag]
+        menuVacancyBtn(dataVacancy: currentVacancy)
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//    }
 }
 
 //MARK: Firebase
@@ -155,20 +161,20 @@ extension EmployerVacancyController {
         
         let dataLoader = LoaderDataFirebase()
         dataLoader.getDataVacancies()
-        
+        var array = [Vacancy]()
         dataLoader.completionHandler{[weak self] (vacansy, status, message) in
-            var array = [Vacancy]()
             if status {
                 guard let self = self else {return}
                 guard let _vacansy = vacansy else {return}
                 
-                for item in _vacansy as! [Vacancy] {
-                    if item.userId == self.userProfileID {
-                        self.headingVacancy = item.heading
-                        array.append(item)
+                for currentVacancy in _vacansy as! [Vacancy] {
+                    if currentVacancy.userId == self.userProfileID {
+//                        self.keyCurrentVacancy = currentVacancy.key
+//                        self.titleCurrentVacancy = currentVacancy.heading
+                        array.append(currentVacancy)
                     }
-                    self.filteredVacancies = array
                 }
+                self.filteredVacancies = array
                 self.tableView.reloadData()
             }
             self?.checkCountElementsWithTabBar()
@@ -191,7 +197,10 @@ extension EmployerVacancyController {
         }
     }
     
-    private func deleteVacancy(title: String, userID: String, completion: @escaping (AuthResult) -> Void) {
+    private func deleteVacancy(keyVacancy: String,
+                               titleVacancy: String,
+                               userID: String, completion: @escaping (AuthResult) -> Void) {
+        
         
         //check empty
         //check network
@@ -200,12 +209,13 @@ extension EmployerVacancyController {
             return
         }
         
-        if title == headingVacancy && userID == userProfileID {
+        if keyVacancy.isEmpty != true && titleVacancy.isEmpty != true {
             let db = Database.database()
-            guard let titleVacancy = headingVacancy else {return}
-            db.reference().child("vacancies").child(titleVacancy).removeValue()
+            db.reference().child("vacancies").child(keyVacancy).removeValue()
             //            self.view.activityStartAnimating(activityColor: UIColor.red, backgroundColor: UIColor.black.withAlphaComponent(0.1))
             completion(.success)
+            self.tableView.reloadData()
+            self.viewWillAppear(true)
         } else {
             completion(.failure(AuthError.unknownError))
         }
@@ -222,7 +232,7 @@ extension EmployerVacancyController {
     }
 }
 
-//MARK: create new vacancy
+//MARK: FIREBASE
 extension EmployerVacancyController: UIActionSheetDelegate {
     private func addingNewVacansy() {
         let createIcon = UIImage(systemName: "bolt.fill")
@@ -243,35 +253,67 @@ extension EmployerVacancyController: UIActionSheetDelegate {
         present(actionSheet, animated: true)
     }
     
-    private func menuVacacyBtn() {
+    // Button Full menu for all vacancies
+    private func menuVacancyBtn(dataVacancy: Vacancy) {
         
         let deleteIcon = UIImage(systemName: "trash.fill")
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let blockIcon = UIImage(systemName: "lock.fill")
+        let editIcon = UIImage(systemName: "gear")
+        let actionSheet = UIAlertController(title: "Действия с вакансией", message: nil, preferredStyle: .actionSheet)
         //        actionSheet.view.tintColor = .black
         
         let cancel = UIAlertAction(title: "Назад", style: .cancel)
-        
-        let menuService = UIAlertAction(title: "Удалить вакансию", style: .destructive) {[weak self] (actionSheet) in
-            
-            guard let headingVacancy = self?.headingVacancy,
-                let userProfileID = self?.userProfileID else {return}
-            
-            self?.deleteVacancy(title: headingVacancy, userID: userProfileID) { (result) in
-                switch result {
-                case .success:
-                    self?.successAlert(title: "Удалено!", message: "Вакансия удалена успешно")
-                    //                self.view.activityStopAnimating()
-                    break
-                case .failure(_):
-                    self?.errorAlert(title: "Ошибка!", message: "Ошибка удаления")
+        let deleteVacancy = UIAlertAction(title: "Удалить вакансию", style: .destructive) {[weak self] (actionSheet) in
+            let alertDelete = UIAlertController(title: nil,
+                                                message: "Вы уверены что хотите удалить вакансию?",
+                                                preferredStyle: .alert)
+            alertDelete.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+            alertDelete.addAction(UIAlertAction(title: "Удалить", style: .destructive, handler: { _ in
+                
+                guard
+                    let userProfileID = self?.userProfileID else {return}
+                
+                self?.deleteVacancy(keyVacancy: dataVacancy.key!, titleVacancy: dataVacancy.heading, userID: userProfileID) { (result) in
+                    switch result {
+                    case .success:
+                        self?.successAlert(title: "Удалено!", message: "Вакансия удалена успешно")
+                        //                self.view.activityStopAnimating()
+                        break
+                    case .failure(_):
+                        self?.errorAlert(title: "Ошибка!", message: "Ошибка удаления")
+                    }
                 }
-            }
+            }))
+            self?.present(alertDelete, animated: true)
+        }
+        let blockVacancy = UIAlertAction(title: "Изменить видимость", style: .default) { (actionSheet) in
+            let alert = UIAlertController(title: "Изменить видимость",
+                                          message: "Выберите из списка",
+                                          preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Видно всем", style: .default, handler: { _ in
+                //TODO
+            }))
+            alert.addAction(UIAlertAction(title: "Не видно никому", style: .default, handler: { _ in
+                //TODO
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        let editCurrentVacancy = UIAlertAction(title: "Редактировать вакансию", style: .default) { (actionSheet) in
+            //TODO
         }
         
-        menuService.setValue(deleteIcon, forKey: "image")
-        menuService.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        deleteVacancy.setValue(deleteIcon, forKey: "image")
+        deleteVacancy.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        blockVacancy.setValue(blockIcon, forKey: "image")
+        blockVacancy.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        editCurrentVacancy.setValue(editIcon, forKey: "image")
+        editCurrentVacancy.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
         
-        actionSheet.addAction(menuService)
+        actionSheet.addAction(blockVacancy)
+        actionSheet.addAction(editCurrentVacancy)
+        actionSheet.addAction(deleteVacancy)
         actionSheet.addAction(cancel)
         present(actionSheet, animated: true)
     }

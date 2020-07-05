@@ -11,24 +11,16 @@ import Firebase
 
 class DetailVacansyViewController: UIViewController {
     
-    @IBOutlet weak var headingVacancyLbl: UILabel!
-    @IBOutlet weak var categotyVacancyLbl: UILabel!
-    @IBOutlet weak var cityVacancyLbl: UILabel!
-    @IBOutlet weak var contentVacancyLbl: UILabel!
-    @IBOutlet weak var paymentVacancyLbl: UILabel!
-    @IBOutlet weak var publicationDateVacancyLbl: UILabel!
-    @IBOutlet weak var countViewVacancyLbl: UILabel!
     @IBOutlet weak var responseButtonLabel: UIButton!
-    
-    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var detailVacancyMenuButton: UIView!
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var favoriteBtn: UIBarButtonItem!
+    @IBOutlet weak var shareBtn: UIBarButtonItem!
+    @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var backView: UIView!
-
     var detailVacancy: Vacancy?
     var checkVacancy: String?
     var countViewsVacancy: Int?
+    private var favoriteVacancies = [Favorite]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,86 +31,98 @@ class DetailVacansyViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        updateCountViewsVacancy(views: countViewsVacancy,
-                                userId: detailVacancy?.userId,
-                                city: detailVacancy?.city,
-                                heading: detailVacancy?.heading,
-                                content: detailVacancy?.content,
-                                phoneNumber: detailVacancy?.phoneNumber,
-                                payment: detailVacancy?.payment) { (result) in
-                                    
-                                    switch result {
-                                    case .success:
-                                        break
-                                    case .failure(let error):
-                                        print(error.localizedDescription)
+        checkFavoriteVacancyInDB()
+        
+        let dataLoader = LoaderDataFirebase()
+        dataLoader.getFavoritesVacancies()
+        
+        dataLoader.completionHandler{[weak self] (vacancy, status, message) in
+            if status {
+                guard let self = self else {return}
+                guard let _vacancy = vacancy else {return}
+                self.favoriteVacancies = _vacancy as! [Favorite]
+//                print(self.favoriteVacancies)
             }
         }
+        
+        
+//        updateCountViewsVacancy(views: countViewsVacancy,
+//                                userId: detailVacancy?.userId,
+//                                city: detailVacancy?.city,
+//                                heading: detailVacancy?.heading,
+//                                content: detailVacancy?.content,
+//                                phoneNumber: detailVacancy?.phoneNumber,
+//                                payment: detailVacancy?.payment) { (result) in
+//
+//                                    switch result {
+//                                    case .success:
+//                                        break
+//                                    case .failure(let error):
+//                                        print(error.localizedDescription)
+//            }
+//        }
     }
-    
-    
     
     private func checkStatusUser() {
         if checkVacancy == nil {
             detailVacancyMenuButton.isHidden = false
+            favoriteBtn.isEnabled = true
         } else {
             detailVacancyMenuButton.isHidden = true
+            favoriteBtn.isEnabled = false
         }
     }
     
     private func setupItems() {
         
         checkStatusUser()
-        backView.addCorner()
-        backView.addShadow()
-       
+        tableView.tableFooterView = UIView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        if let topItem = navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil, action: nil)
+        }
+        navigationItem.title = "Вакансия"
         detailVacancyMenuButton.addShadow()
-        guard let detailVacancy = detailVacancy,
-            let heading = headingVacancyLbl,
-            let category = categotyVacancyLbl,
-            let city = cityVacancyLbl,
-            let content = contentVacancyLbl,
-            let payment = paymentVacancyLbl,
-            let publicationDate = publicationDateVacancyLbl,
-            let response = responseButtonLabel,
-            let countViews = countViewVacancyLbl,
-            let countViewsVacancy = countViewsVacancy else {return}
+        responseButtonLabel.changeStyleButton(with: "Откликнуться")
         
-         
-        heading.text = detailVacancy.heading
-        city.text = detailVacancy.city
-        category.text = "not input"
-        content.text = detailVacancy.content
-        payment.text = detailVacancy.payment + " ₽ "
-        let datePublic = detailVacancy.timestamp
-        let date = Date(timeIntervalSince1970: datePublic / 1000)
-        publicationDate.text = date.publicationDate(withDate: date)
-        navigationBar.topItem?.title = "Вакансия от: \(date.publicationDate(withDate: date))"
-        
-        countViews.text = "\(countViewsVacancy)"
-        
-        response.changeStyleButton(with: "Откликнуться")
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
+//        shareBtn.action = #selector(handleSharePressed(sender:))
+//        shareBtn.target = self
+//        favoriteBtn.action = #selector(handleFavoritePressed(sender:))
+//        favoriteBtn.target = self
     }
+//
+//    @objc func handleFavoritePressed(sender: UIBarButtonItem) {
+//        addingFavoriteVacancy()
+//    }
+    
+//    @objc func handleSharePressed(sender: UIBarButtonItem) {
+//        let ac = UIActivityViewController(activityItems: [detailVacancy?.heading as Any], applicationActivities: nil)
+//        ac.popoverPresentationController?.sourceView = self.view
+//        ac.excludedActivityTypes = [.airDrop]
+//        self.present(ac, animated: true)
+//    }
 
     @IBAction func responseButton(_ sender: UIButton) {
-        
         response()
-        
      }
     
+    @IBAction func shareBtnPressed(_sender: UIBarButtonItem) {
+        let ac = UIActivityViewController(activityItems: [detailVacancy?.heading as Any], applicationActivities: nil)
+        ac.popoverPresentationController?.sourceView = self.view
+        ac.excludedActivityTypes = [.airDrop]
+        self.present(ac, animated: true)
+    }
     
-    @IBAction func cancelButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+    @IBAction func favoriteBtnPressed(_sender: UIBarButtonItem) {
+        addingFavoriteVacancy()
     }
     
     //TODO
     private func response() {
-        
         let delay = 5
-        
         self.errorAlert(title: "Успешно",
                        message: "Вы откликнулись на вакансию: Название вакансии, если работодателя заинтересует ваша кандидатура, с вами свяжуться!")
         
@@ -128,62 +132,45 @@ class DetailVacansyViewController: UIViewController {
     }
 }
 
-//MARK: Collection view delegate, datasource
-extension DetailVacansyViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+extension DetailVacansyViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MenuCollectionCell", for: indexPath) as! MenuCollectionCell
-        
-        let index = indexPath.row
-        
-        switch index {
+        let indexCell = indexPath.row
+        switch indexCell {
         case 0:
-//            cell.imageMenu.image = UIImage(systemName: "star")
-            cell.favoriteButtonLbl.setImage(UIImage(named: "FavoriteStar"), for: .normal)
-//            cell.favoriteButtonLbl.setImage(UIImage(named: "FavoriteStarFill"), for: .selected)
-            cell.favoriteButtonLbl.contentMode = .center
-            cell.desriptionMenuLbl.text = "В избранное"
-            cell.favoriteButtonLbl.addTarget(self, action: #selector(handleFavoritePressed), for: .touchUpInside)
+            let headingCell = tableView.dequeueReusableCell(withIdentifier: "DetailVacancyCell", for: indexPath) as! DetailVacancyCell
+            headingCell.headingLbl.text = detailVacancy?.heading
+            headingCell.cityVacancyLbl.text = detailVacancy?.city
+            headingCell.categoryVacancyLbl.styleLabel(with: detailVacancy!.category)
+//            headingCell.categoryVacancyLbl.text = detailVacancy?.category
+            headingCell.selectionStyle = .none
+            return headingCell
+        case 1:
+            let contentCell = tableView.dequeueReusableCell(withIdentifier: "DetailVacancyContentCell", for: indexPath) as! DetailVacancyContentCell
+            contentCell.contentLbl.text = detailVacancy?.content
+            contentCell.paymentLbl.text = detailVacancy!.payment + " ₽ "
+            contentCell.selectionStyle = .none
+            return contentCell
+        case 2:
+            let countViewsCell = tableView.dequeueReusableCell(withIdentifier: "DetailCountViewCell", for: indexPath) as! DetailCountViewCell
+            if let datePublic = detailVacancy?.timestamp {
+            let date = Date(timeIntervalSince1970: datePublic / 1000)
+            countViewsCell.publicationDateLbl.text = date.publicationDate(withDate: date)
+            }
+            countViewsCell.countViewsLbl.text = "\(countViewsVacancy ?? 0)"
+            countViewsCell.selectionStyle = .none
+            return countViewsCell
         default:
-            cell.favoriteButtonLbl.setImage(UIImage(named: "Share"), for: .normal)
-//            cell.imageMenu.image = UIImage(systemName: "arrowshape.turn.up.right")
-            cell.desriptionMenuLbl.text = "Поделиться"
-            cell.favoriteButtonLbl.addTarget(self, action: #selector(handleSharePressed), for: .touchUpInside)
+           break
         }
-        
-        return cell
+        return UITableViewCell()
     }
-    
-    @objc func handleFavoritePressed() {
-        print("added")
-        addingFavoriteVacancy()
-    }
-    
-    @objc func handleSharePressed() {
-        let ac = UIActivityViewController(activityItems: [detailVacancy?.heading as Any], applicationActivities: nil)
-        ac.popoverPresentationController?.sourceView = self.view
-        ac.excludedActivityTypes = [.airDrop]
-        self.present(ac, animated: true)
-    }
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//
-//        let index = indexPath.row
-////        let arrayData = [detailVacancy?.heading, detailVacancy?.city, detailVacancy?.content, detailVacancy?.payment]
-//        switch index {
-//        case 0:
-//        default:
-//            let ac = UIActivityViewController(activityItems: [detailVacancy?.heading as Any], applicationActivities: nil)
-//            ac.popoverPresentationController?.sourceView = self.view
-//            ac.excludedActivityTypes = [.airDrop]
-//            self.present(ac, animated: true)
-//        }
-//    }
 }
+
 
 //MARK: Firebase
 extension DetailVacansyViewController {
@@ -204,13 +191,13 @@ extension DetailVacansyViewController {
             let content = content,
             let phoneNumber = phoneNumber,
             let payment = payment,
-            let timestamp = detailVacancy?.timestamp,
-            let favoritesVacancies = detailVacancy?.favoritesVacancies else {
+            let timestamp = detailVacancy?.timestamp
+            else {
                 completion(.failure(AuthError.unknownError))
-                return}
+                return }
 
         let ref = Database.database().reference(withPath: "vacancies")
-        let values = [heading: [
+        let values = [detailVacancy?.key: [
             "userId": userId,
             "city": city,
             "heading": heading,
@@ -218,8 +205,8 @@ extension DetailVacansyViewController {
             "phoneNumber": phoneNumber,
             "payment": payment,
             "timestamp": timestamp,
-            "countViews": views,
-            "favoritesVacancies": favoritesVacancies]
+            "countViews": views
+            ]
         ]
         ref.updateChildValues(values, withCompletionBlock: { (error, ref) in
             if(error != nil){
@@ -231,52 +218,49 @@ extension DetailVacansyViewController {
     }
     
     private func addingFavoriteVacancy() {
+        
+//        guard let currentUsers = Auth.auth().currentUser else { return }
+//        let infoUser = Users(user: currentUsers)
+//        let ref = Database.database().reference(withPath: "favorites_vacancies")
+//        guard let keyCurrentVacancy = detailVacancy?.key else { return }
+//        let vacancyRef = ref.child(infoUser.userId)
+//        var transformed = favoriteVacancies.compactMap { $0.keys }
 //
-//        let vacancyRef = ref.child(detailVacancy!.heading)
-//        vacancyRef.setValue(["userId": detailVacancy!.userId,
-//                             "city": detailVacancy!.city,
-//                             "heading": detailVacancy!.heading,
-//                             "content": detailVacancy!.content,
-//                             "phoneNumber": detailVacancy!.phoneNumber,
-//                             "payment": detailVacancy!.payment,
-//                             "timestamp": detailVacancy!.timestamp,
-//                             "countViews": detailVacancy!.countViews])
-        
-        guard let views = detailVacancy?.countViews,
-            let userId = detailVacancy?.userId,
-            let city = detailVacancy?.city,
-            let heading = detailVacancy?.heading,
-            let content = detailVacancy?.content,
-            let phoneNumber = detailVacancy?.phoneNumber,
-            let payment = detailVacancy?.payment,
-            let timestamp = detailVacancy?.timestamp,
-            var favoritesVacancies = detailVacancy?.favoritesVacancies else {
-                //                       completion(.failure(AuthError.unknownError))
-                return}
-        
-        guard let currentUsers = Auth.auth().currentUser else { return }
-        let infoUser = Users(user: currentUsers)
-        let ref = Database.database().reference(withPath: "vacancies")
-        favoritesVacancies.append(infoUser.userId)
-        let values = [heading: [
-            "userId": userId,
-            "city": city,
-            "heading": heading,
-            "content": content,
-            "phoneNumber": phoneNumber,
-            "payment": payment,
-            "timestamp": timestamp,
-            "countViews": views + 1,
-            "favoritesVacancies": favoritesVacancies
-            ]
-        ]
-        ref.updateChildValues(values, withCompletionBlock: { (error, ref) in
-            if(error != nil){
-                print(error?.localizedDescription ?? "")
-                return
-            }
-        })
+//        var action = [String]()
+//        print("текущий ключ вакансии: \(keyCurrentVacancy)")
+//        for currentKey in 0..<transformed.count {
+//            if transformed[currentKey] != keyCurrentVacancy {
+//                action = transformed
+//                action.append(keyCurrentVacancy)
+//                vacancyRef.setValue(action)
+//            } else {
+////                action =
+//            }
+//        }
     }
+    
+    private func checkFavoriteVacancyInDB() {
+        //  если мой ИД уже есть в массиве "избранное" -- тогда кнопка заполнена
+        //  если НЕТ -- кнопка пустая
+//        guard let currentUsers = Auth.auth().currentUser else { return }
+//        let infoUser = Users(user: currentUsers)
+//        //
+//        //        guard let favorites = detailVacancy?.favoritesVacancies else {return}
+//        //
+//        for (key, value) in favoriteVacancies.enumerated() {
+//            let keys = "\(value)"
+//            if infoUser.userId == keys {
+//                ////                print("ID detected")
+////                print(key,value)
+//
+//                favoriteBtn.image = UIImage(systemName: "star.fill")
+//            } else {
+//                print("ID not found")
+//                favoriteBtn.image = UIImage(systemName: "star")
+//            }
+//        }
+    }
+    
     
     private func deleteFavoriteVacancy() {
         

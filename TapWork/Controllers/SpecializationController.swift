@@ -11,6 +11,7 @@ import UIKit
 class SpecializationController: UITableViewController {
     
     var specializations = [Specializations]()
+    var markerForSelectProfession = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,7 @@ class SpecializationController: UITableViewController {
                 
                 let professions = specializations[indexPath.row]
                 let categoryInfoVC = segue.destination as! ProfessionsController
+                categoryInfoVC.markerForSelectProfession = markerForSelectProfession
                 
                 for profession in [professions] {
                     categoryInfoVC.professions = profession.professions as! [String]

@@ -16,10 +16,12 @@ class TitleVacansyController: UIViewController {
     @IBOutlet weak var cityDropMenuTxtFld: DropDown!
     @IBOutlet weak var summaryCountLbl: UILabel!
     @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var categoryTxtFld: UITextField!
     @IBOutlet weak var nextButtonLabel: UIButton!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     private var citiesList = [Items]()
+    var markerForProfession = "CREATE_VACANCY"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,13 +51,32 @@ class TitleVacansyController: UIViewController {
         errorLabel.isHidden = true
         titleTextField.placeholder = "Название"
         cityDropMenuTxtFld.placeholder = "Город"
+        categoryTxtFld.placeholder = "Укажите кого ищите"
         titleTextField.becomeFirstResponder()
+        categoryTxtFld.becomeFirstResponder()
+        //touch text field
+        categoryTxtFld.addTarget(self, action: #selector(selectProfession), for: .touchDown)
         
+    }
+    
+    @objc func selectProfession() {
+        let categoriesController = self.storyboard?.instantiateViewController(withIdentifier: "CategoriesController") as! CategoriesController
+        categoriesController.markerForSelectProfession = markerForProfession
+        let navController = UINavigationController(rootViewController: categoriesController)
+        navigationController?.present(navController, animated: true, completion: nil)
     }
     
     private func delegates() {
         titleTextField.delegate = self
         cityDropMenuTxtFld.delegate = self
+        categoryTxtFld.delegate = self
+    }
+    
+    @IBAction func unwindToCreateVacancy(segue: UIStoryboardSegue) {
+        if segue.identifier == "unwindToCreateVacancy" {
+            let selectProfVC = segue.source as? ProfessionsController
+            self.categoryTxtFld.text = selectProfVC?.checkItem
+        }
     }
     
     @IBAction func nextButtonPressed(_ sender: UIButton) {
@@ -80,6 +101,7 @@ class TitleVacansyController: UIViewController {
             let contentVC = segue.destination as! ContentVacansyController
             contentVC.header = titleTextField.text!
             contentVC.city = cityDropMenuTxtFld.text!
+            contentVC.category = categoryTxtFld.text!
         }
     }
     
@@ -137,7 +159,7 @@ extension TitleVacansyController: UITextFieldDelegate {
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField == cityDropMenuTxtFld {
+        if textField == cityDropMenuTxtFld || textField == categoryTxtFld {
              return false
         }
        return true

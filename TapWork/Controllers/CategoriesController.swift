@@ -14,11 +14,10 @@ class CategoriesController: UIViewController {
     
 //    private let categories = DataLoader().categoryData
     private var categories = [CategoriesList]()
+    var markerForSelectProfession = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -75,6 +74,7 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
 
             let category = categories[indexPath.row]
             let categoryInfoVC = segue.destination as! SpecializationController
+            categoryInfoVC.markerForSelectProfession = markerForSelectProfession
 
             for specializations in [category] {
                 categoryInfoVC.specializations = specializations.specialization!

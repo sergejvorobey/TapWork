@@ -19,6 +19,7 @@ class ContentVacansyController: UIViewController {
     
     var header: String?
     var city: String?
+    var category: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +75,7 @@ class ContentVacansyController: UIViewController {
             let paymentVC = segue.destination as! PaymentController
             paymentVC.headerVacansy = header
             paymentVC.cityVacansy = city
+            paymentVC.categoryVacancy = category
             paymentVC.contentVacansy = contentTextView.text
             
         }

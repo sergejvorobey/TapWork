@@ -21,6 +21,7 @@ class ProfileUserController: UIViewController {
         super.viewDidLoad()
         
         setupItems()
+        tableView.addSubview(refreshControll)
     }
     
     private func setupItems() {
@@ -55,6 +56,23 @@ class ProfileUserController: UIViewController {
                 
             }
         }
+    }
+    
+    //  refresh spinner
+    private lazy var refreshControll: UIRefreshControl = {
+        let refreshControll = UIRefreshControl()
+        refreshControll.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        refreshControll.tintColor = UIColor.red
+        return refreshControll
+        
+    }()
+    
+    @objc func handleRefresh(_ refreshControll: UIRefreshControl) {
+        self.tableView.reloadData()
+        let deadline = DispatchTime.now() + .milliseconds(700)
+        DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
+            refreshControll.endRefreshing()
+        })
     }
     
     @IBAction func exitAccountPressed(_ sender: UIBarButtonItem) {

@@ -24,6 +24,7 @@ class PaymentController: UIViewController {
     
     var headerVacansy: String?
     var cityVacansy: String?
+    var categoryVacancy: String?
     var contentVacansy: String?
     
     override func viewDidLoad() {
@@ -40,6 +41,7 @@ class PaymentController: UIViewController {
     //MARK: create new vacansy
         addVacansy(heading: headerVacansy,
                    city: cityVacansy,
+                   category: categoryVacancy,
                    content: contentVacansy,
                    payment: paymentTextField.text,
                    phone: phoneTextField.text)
@@ -223,6 +225,7 @@ extension PaymentController {
     // MARK: Add vacansy in database
     private func addVacansy(heading: String?,
                             city: String?,
+                            category: String?,
                             content: String?,
                             payment: String?,
                             phone: String?,
@@ -240,6 +243,7 @@ extension PaymentController {
 
         guard let heading = heading,
             let city = city,
+            let category = category,
             let content = content,
             let payment = payment,
             let phone = phone
@@ -259,11 +263,12 @@ extension PaymentController {
         let ref = Database.database().reference(withPath: "vacancies")
         let vacansy = Vacancy(userId: infoUser.userId,
                               city: city,
+                              category: category,
                               heading: heading,
                               content: content,
                               phoneNumber: phone,
                               payment: payment)
-        let vacansyRef = ref.child(vacansy.heading)//vacansy.heading
+        let vacansyRef = ref.childByAutoId()
         vacansyRef.setValue(vacansy.providerToDictionary())
         
         completion(.success)

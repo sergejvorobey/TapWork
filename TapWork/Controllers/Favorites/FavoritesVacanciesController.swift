@@ -25,13 +25,15 @@ class FavoritesVacanciesController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        print(userProfileID)
+
         getProfileUserID()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.showActivityIndicator(spinner: spinner)
+        setupItems()
         getFavoritesVacancies {[weak self] (result) in
             switch result {
             case .success:
@@ -40,10 +42,6 @@ class FavoritesVacanciesController: UIViewController {
                 self?.errorAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
-        
-        self.showActivityIndicator(spinner: spinner)
-        setupItems()
-        
     }
     
     private func setupItems() {
@@ -170,40 +168,34 @@ extension FavoritesVacanciesController {
 extension FavoritesVacanciesController {
     
     private func getFavoritesVacancies (completion: @escaping (AuthResult) -> Void) {
-        guard Validators.isConnectedToNetwork()  else {
-            completion(.failure(AuthError.serverError))
-            return
-        }
-        
-        let dataLoader = LoaderDataFirebase()
-        dataLoader.getDataVacancies()
-        
-        dataLoader.completionHandler{[weak self] (vacancy, status, message) in
-            var array = [Vacancy]()
-            if status {
-                guard let self = self else {return}
-                guard let _vacancy = vacancy else {return}
-                //                self.favoriteVacancy = _vacancy as! [Vacancy]
-                for item in _vacancy as! [Vacancy] {
-                    //                    for i in item.favoritesVacancies {
-                    //                        print(i)
-                    let filteredNums = item.favoritesVacancies.filter({$0 == self.userProfileID})
-                    
-                    
-                    if filteredNums.first == self.userProfileID {
-                        array.append(item)
-                        
-                    }
-                    self.favoriteVacancy = array
-                }
-            }
-            
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-            self?.checkNoticeView()
-        }
-        completion(.success)
+//        guard Validators.isConnectedToNetwork()  else {
+//            completion(.failure(AuthError.serverError))
+//            return
+//        }
+//
+//        let dataLoader = LoaderDataFirebase()
+//        dataLoader.getDataVacancies()
+//
+//        dataLoader.completionHandler{[weak self] (vacancy, status, message) in
+//            var array = [Vacancy]()
+//            if status {
+//                guard let self = self else {return}
+//                guard let _vacancy = vacancy else {return}
+//                for item in _vacancy as! [Vacancy] {
+//                    let filteredNums = item.favoritesVacancies.filter({$0 == self.userProfileID})
+//
+//                    if filteredNums.first == self.userProfileID {
+//                        array.append(item)
+//                    }
+//                    self.favoriteVacancy = array
+//                }
+//            }
+//            DispatchQueue.main.async {
+//                self?.tableView.reloadData()
+//            }
+//            self?.checkNoticeView()
+//        }
+//        completion(.success)
     }
     
     //MARK: parse user id
@@ -212,15 +204,14 @@ extension FavoritesVacanciesController {
         dataLoader.getProfileUserID()
         dataLoader.completionHandler {[weak self](userProfileID, status, message) in
             if status {
-                
                 guard let self = self else {return}
                 guard let _userProfileID = userProfileID else {return}
                 self.userProfileID = _userProfileID as? String
-                //                print(self.userProfileID)
             }
         }
     }
     
+    //MARK: delete favorites
     private func deleteFavoriteVacancy() {
         
     }
